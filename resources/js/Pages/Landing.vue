@@ -3,34 +3,50 @@ import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Landing" />
+    <Head title="Landing">
 
-    <div class="grid h-screen" style="background-image: url('/img/landing-bg-day.jpg');">
-        <div class="py-6 px-5 mx-auto my-auto w-1/4 bg-white rounded-md">
-            <div class="text-5xl mb-2 mx-auto text-center">Welcome</div>
-            <hr class="h-1 mb-8 bg-gray-200 border-0 rounded dark:bg-gray-700">
+    </Head>
+
+
+
+
+    <div class="grid h-screen font-Poppins" style="background-image: url('/img/landing-bg-day.jpg');">
+        <div class="py-6 px-5 my-auto w-1/3 bg-white rounded-md h-screen">
+            <div class="text-3xl mb-10 my-10 mx-auto text-center">Welcome</div>
             <form>
-                <div class="grid grid-cols-1">
+                <div class="grid grid-cols-1 w-2/3 mx-auto">
                     <div class="grid grid-cols-1">
-                        <label class="ml-5" for="email"> Email </label>
-                        <input type="email" class="form-input px-3 py-1 mb-3 rounded-full"
+                        <label class="ml-2" for="email"> Email </label>
+                        <input type="email"
+                            class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
                             placeholder="example@example.com" id="email">
                     </div>
-                    <div class="grid grid-cols-1">
-                        <label class="ml-5" for="pass"> Password </label>
-                        <input type="password" class="form-input px-3 py-1 mb-3 rounded-full" id="pass" placeholder="********">
+                    <div class="grid mx-auto w-full grid-cols-1">
+                        <label class="ml-2" for="pass"> Password </label>
+                        <input type="password"
+                            class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
+                            id="pass" placeholder="********">
                     </div>
                 </div>
-                <div class="grid grid-cols-1 w-full mx-auto mb-4">
-                    <button class="rounded-full bg-pink-500 focus:ring focus:ring-violet-300 w-48 mx-auto h-8">Login</button>
+                <div class="grid grid-cols-1 w-full mx-auto mb-10">
+                    <button
+                        class="rounded-full bg-violet-600 h-12 focus:ring focus:ring-violet-300 w-48 mx-auto text-white ">Login</button>
                 </div>
-                <div class="mb-4">
-                    <input type="checkbox" class="form-checkbox ml-5" id="remember"> <label for="remember" class="ml-2 mb-4 text-sm"> Remember Me </label> 
+                <div class="grid w-full grid-cols-2 my-4">
+                    <div class="mb-4">
+                        <input type="checkbox" class="form-checkbox ml-5" id="remember"> <label for="remember"
+                            class="ml-2 mb-4 text-sm"> Remember Me </label>
+                    </div>
+                    <div class="mb-4 text-center text-sm">
+                        <span class="italic"> Forgot Password? </span>
+                    </div>
                 </div>
+
             </form>
-            <hr>
-            <div class="text-center mx-auto mt-3 italic font-thin"> Don't have an account?</div>
-            <div class="mx-auto w-full grid"> <button class="mx-auto w-48"> Join Now </button> </div>
+            <hr class="mb-10">
+            <div class="text-center mx-auto mt-3 italic font-thin"> No account? No worries.</div>
+            <div class="mx-auto w-full grid"> <button class="mx-auto w-48 form-input rounded-full"> Join Now </button>
+            </div>
         </div>
     </div>
 </template>
