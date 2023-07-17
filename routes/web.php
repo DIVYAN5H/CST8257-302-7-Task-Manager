@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +29,12 @@ Route::get('/', function () {
 Route::get('/landing', function() {
     return Inertia::render('Landing');
 });
+
+Route::get('/test2', function() {
+    return Inertia::render('Test2');
+});
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

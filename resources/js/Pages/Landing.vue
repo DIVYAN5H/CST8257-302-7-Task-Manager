@@ -1,5 +1,6 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3'
 </script>
 
 <template>
@@ -33,13 +34,12 @@ import { Head } from '@inertiajs/vue3';
                             class="ml-2 mb-4 text-sm"> Remember Me </label>
                     </div>
                     <div class="mb-4 text-right text-sm">
-                        <a href="/landing"> <span class="italic"> Forgot Password? </span> </a>
+                        <a href="/test2"> <span class="italic"> Forgot Password? </span> </a>
                     </div>
                 </div>
                 </div>
                 <div class="grid grid-cols-1 w-full mx-auto mb-10">
-                    <button
-                        class="rounded-full bg-violet-600 h-12 focus:ring focus:ring-violet-300 w-48 mx-auto text-white ">Login</button>
+                    <Link href="/test2" as="button" type="button" class="rounded-full bg-violet-600 h-12 focus:ring focus:ring-violet-300 w-48 mx-auto text-white">Login</Link>
                 </div>
 
             </form>
