@@ -5,13 +5,7 @@
 <a href="delTest">Delete</a>
 <a href="updateTest">Update</a>
 <div>
-    Data<br>
-    @if(session('status')){
-    <h2>{{session('status')}}</h2>
-    }
-    @else{
-        <br>no session
-    }
-    @endif
+    Data<br />
+    {{var_dump($fetchedData)}}
 </div>
 @endsection

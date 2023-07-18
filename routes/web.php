@@ -20,5 +20,10 @@ Route::get('/', function () {
 
 Route::get('firebaseTest',[FirebaseController::class,'index']);
 
+// [FirebaseController::class,'index']
+// public function index(){
+//     return view('firebase.tasks.index');
+// } 
+
 Route::get('addTest',[FirebaseController::class,'addDisplay']);
 Route::post('addTest',[FirebaseController::class,'addFunc']);

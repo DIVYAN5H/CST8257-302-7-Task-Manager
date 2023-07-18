@@ -7,6 +7,9 @@
     @csrf
     
     Add Task: <input name="task" type="text">
+    <br />
+    List For Task: <input name="list" type="text">
+
 
     <button type="submit">Add</button>
 </form>

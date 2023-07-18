@@ -8,13 +8,8 @@ use Kreait\Firebase\Contract\Database;
 
 class FirebaseController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $factory = (new Factory())->withServiceAccount(__DIR__.'firebase_credentianls.json');
-    //     $this->database = app('firebase.database');
-    //     $this->tableName = 'Tasks';
-    // }
     private $database;
+    private $userId = "testUserId";
 
     public function __construct(Database $database)
     {
@@ -22,7 +17,8 @@ class FirebaseController extends Controller
     }
 
     public function index(){
-        return view('firebase.tasks.index');
+        $fetchedData = $this->database->getReference('userTasks/'.$this->userId)->getValue();
+        return view('firebase.tasks.index',compact('fetchedData'));
     } 
 
     public function addDisplay(){
@@ -30,10 +26,12 @@ class FirebaseController extends Controller
     }
 
     public function addFunc(Request $request){
-        $postData = [
+        $listName = $request->list;
+        $dataToSave = [
             "task"=> $request->task,
+            "priority"=>"1",
         ];
-        $postRef = $this->database->getReference('Tasks')->push($postData);
+        $postRef = $this->database->getReference('userTasks/'.$this->userId."/".$listName)->push($dataToSave);
         if($postRef){
             return redirect('firebaseTest')->with('status','success');
         }
