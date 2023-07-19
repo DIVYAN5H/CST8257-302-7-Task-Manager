@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\FirebaseController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 /*
@@ -53,3 +54,17 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('firebaseTest',[FirebaseController::class,'index']);
+
+// [FirebaseController::class,'index']
+// public function index(){
+//     return view('firebase.tasks.index');
+// } 
+
+Route::get('addTest',[FirebaseController::class,'addDisplay']);
+Route::post('addTest',[FirebaseController::class,'addFunc']);
