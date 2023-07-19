@@ -1,12 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
     --white : #ffffff;
     --black: #000000;
-    --color-main : #00ff44;
-    --color-accent: red;
+    --color-main : rgb(139, 49, 181);
+    --color-accent: rgb(235, 231, 117);
 
   }
 
