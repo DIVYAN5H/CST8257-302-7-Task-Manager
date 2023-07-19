@@ -10,6 +10,8 @@ import { Head } from '@inertiajs/vue3';
         Add a New Task
       </h1>
     </div>
+<div style="background-image: url('resources/css/img/purple nature bg.jpg');">
+
 
     <div class="w-1/2 bg-gray-100 drop-shadow-xl rounded mx-auto">
       <form class="rounded px-8 pt-6 pb-8 mb-4">
@@ -38,4 +40,5 @@ import { Head } from '@inertiajs/vue3';
               </div>
             </form>
     </div>
+  </div>
 </template>
