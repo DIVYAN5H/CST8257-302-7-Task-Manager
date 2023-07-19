@@ -3,6 +3,30 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --white : #ffffff;
+    --black: #000000;
+    --color-main : #00ff44;
+    --color-accent: red;
+
+  }
+
+  .button{
+    background-color: var(--color-main);
+    color: var(--white);
+    box-shadow: 0 0 3px var(--black);
+  }
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
 
 .v-enter-active,
 .v-leave-active {
