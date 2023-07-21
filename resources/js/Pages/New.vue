@@ -6,8 +6,8 @@ import Navigation from '@/Components/Navigation.vue';
     <Head title="New" ></Head>
     <Navigation></Navigation>
     
-    <div class="flex justify-evenly flex-col items-center h-screen bg-cover" style="background-image: url('/img/purple nature bg.jpg');">
-    <div class="text-4xl text-white">
+    <div class="flex justify-start flex-col items-center h-screen bg-cover" style="background-image: url('/img/purple nature bg.jpg');">
+    <div class="text-4xl text-white py-10">
       <h1>
         Add a New Task
       </h1>
