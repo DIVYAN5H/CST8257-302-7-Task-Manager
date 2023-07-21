@@ -12,7 +12,12 @@ const show = ref(true)
     <Transition>
         <div v-if="show" appear class="grid h-screen font-Poppins bg-cover"
             style="background-image: url('/img/landing-bg-day.jpg');">
-            <div class="py-20 px-5 my-auto w-1/3 bg-white rounded-md h-screen min-w-max">
+            <div class="py-5 px-5 my-auto w-1/3 bg-white rounded-md h-screen min-w-max">
+                
+                <div>
+                    <img style="width: 50px;" src="/img/Logo.png" alt="">
+                </div>
+
                 <div class="text-3xl mb-10 my-10 mx-auto text-center">Welcome!</div>
                 <form>
                     <div class="grid grid-cols-1 w-2/3 mx-auto">

@@ -36,6 +36,9 @@ Route::get('/new', function() {
     return Inertia::render('New');
 });
 
+Route::get('/home', function() {
+    return Inertia::render('Home');
+});
 
 Route::get('/test2', function() {
     return Inertia::render('Test2');
