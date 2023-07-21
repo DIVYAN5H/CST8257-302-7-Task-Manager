@@ -4,9 +4,11 @@ import Navigation from '@/Components/Navigation.vue';
 </script>
 <template>
     <Head title="New" ></Head>
-    <Navigation></Navigation>
     
-    <div class="flex justify-start flex-col items-center h-screen bg-cover" style="background-image: url('/img/purple nature bg.jpg');">
+    <div class="flex justify-start flex-col items-center h-screen bg-cover" style="background-image: url('/img/landing-bg-day.jpg');">
+      <div class="w-full">
+        <Navigation></Navigation>
+      </div>
     <div class="text-4xl text-white py-10">
       <h1>
         Add a New Task
