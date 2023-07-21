@@ -4,17 +4,23 @@
 @tailwind utilities;
 
 :root {
-    --white : #ffffff;
-    --black: #000000;
-    --color-main : #00ff44;
-    --color-accent: red;
+  --white : #ffffff;
+  --black: #000000;
+  --color-main : rgb(139, 49, 181);
+  --color-accent: rgb(210, 207, 121);
 
-  }
+}
 
   .button{
     background-color: var(--color-main);
     color: var(--white);
-    box-shadow: 0 0 3px var(--black);
+    transition: background-color 0.3s ease-in-out;
+
+  }
+
+  .button:hover{
+    background-color: var(--color-accent);
+
   }
 
 .v-enter-active,
