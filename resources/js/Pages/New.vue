@@ -13,7 +13,7 @@ import Navigation from '@/Components/Navigation.vue';
       </h1>
     </div>
 
-    <div class="w-2/5 bg-gray-100 drop-shadow-xl rounded-lg">
+    <div class="w-2/5 bg-white drop-shadow-xl rounded-lg">
       <form class=" px-8 pt-6 pb-8">
               <div class="mb-6">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
