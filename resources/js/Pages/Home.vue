@@ -41,6 +41,7 @@ import Navigation from '@/Components/Navigation.vue';
           <br>
           
         </div>
+
         <div  class="text-white flex justify-center">
             <p>You can manage your tasks here based on their priority</p>
           </div>
@@ -57,7 +58,7 @@ import Navigation from '@/Components/Navigation.vue';
             </div>
         </div>
 
-        <div class="main flex justify-evenly flex-row mx-5 mt-5 h-[24rem]">
+        <div class="main text-white flex justify-evenly flex-row mx-5 mt-5 h-[24rem]">
 
           <div style="overflow: hidden; overflow-y: scroll;" class=" w-80">
             
