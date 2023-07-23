@@ -22,3 +22,15 @@
 2023-07-21T21:52:29.124636Z 0 [ERROR] [MY-010257] [Server] Do you already have another mysqld server running on port: 3306 ?
 2023-07-21T21:52:29.125485Z 0 [ERROR] [MY-010119] [Server] Aborting
 2023-07-21T21:52:30.341171Z 0 [System] [MY-010910] [Server] C:\Users\hasee\Documents\Semester_3\Web_App_Development\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqld: Shutdown complete (mysqld 8.0.30)  MySQL Community Server - GPL.
+2023-07-23T00:25:03.855092Z 0 [Warning] [MY-010097] [Server] Insecure configuration for --secure-file-priv: Current value does not restrict location of generated files. Consider setting it to a valid, non-empty path.
+2023-07-23T00:25:03.856594Z 0 [Warning] [MY-010918] [Server] 'default_authentication_plugin' is deprecated and will be removed in a future release. Please use authentication_policy instead.
+2023-07-23T00:25:03.856657Z 0 [System] [MY-010116] [Server] C:\Users\hasee\Documents\Semester_3\Web_App_Development\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqld (mysqld 8.0.30) starting as process 24116
+2023-07-23T00:25:03.985361Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-07-23T00:25:04.481327Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-07-23T00:25:05.006842Z 0 [Warning] [MY-013829] [Server] Missing data directory for ICU regular expressions: C:\Users\hasee\Documents\Semester_3\Web_App_Development\laragon\bin\mysql\mysql-8.0.30-winx64\lib\private\.
+2023-07-23T00:25:05.063510Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-07-23T00:25:05.064012Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-07-23T00:25:05.084355Z 0 [ERROR] [MY-010262] [Server] Can't start server: Bind on TCP/IP port: Only one usage of each socket address (protocol/network address/port) is normally permitted. 
+2023-07-23T00:25:05.085369Z 0 [ERROR] [MY-010257] [Server] Do you already have another mysqld server running on port: 3306 ?
+2023-07-23T00:25:05.085954Z 0 [ERROR] [MY-010119] [Server] Aborting
+2023-07-23T00:25:06.287276Z 0 [System] [MY-010910] [Server] C:\Users\hasee\Documents\Semester_3\Web_App_Development\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqld: Shutdown complete (mysqld 8.0.30)  MySQL Community Server - GPL.
