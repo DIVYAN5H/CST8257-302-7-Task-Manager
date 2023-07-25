@@ -5,7 +5,7 @@ import Navigation from '@/Components/Navigation.vue';
 <template>
     <Head title="New" ></Head>
     
-    <div class="flex justify-start flex-col items-center h-screen bg-cover" style="background-image: url('/img/landing-bg-day.jpg');">
+    <div class="flex justify-start flex-col items-center h-screen bg-cover" style="background-image: url('/img/purple nature bg.jpg');">
       <div class="w-full">
         <Navigation></Navigation>
       </div>
