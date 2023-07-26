@@ -8,7 +8,10 @@
   --black: #000000;
   --color-main : rgb(139, 49, 181);
   --color-accent: rgb(210, 207, 121);
-
+  --box-border: rgb(184, 184, 184);
+  --low-border: rgb(78, 201, 201);
+  --mid-border: rgb(229, 227, 120);
+  --high-border: rgb(231, 59, 59);
 }
 
   .button{
@@ -31,6 +34,28 @@
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+.new-box-border{
+  border: 1px solid var(--box-border);
+}
+
+.box-borders{
+  border-top: 1px solid var(--box-border);
+  border-bottom: 1px solid var(--box-border);
+  border-right: 1px solid var(--box-border);
+
+}
+.low-box{
+  border-left: 10px solid var(--low-border);
+}
+.mid-box{
+  border-left: 10px solid var(--mid-border);
+  
+}
+.high-box{
+  border-left: 10px solid var(--high-border);
+
 }
 
 

@@ -1,6 +1,7 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
 import Navigation from '@/Components/Navigation.vue';
+import { Link } from '@inertiajs/vue3';
 </script>
 <template>
     <Head title="New" ></Head>
@@ -15,7 +16,7 @@ import Navigation from '@/Components/Navigation.vue';
       </h1>
     </div>
 
-    <div style="border: 1px solid rgb(184, 184, 184);" class="w-2/5 backdrop-blur-lg bg-white/30 drop-shadow-xl rounded-lg ">
+    <div class="w-2/5 backdrop-blur-lg bg-white/30 drop-shadow-xl rounded-lg new-box-border">
       <form class=" px-8 pt-6 pb-8">
               <div class="mb-6">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
@@ -64,9 +65,11 @@ import Navigation from '@/Components/Navigation.vue';
                 </div>
 
               <div class="flex items-center justify-between">
-                <button class="button py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" type="button">
+                
+                <Link @click="show = !show" as="button" type="button" class="button py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
                   Add Task
-                </button>
+                </Link>
+                
               </div>
             </form>
     </div>
