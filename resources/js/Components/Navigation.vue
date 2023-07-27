@@ -4,7 +4,9 @@
 
   <a href="" class="flex items-center">
       <img src="/img/Logo.png" class="h-8 mr-3" alt="TaskMaster Logo" />
-      <span class="self-center text-2xl font-semibold whitespace-nowrap">TaskMaster</span>
+      <span class="self-center text-2xl font-semibold whitespace-nowrap">TaskMaster
+
+      </span>
   </a>
 
   
