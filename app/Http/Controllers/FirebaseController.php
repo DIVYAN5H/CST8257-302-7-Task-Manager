@@ -20,6 +20,9 @@ class FirebaseController extends Controller
 
     public function index()
     {
+        if(!Session::get('user')){
+            return redirect('loginTest');
+        }
         $userData = [
             "user" => Session::get('user'),
             "userTasks" => Session::get('userTasks'),
@@ -53,6 +56,10 @@ class FirebaseController extends Controller
 
     public function registerDisplay()
     {
+        if(Session::get('user')){
+            return redirect('firebaseTest');
+        }
+
         return view('firebase.tasks.register');
     }
 
@@ -77,6 +84,10 @@ class FirebaseController extends Controller
 
     public function loginDisplay()
     {
+        if(Session::get('user')){
+            return redirect('index');
+        }
+
         return view('firebase.tasks.login');
     }
     public function loginFunc(Request $request)
