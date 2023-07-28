@@ -7,6 +7,7 @@ use SebastianBergmann\CodeUnit\FunctionUnit;
 use Kreait\Firebase\Contract\Database;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class FirebaseController extends Controller
 {
@@ -31,9 +32,14 @@ class FirebaseController extends Controller
         return view('firebase.tasks.index')->with('userData', $userData);
     }
 
-    public function addDisplay()
+    /*public function addDisplay()
     {
         return view('firebase.tasks.add');
+    }*/
+
+    public function addDisplay()
+    {
+        return Inertia::render('New');
     }
 
     public function addFunc(Request $request)
@@ -42,7 +48,7 @@ class FirebaseController extends Controller
         $listName = $request->list;
         $dataToSave = [
             "task" => $request->task,
-            "priority" => "1",
+            "priority" => $request->priority,
         ];
         $postRef = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName)->push($dataToSave);
         if ($postRef) {
@@ -61,6 +67,13 @@ class FirebaseController extends Controller
         }
 
         return view('firebase.tasks.register');
+    }
+
+    public function addform()
+    {
+        
+
+        return view('firebase.tasks.add');
     }
 
     public function registerFunc(Request $request)

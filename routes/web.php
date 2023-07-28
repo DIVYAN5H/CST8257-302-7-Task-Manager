@@ -33,9 +33,9 @@ Route::get('/landing', function() {
 });
 
 
-Route::get('/new', function() {
+/*Route::get('/new', function() {
     return Inertia::render('New');
-});
+});*/
 
 Route::get('/home', function() {
     return Inertia::render('Home');
@@ -56,6 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('add',[FirebaseController::class,'addform']);
+
 require __DIR__.'/auth.php';
 
 Route::get('/', function () {
@@ -69,8 +71,8 @@ Route::get('firebaseTest',[FirebaseController::class,'index']);
 //     return view('firebase.tasks.index');
 // } 
 
-Route::get('addTest',[FirebaseController::class,'addDisplay']);
-Route::post('addTest',[FirebaseController::class,'addFunc']);
+Route::get('new',[FirebaseController::class,'addDisplay']);
+Route::post('new',[FirebaseController::class,'addFunc']);
 
 Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
 Route::post('registerTest',[FirebaseController::class,'registerFunc']);
