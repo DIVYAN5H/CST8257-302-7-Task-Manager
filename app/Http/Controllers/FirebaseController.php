@@ -7,6 +7,7 @@ use SebastianBergmann\CodeUnit\FunctionUnit;
 use Kreait\Firebase\Contract\Database;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
 
 class FirebaseController extends Controller
 {
@@ -85,10 +86,10 @@ class FirebaseController extends Controller
     public function loginDisplay()
     {
         if(Session::get('user')){
-            return redirect('index');
+            return redirect('Home');
         }
 
-        return view('firebase.tasks.login');
+        return Inertia::render('Landing');
     }
     public function loginFunc(Request $request)
     {
@@ -96,10 +97,10 @@ class FirebaseController extends Controller
         $loggedIn = false;
         $loggedIn = true;
 
-        $userDB = $this->database->getReference('users/' . $request->username)->getValue();
+        $userDB = $this->database->getReference('users/' . $request->email)->getValue();
 
         if ($userDB == null) {
-            return redirect('loginTest')->with('status', 'no such Username');
+            return Inertia::render('Landing')->with('status', 'No account Found');
         } else {
             $loggedIn = decrypt($userDB['password']) == $providedPassword ? true : false;
 
@@ -115,9 +116,9 @@ class FirebaseController extends Controller
                 Session::put('user', $user);
                 Session::put('userTasks', $userTasks);
 
-                return redirect('firebaseTest');
+                return redirect('Home');
             } else {
-                return redirect('loginTest')->with('status', 'wrong password');
+                return Inertia::render('Landing')->with('status', 'wrong password');
             }
         }
     }

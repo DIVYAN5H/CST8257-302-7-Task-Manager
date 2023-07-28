@@ -75,5 +75,5 @@ Route::post('addTest',[FirebaseController::class,'addFunc']);
 Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
 Route::post('registerTest',[FirebaseController::class,'registerFunc']);
 
-Route::get('loginTest',[FirebaseController::class,'loginDisplay']);
-Route::post('loginTest',[FirebaseController::class,'loginFunc']);
+Route::get('login',[FirebaseController::class,'loginDisplay']);
+Route::post('login',[FirebaseController::class,'loginFunc']);
