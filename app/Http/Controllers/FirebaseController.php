@@ -24,6 +24,7 @@ class FirebaseController extends Controller
         if(!Session::get('user')){
             return redirect('loginTest');
         }
+
         $userData = [
             "user" => Session::get('user'),
             "userTasks" => Session::get('userTasks'),
@@ -98,10 +99,14 @@ class FirebaseController extends Controller
     public function loginDisplay()
     {
         if(Session::get('user')){
-            return redirect('index');
+            $userData = [
+                "user" => Session::get('user'),
+                "userTasks" => Session::get('userTasks'),
+            ];
+            return redirect('home')->with('userData', $userData);
         }
 
-        return view('firebase.tasks.login');
+        return Inertia::render('Landing');
     }
     public function loginFunc(Request $request)
     {
@@ -112,7 +117,7 @@ class FirebaseController extends Controller
         $userDB = $this->database->getReference('users/' . $request->username)->getValue();
 
         if ($userDB == null) {
-            return redirect('loginTest')->with('status', 'no such Username');
+            return Inertia::render('Landing')->with('status', 'No account Found');
         } else {
             $loggedIn = decrypt($userDB['password']) == $providedPassword ? true : false;
 
@@ -128,9 +133,13 @@ class FirebaseController extends Controller
                 Session::put('user', $user);
                 Session::put('userTasks', $userTasks);
 
-                return redirect('firebaseTest');
+                $userData = [
+                    "user" => Session::get('user'),
+                    "userTasks" => Session::get('userTasks'),
+                ];
+                return redirect('home')->with('userData', $userData);
             } else {
-                return redirect('loginTest')->with('status', 'wrong password');
+                return Inertia::render('Landing')->with('status', 'wrong password');
             }
         }
     }
