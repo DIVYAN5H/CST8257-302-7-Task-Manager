@@ -10,23 +10,25 @@ const form = reactive({
     password:""
 });
 
-const csrfToken = ref(document.head.querySelector('meta[name="csrf-token"]').content);
+// const csrfToken = ref(document.head.querySelector('meta[name="csrf-token"]').content);
 
-function submitForm() {
+// function submitForm() {
 
-    fetch('/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken.value,
-        },
-        body: JSON.stringify(form),
-    }).then()
-}
+//     fetch('/login', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'X-CSRF-TOKEN': csrfToken.value,
+//         },
+//         body: JSON.stringify(form),
+//     }).then()
+// }
 </script>
 
 <template>
-  <Head title="Landing"> </Head>
+  <Head title="Landing"> 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+  </Head>
   <Transition>
     <div
       v-if="show"
@@ -41,12 +43,13 @@ function submitForm() {
           <img style="width: 50px" src="/img/Logo.png" alt="" />
         </div>
 
-        <form>
+        <form action="/login" method="POST">
+            {{ csrf }}
           username: <input name="username" type="text" />
           <br />
           password: <input name="password" type="password" />
 
-          <button v-on:click="submitForm">Login</button>
+          <button type="submit">Login</button>
         </form>
 <!-- 
         <div class="text-3xl mb-10 my-10 mx-auto text-center">Welcome!</div>

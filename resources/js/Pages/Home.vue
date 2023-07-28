@@ -4,7 +4,12 @@ import Navigation from '@/Components/Navigation.vue';
 import { Link } from '@inertiajs/vue3';
 import Popop from '@/Components/Popup.vue';
 const show = ref(false)
+
+
+
 </script>
+
+
 
 <style>
 ::-webkit-scrollbar {
@@ -36,6 +41,9 @@ const show = ref(false)
   <div class="h-screen bg-cover" style="background-image: url('/img/purple nature bg.jpg');">
     <div class="w-full">
       <Navigation></Navigation>
+
+
+
 
       <!--This is a popup that will show up when a user clicks a task so tehy can add more subtasks???-->
 

@@ -24,6 +24,7 @@ class FirebaseController extends Controller
         if(!Session::get('user')){
             return redirect('loginTest');
         }
+
         $userData = [
             "user" => Session::get('user'),
             "userTasks" => Session::get('userTasks'),
@@ -86,7 +87,11 @@ class FirebaseController extends Controller
     public function loginDisplay()
     {
         if(Session::get('user')){
-            return redirect('Home');
+            $userData = [
+                "user" => Session::get('user'),
+                "userTasks" => Session::get('userTasks'),
+            ];
+            return redirect('home')->with('userData', $userData);
         }
 
         return Inertia::render('Landing');
@@ -97,7 +102,7 @@ class FirebaseController extends Controller
         $loggedIn = false;
         $loggedIn = true;
 
-        $userDB = $this->database->getReference('users/' . $request->email)->getValue();
+        $userDB = $this->database->getReference('users/' . $request->username)->getValue();
 
         if ($userDB == null) {
             return Inertia::render('Landing')->with('status', 'No account Found');
@@ -116,7 +121,11 @@ class FirebaseController extends Controller
                 Session::put('user', $user);
                 Session::put('userTasks', $userTasks);
 
-                return redirect('Home');
+                $userData = [
+                    "user" => Session::get('user'),
+                    "userTasks" => Session::get('userTasks'),
+                ];
+                return redirect('home')->with('userData', $userData);
             } else {
                 return Inertia::render('Landing')->with('status', 'wrong password');
             }
