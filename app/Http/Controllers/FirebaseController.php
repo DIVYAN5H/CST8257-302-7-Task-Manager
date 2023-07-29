@@ -96,12 +96,12 @@ class FirebaseController extends Controller
             "password" => encrypt($request->password),
         ];
 
-        $postRef = $this->database->getReference('users/' . $request->user)->set($dataToSave);
-
-
+        if($dataToSave['username'] != null){
+            $postRef = $this->database->getReference('users/' . $dataToSave['username'])->set($dataToSave);
+        }
         if ($postRef) {
             Session::put('user', $dataToSave);
-            return redirect('home')->with('status', 'success');
+            return redirect()->route('home');
         } else {
             return redirect('firebaseTest')->with('status', 'failed');
         }
