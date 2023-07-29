@@ -63,9 +63,7 @@ class FirebaseController extends Controller
 
     public function registerDisplay()
     {
-        if (Session::get('user')) {
-            return redirect('firebaseTest');
-        }
+
 
         return view('firebase.tasks.register');
     }
@@ -127,6 +125,7 @@ class FirebaseController extends Controller
             return redirect()->route('landing');
         } else {
 
+
             $loggedIn = decrypt($userDB['password']) == $providedPassword ? true : false;
 
             if ($loggedIn) {
@@ -138,7 +137,7 @@ class FirebaseController extends Controller
                     "username" => $userDB['username'],
                     "email" => $userDB['email'],
                     "name" => $userDB['name'],
-                    "tasks" => $userTasks::all(),
+                    "tasks" => $userTasks,
                 ];
 
                 Session::put('user', $user);

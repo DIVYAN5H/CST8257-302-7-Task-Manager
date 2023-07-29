@@ -12,7 +12,7 @@ const users = page.props.user;
 const name = page.props.name;
 const tasks = JSON.parse(page.props.tasks);
 
-console.log(users);
+
 
 </script>
 
@@ -107,15 +107,13 @@ console.log(users);
         <p>You can manage your tasks here based on their priority</p>
       </div>
 
-      <div class="text-2xl text-white main flex justify-between flex-row mx-56 mt-10">
+      <div class="main flex justify-between flex-row mx-56 mt-10">
 
         <div>
           <div v-for="(list, listName) in tasks" :key="listName">
-            <h1> List Header: {{ listName }} </h1>
             <div v-for="(task, taskID) in list" :key="taskId">
-              <h3> Tasks: </h3>
               <ul>
-                <TaskComponent :title=task.task> </TaskComponent>
+                <TaskComponent :title=listName :body=task.task> </TaskComponent>
               </ul>
             </div>
 
@@ -123,7 +121,7 @@ console.log(users);
 
         </div>
         <div>
-          <h1>{{ users }}</h1>
+          <h1>AAAA</h1>
         </div>
       </div>
 
