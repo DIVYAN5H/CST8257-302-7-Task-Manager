@@ -23,8 +23,8 @@ const form = useForm({
     <meta name="csrf-token" content="{{ csrf_token() }}">
   </Head>
   <Transition>
-    <div v-if="show" appear class="grid h-screen font-Poppins bg-texture-3">
-      <LoginView></LoginView>
+    <div appear class="grid h-screen font-Poppins bg-texture-3">
+      <LoginView @transition="show = !show"></LoginView>
     </div>
   </Transition>
 </template>

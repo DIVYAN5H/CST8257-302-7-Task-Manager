@@ -59,7 +59,7 @@ const form = useForm({
                 </div>
             </div>
             <div class="grid grid-cols-1 w-full mx-auto mb-10">
-                <button type="submit" :disabled="form.processing">Login</button>
+                <button type="submit" @click="$emit('transition')" :disabled="form.processing">Login</button>
                 <Link type="submit" as="button"
                     class="rounded-full bg-violet-600 h-12 focus:ring focus:ring-violet-300 w-48 mx-auto text-white">
                 Login</Link>
