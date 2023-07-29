@@ -50,26 +50,14 @@ defineProps(['username']);
             <span class="sr-only">Open user menu</span>
             <img class="w-8 h-8 rounded-full" src="/img/pumbasa.jpg" alt="user photo">
           </button>
-
-          <!--<button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-        </svg>
-    </button>-->
-
-
         </div>
-
       </div>
-
     </div>
-
   </nav>
 
   <aside
     class="transform shadow-2xl top-0 right-0 w-1/4 fixed h-full rounded overflow-auto ease-in-out transition-all duration-300 z-30"
-    :class="isOpen ? 'translate-x-full focus:ring-4 focus:ring-gray-300' : '-translate-x-0'">
+    :class="isOpen ?  '-translate-x-0': 'translate-x-full focus:ring-4 focus:ring-gray-300'">
     <div class="backdrop-blur bg-white/30 w-full">
       <button class="rounded-full" @click="isOpen = !isOpen"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
           viewBox="0 0 24 24" stroke-width="1.5" stroke="#BB342F" class="w-6 h-6">

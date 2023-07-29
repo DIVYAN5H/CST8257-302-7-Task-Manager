@@ -9,7 +9,6 @@ import { useForm } from '@inertiajs/vue3';
 const page = usePage();
 const users = page.props.user;
 
-console.log(users);
 
 const form = useForm({
   user: null,
