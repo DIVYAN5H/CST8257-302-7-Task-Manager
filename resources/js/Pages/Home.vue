@@ -4,7 +4,6 @@ import { ref } from 'vue';
 import Navigation from '@/Components/Navigation.vue';
 import Popop from '@/Components/Popup.vue';
 import TaskComponent from '@/Components/TaskComponent.vue';
-import UserFlyout from '@/Components/UserFlyout.vue';
 
 const showPopup = ref(false);
 const show = ref(true);
@@ -14,8 +13,8 @@ const users = page.props.user;
 const name = page.props.name;
 const tasks = JSON.parse(page.props.tasks);
 
-
-
+console.log(name);
+console.log(tasks);
 </script>
 
 
@@ -48,7 +47,7 @@ const tasks = JSON.parse(page.props.tasks);
   <Head title="Home">
   </Head>
   <Transition>
-    <div v-if="show" class="h-screen bg-texture-2">
+    <div class="h-screen bg-texture-2">
       <div class="w-full">
       <Navigation :username = name></Navigation>
 
@@ -118,7 +117,7 @@ const tasks = JSON.parse(page.props.tasks);
 
         <div>
           <div v-for="(list, listName) in tasks" :key="listName">
-            <div v-for="(task, taskID) in list" :key="taskId">
+            <div v-for="(task, taskId) in list" :key="taskId">
               <ul>
                 <TaskComponent :title=listName :body=task.task> </TaskComponent>
               </ul>

@@ -22,12 +22,6 @@ const form = useForm({
         <div>
             <img style="width: 50px" src="/img/Logo.png" alt="" />
         </div>
-        <!-- 
-        <form @submit.prevent="form.post('/home')">
-          us: <input type="text" v-model="form.user">
-          pw: <input type="password" v-model="form.password">
-          <button type="submit" :disabled="form.processing">Login</button>
-        </form> -->
 
         <div class="text-3xl mb-10 my-10 mx-auto text-center">Welcome!</div>
         <form @submit.prevent="form.post('/home')">

@@ -98,7 +98,7 @@ class FirebaseController extends Controller
     {
         if (Session::get('user')) {
             $userData = Session::get('user');
-            $userTasks = Session::get('userTasks');
+            $userTasks = Session::get('tasks');
             return Inertia::render('Home', [
                 'user' => $userData['username'],
                 'name' => $userData['name'],

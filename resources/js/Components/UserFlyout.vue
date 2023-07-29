@@ -30,6 +30,4 @@ defineProps(['username']);
         </div>
 
     </div>
-
-
 </template>
