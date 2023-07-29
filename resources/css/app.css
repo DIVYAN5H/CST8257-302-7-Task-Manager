@@ -59,7 +59,7 @@
 
 .v-enter-active,
 .v-leave-active {
-  transition: opacity 1s ease !important;
+  transition: opacity 2s ease !important;
 }
 
 .v-enter-from,
