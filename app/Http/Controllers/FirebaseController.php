@@ -40,7 +40,16 @@ class FirebaseController extends Controller
 
     public function addDisplay()
     {
-        return Inertia::render('New');
+        if (Session::get('user')) {
+            $userData = Session::get('user');
+            $userTasks = Session::get('tasks');
+            return Inertia::render('New', [
+                'user' => $userData['username'],
+                'name' => $userData['name'],
+                'tasks' => $userTasks,
+            ]);
+        }
+        return Inertia::render('Landing');
     }
 
     public function addFunc(Request $request)
@@ -55,9 +64,10 @@ class FirebaseController extends Controller
         if ($postRef) {
             $userTasks = $this->database->getReference('userTasks/' . $user['username'])->getValue();
             Session::put('userTasks', $userTasks);
-            return redirect('firebaseTest')->with('status', 'success');
+            
+            return redirect('home')->with('status', 'success');
         } else {
-            return redirect('firebaseTest')->with('status', 'failed');
+            return redirect('new')->with('status', 'failed');
         }
     }
 
