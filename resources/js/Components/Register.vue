@@ -22,7 +22,7 @@ const form = useForm({
         </div>
 
         <div class="text-3xl mb-10 my-10 mx-auto text-center">Register</div>
-        <form @submit.prevent="form.post('/home')">
+        <form @submit.prevent="form.post('/register')">
             <div class="grid grid-cols-1 w-2/3 mx-auto">
                 <div class="grid grid-cols-1">
                     <label class="ml-2" for="username"> Username </label>

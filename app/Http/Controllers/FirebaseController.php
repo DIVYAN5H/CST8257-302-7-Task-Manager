@@ -65,9 +65,8 @@ class FirebaseController extends Controller
             $userTasks = $this->database->getReference('userTasks/' . $user['username'])->getValue();
             $userTaskJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
             Session::put('userTasks', $userTasks);
-
             
-            return redirect('home')->with('tasks', $userTaskJson);
+            return redirect()->route('home')->with('tasks', $userTaskJson);
         } else {
             return redirect('new')->with('status', 'failed');
         }
@@ -91,16 +90,18 @@ class FirebaseController extends Controller
     {
 
         $dataToSave = [
-            "username" => $request->username,
+            "username" => $request->user,
             "email" => $request->email,
             "name" => $request->name,
             "password" => encrypt($request->password),
         ];
 
-        $postRef = $this->database->getReference('users/' . $request->username)->set($dataToSave);
+        $postRef = $this->database->getReference('users/' . $request->user)->set($dataToSave);
+
 
         if ($postRef) {
-            return redirect('firebaseTest')->with('status', 'success');
+            Session::put('user', $dataToSave);
+            return redirect('home')->with('status', 'success');
         } else {
             return redirect('firebaseTest')->with('status', 'failed');
         }
@@ -110,12 +111,14 @@ class FirebaseController extends Controller
     {
         if (Session::get('user')) {
             $userData = Session::get('user');
-            $userTasks = Session::get('tasks');
+            $userTasks = json_encode($this->database->getReference('userTasks/' . $userData['username'])->getValue());
+
             return Inertia::render('Home', [
                 'user' => $userData['username'],
                 'name' => $userData['name'],
                 'tasks' => $userTasks,
             ]);
+            
         }
         return Inertia::render('Landing');
     }

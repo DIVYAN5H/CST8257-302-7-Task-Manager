@@ -63,6 +63,6 @@ Route::get('new',[FirebaseController::class,'addDisplay']);
 Route::post('new',[FirebaseController::class,'addFunc']);
 
 Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
-Route::post('registerTest',[FirebaseController::class,'registerFunc']);
+Route::post('register',[FirebaseController::class,'registerFunc']);
 
 Route::get('login',[FirebaseController::class,'loginDisplay']);
