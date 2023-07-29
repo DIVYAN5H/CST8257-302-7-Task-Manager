@@ -6,7 +6,8 @@ import Popop from '@/Components/Popup.vue';
 import TaskComponent from '@/Components/TaskComponent.vue';
 import UserFlyout from '@/Components/UserFlyout.vue';
 
-const show = ref(false);
+const showPopup = ref(false);
+const show = ref(true);
 
 const page = usePage();
 const users = page.props.user;
@@ -46,8 +47,9 @@ const tasks = JSON.parse(page.props.tasks);
 <template>
   <Head title="Home">
   </Head>
-  <div class="h-screen bg-texture-2">
-    <div class="w-full">
+  <Transition>
+    <div v-if="show" class="h-screen bg-texture-2">
+      <div class="w-full">
       <Navigation :username = name></Navigation>
 
 
@@ -55,8 +57,8 @@ const tasks = JSON.parse(page.props.tasks);
 
       <!--This is a popup that will show up when a user clicks a task so tehy can add more subtasks???-->
 
-      <div v-if="show" class="popup">
-        <Popup class="popup-box box-borders" v-if="show">
+      <div v-if="showPopup" class="popup">
+        <Popup class="popup-box box-borders" v-if="showPopup">
           <h1 class="text-xl">The task opened!</h1>
 
           <ul>
@@ -90,7 +92,7 @@ const tasks = JSON.parse(page.props.tasks);
             +
           </button>
 
-          <button @click="show = false" class="button py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
+          <button @click="showPopup = false" class="button py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
             Close
           </button>
 
@@ -138,7 +140,7 @@ const tasks = JSON.parse(page.props.tasks);
             class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders">
           Task Number 1
           </Link>-->
-          <button @click="show = true"
+          <button @click="showPopup = true"
             class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders high-box">
             Task 2
           </button>
@@ -150,7 +152,7 @@ const tasks = JSON.parse(page.props.tasks);
             class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders">
           Task Number 1
           </Link>-->
-          <button @click="show = true"
+          <button @click="showPopup = true"
             class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders mid-box">
             Task 2
           </button>
@@ -164,7 +166,7 @@ const tasks = JSON.parse(page.props.tasks);
 
           Task Number 1
           </Link>-->
-          <button @click="show = true"
+          <button @click="showPopup = true"
             class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders low-box">
             Task 2
           </button>
@@ -176,8 +178,10 @@ const tasks = JSON.parse(page.props.tasks);
 
 
       </div>
-    </div>
+      </div>
   </div>
+  </Transition>
+
 </template>
 
 <script>
