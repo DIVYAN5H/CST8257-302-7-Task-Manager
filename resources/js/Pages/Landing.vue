@@ -19,16 +19,18 @@ console.log(show);
   <Head title="Landing">
     <meta name="csrf-token" content="{{ csrf_token() }}">
   </Head>
-    <div appear class="grid h-screen font-Poppins bg-texture-3">
-      <Transition>
-        <div v-if="show == true">
-          <LoginView @transition="show = !show"></LoginView>
-        </div>
-      </Transition>
-      <Transition>
-        <div v-if="show == false"> 
-          <Register> </Register>  
-        </div>
-      </Transition>
-    </div>
+  <div appear class="grid h-screen font-Poppins bg-texture-3">
+    <Transition name="fade" mode="out-in">
+      <div class="transform top-0 left-0 w-full fixed overflow-auto ease-in-out transition-all duration-300 z-30"
+        :class="show ? 'translate-x-50' : '-translate-x-full'">
+        <LoginView @transition="show = !show"></LoginView>
+      </div>
+    </Transition>
+    <Transition name="fade1" mode="out-in">
+      <div class="transform top-0 left-0 w-full fixed overflow-auto ease-in-out transition-all duration-300 z-30"
+        :class="show ? '-translate-x-full' : 'translate-x-50'">
+        <Register @transition="show = !show"> </Register>
+      </div>
+    </Transition>
+  </div>
 </template>

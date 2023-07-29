@@ -51,9 +51,9 @@ const form = useForm({
                 
                 <div class="grid w-full grid-cols-2 w-full">
                     <div class="mb-4 text-right text-sm">
-                        <a href="/test2">
+                        <button @click="$emit('transition')">
                             <span class="italic"> Back To Login </span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
