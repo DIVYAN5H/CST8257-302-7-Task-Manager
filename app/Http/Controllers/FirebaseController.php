@@ -63,9 +63,11 @@ class FirebaseController extends Controller
         $postRef = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName)->push($dataToSave);
         if ($postRef) {
             $userTasks = $this->database->getReference('userTasks/' . $user['username'])->getValue();
+            $userTaskJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
             Session::put('userTasks', $userTasks);
+
             
-            return redirect('home')->with('status', 'success');
+            return redirect('home')->with('tasks', $userTaskJson);
         } else {
             return redirect('new')->with('status', 'failed');
         }
