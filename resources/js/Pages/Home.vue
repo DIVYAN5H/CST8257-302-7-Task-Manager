@@ -6,7 +6,7 @@ import Popop from '@/Components/Popup.vue';
 import TaskComponent from '@/Components/TaskComponent.vue';
 
 const showPopup = ref(false);
-const show = ref(true);
+const show = ref(false);
 
 const page = usePage();
 const users = page.props.user;

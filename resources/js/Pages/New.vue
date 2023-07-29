@@ -36,14 +36,14 @@ const form = useForm({
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
                   List Name
                 </label>
-                <input name="list" class="shadow appearance-none border border-purple-500 rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="list" type="text">
+                <input v-model="form.list" name="list" class="shadow appearance-none border border-purple-500 rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="list" type="text">
               </div>
               
               <div class="mb-6">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                   Task
                 </label>
-                <input name="task" id="task" cols="30" rows="2" style="border-radius: 15px; resize: none;scrollbar-width: none ;" class="shadow appearance-none border border-purple-500 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">             
+                <input v-model="form.task" name="task" id="task" cols="30" rows="2" style="border-radius: 15px; resize: none;scrollbar-width: none ;" class="shadow appearance-none border border-purple-500 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">             
               </div>
               
 
@@ -69,7 +69,7 @@ const form = useForm({
                   <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
                     Priority
                   </label>
-                  <select name="priority" class="shadow appearance-none border border-purple-500 rounded-full w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="priority">
+                  <select v-model="form.priority" name="priority" class="shadow appearance-none border border-purple-500 rounded-full w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="priority">
                     <option value="0">Select</option>
                     <option value="1">Low</option>
                     <option value="2">Medium</option>
