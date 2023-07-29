@@ -6,6 +6,8 @@ import UserFlyout  from '@/Components/UserFlyout.vue';
 
 const isOpen = ref(false);
 
+defineProps(['username']);
+
 </script>
 
 <template>
@@ -68,9 +70,11 @@ const isOpen = ref(false);
   </nav>
 
 <aside
-  class="transform top-0 right-0 w-1/4 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30"
+  class="transform shadow-2xl top-0 right-0 w-1/4 fixed h-full rounded overflow-auto ease-in-out transition-all duration-300 z-30"
   :class="isOpen ? 'translate-x-full focus:ring-4 focus:ring-gray-300' : '-translate-x-0'">
-  <button @click="isOpen = !isOpen"> Close </button>
-  <UserFlyout></UserFlyout>
+  <div class="backdrop-blur bg-white/30 w-full">
+    <button  @click="isOpen = !isOpen"> Close </button>
+  </div>
+  <UserFlyout :username = username></UserFlyout>
 </aside>
 </template>

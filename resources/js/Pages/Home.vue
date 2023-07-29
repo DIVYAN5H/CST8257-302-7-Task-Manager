@@ -46,9 +46,9 @@ const tasks = JSON.parse(page.props.tasks);
 <template>
   <Head title="Home">
   </Head>
-  <div class="h-screen bg-cover" style="background-image: url('/img/purple nature bg.jpg');">
+  <div class="h-screen bg-texture-2">
     <div class="w-full">
-      <Navigation></Navigation>
+      <Navigation :username = name></Navigation>
 
 
 
