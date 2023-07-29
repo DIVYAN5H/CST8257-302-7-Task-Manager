@@ -3,7 +3,8 @@ import { Head, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import Navigation from '@/Components/Navigation.vue';
 import Popop from '@/Components/Popup.vue';
-import TaskComponent from '@/Components/TaskComponent.vue'
+import TaskComponent from '@/Components/TaskComponent.vue';
+import UserFlyout from '@/Components/UserFlyout.vue';
 
 const show = ref(false);
 

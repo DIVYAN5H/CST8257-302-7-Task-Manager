@@ -2,7 +2,7 @@
 
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import { UserFlyout } from '@/Components/UserFlyout.vue';
+import UserFlyout  from '@/Components/UserFlyout.vue';
 
 const isOpen = ref(false);
 
