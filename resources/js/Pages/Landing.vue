@@ -48,16 +48,15 @@ const form = useForm({
         <div>
           <img style="width: 50px" src="/img/Logo.png" alt="" />
         </div>
-
+<!-- 
         <form @submit.prevent="form.post('/home')">
           us: <input type="text" v-model="form.user">
           pw: <input type="password" v-model="form.password">
           <button type="submit" :disabled="form.processing">Login</button>
-        </form>
+        </form> -->
         
-<!-- 
         <div class="text-3xl mb-10 my-10 mx-auto text-center">Welcome!</div>
-        <form action="{{ url('login') }}" method="POST">
+        <form @submit.prevent="form.post('/home')">
           <div class="grid grid-cols-1 w-2/3 mx-auto">
             <div class="grid grid-cols-1">
               <label class="ml-2" for="username"> Username </label>
@@ -67,6 +66,7 @@ const form = useForm({
                 class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
                 placeholder="CoolDude2003"
                 id="username"
+                v-model="form.user"
               />
             </div>
             <div class="grid mx-auto w-full grid-cols-1">
@@ -77,6 +77,7 @@ const form = useForm({
                 class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
                 id="pass"
                 placeholder="••••••••••"
+                v-model="form.password"
               />
             </div>
             <div class="grid w-full grid-cols-2 w-full">
@@ -98,15 +99,17 @@ const form = useForm({
             </div>
           </div>
           <div class="grid grid-cols-1 w-full mx-auto mb-10">
+            <button type="submit" :disabled="form.processing">Login</button>
             <Link
               type="submit"
+              :disabled="form.processing"
               as="button"
               class="rounded-full bg-violet-600 h-12 focus:ring focus:ring-violet-300 w-48 mx-auto text-white"
             >
               Login</Link
             >
           </div>
-        </form> -->
+        </form> 
         <hr class="mb-10" />
         <div class="text-center mx-auto mt-3 italic font-thin">
           No account? No worries.
