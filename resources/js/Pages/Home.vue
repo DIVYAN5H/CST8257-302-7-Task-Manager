@@ -1,11 +1,11 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import Navigation from '@/Components/Navigation.vue';
-import { Link } from '@inertiajs/vue3';
 import Popop from '@/Components/Popup.vue';
 import TaskComponent from '@/Components/TaskComponent.vue'
 
-
+const show = ref(false);
 
 const page = usePage();
 const users = page.props.user;
@@ -63,26 +63,29 @@ const tasks = JSON.parse(page.props.tasks);
               <div class="flex items-center pl-4 border border-gray-200 rounded-full ">
                 <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
                   class="w-4 h-4 text-blue-600 bg-blue rounded ">
-                <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor sit amet consectet</label>
+                <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor sit
+                  amet consectet</label>
               </div>
             </li>
             <li class="my-3">
               <div class="flex items-center pl-4 border border-gray-200 rounded-full ">
                 <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
                   class="w-4 h-4 text-blue-600 bg-blue rounded ">
-                <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor sit amet consectetur a</label>
+                <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor sit
+                  amet consectetur a</label>
               </div>
             </li>
             <li class="my-3">
               <div class="flex items-center pl-4 border border-gray-200 rounded-full ">
                 <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
                   class="w-4 h-4 text-blue-600 bg-blue rounded ">
-                <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor sit amet consec</label>
+                <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor sit
+                  amet consec</label>
               </div>
             </li>
           </ul>
 
-          <button  class="button py-2 px-4 mr-2 rounded-full focus:outline-none focus:shadow-outline">
+          <button class="button py-2 px-4 mr-2 rounded-full focus:outline-none focus:shadow-outline">
             +
           </button>
 
@@ -94,6 +97,7 @@ const tasks = JSON.parse(page.props.tasks);
       </div>
 
       <!--------------------------------------------------------------------------------->
+
 
       <div class=" flex justify-center mt-10">
         <h1 class="text-2xl text-white">
@@ -133,7 +137,8 @@ const tasks = JSON.parse(page.props.tasks);
             class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders">
           Task Number 1
           </Link>-->
-          <button @click="show = true" class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders high-box">
+          <button @click="show = true"
+            class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders high-box">
             Task 2
           </button>
         </div>
@@ -144,7 +149,8 @@ const tasks = JSON.parse(page.props.tasks);
             class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders">
           Task Number 1
           </Link>-->
-          <button @click="show = true" class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders mid-box">
+          <button @click="show = true"
+            class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders mid-box">
             Task 2
           </button>
         </div>
@@ -157,7 +163,8 @@ const tasks = JSON.parse(page.props.tasks);
 
           Task Number 1
           </Link>-->
-          <button @click="show = true" class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders low-box">
+          <button @click="show = true"
+            class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders low-box">
             Task 2
           </button>
 
