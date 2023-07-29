@@ -11,7 +11,7 @@ defineProps(['username']);
 </script>
 
 <template>
-  <nav style="border-bottom: 1px solid rgb(184, 184, 184);" class="backdrop-blur-lg bg-white/20">
+  <nav  class="backdrop-blur-lg shadow-lg bg-white/10">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
       <a href="" class="flex items-center">
@@ -73,7 +73,10 @@ defineProps(['username']);
   class="transform shadow-2xl top-0 right-0 w-1/4 fixed h-full rounded overflow-auto ease-in-out transition-all duration-300 z-30"
   :class="isOpen ? 'translate-x-full focus:ring-4 focus:ring-gray-300' : '-translate-x-0'">
   <div class="backdrop-blur bg-white/30 w-full">
-    <button  @click="isOpen = !isOpen"> Close </button>
+    <button  class="rounded-full" @click="isOpen = !isOpen"> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#BB342F" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+ </button>
   </div>
   <UserFlyout :username = username></UserFlyout>
 </aside>
