@@ -1,11 +1,18 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import Navigation from '@/Components/Navigation.vue';
 import { Link } from '@inertiajs/vue3';
 import Popop from '@/Components/Popup.vue';
-const show = ref(false)
+import TaskComponent from '@/Components/TaskComponent.vue'
 
 
+
+const page = usePage();
+const users = page.props.user;
+const name = page.props.name;
+const tasks = JSON.parse(page.props.tasks);
+
+console.log(users);
 
 </script>
 
@@ -90,7 +97,7 @@ const show = ref(false)
 
       <div class=" flex justify-center mt-10">
         <h1 class="text-2xl text-white">
-          Welcome to your dashboard.
+          Welcome to your dashboard, {{ $page.props.name }}.
         </h1>
         <br>
 
@@ -101,14 +108,22 @@ const show = ref(false)
       </div>
 
       <div class="text-2xl text-white main flex justify-between flex-row mx-56 mt-10">
+
         <div>
-          <h1>List Name</h1>
+          <div v-for="(list, listName) in tasks" :key="listName">
+            <h1> List Header: {{ listName }} </h1>
+            <div v-for="(task, taskID) in list" :key="taskId">
+              <h3> Tasks: </h3>
+              <ul>
+                <TaskComponent :title=task.task> </TaskComponent>
+              </ul>
+            </div>
+
+          </div>
+
         </div>
         <div>
-          <h1>List Name</h1>
-        </div>
-        <div>
-          <h1>List Name</h1>
+          <h1>{{ users }}</h1>
         </div>
       </div>
 
@@ -160,6 +175,7 @@ const show = ref(false)
 </template>
 
 <script>
+
 import { ref } from 'vue';
 
 export default {

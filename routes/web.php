@@ -20,26 +20,17 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/landing', function() {
-    return Inertia::render('Landing');
-});
-
-
-/*Route::get('/new', function() {
-    return Inertia::render('New');
-});*/
-
-Route::get('/home', function() {
     return Inertia::render('Home');
 });
+
+Route::get('/landing', function(){
+    return Inertia::render('Landing');
+})->name('landing');
+
+Route::get('/home', [FirebaseController::class,'loginDisplay']
+)->name('home');
+
+Route::post('/home',[FirebaseController::class,'loginFunc']);
 
 Route::get('/test2', function() {
     return Inertia::render('Test2');
@@ -60,9 +51,6 @@ Route::get('add',[FirebaseController::class,'addform']);
 
 require __DIR__.'/auth.php';
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('firebaseTest',[FirebaseController::class,'index']);
 
@@ -78,4 +66,3 @@ Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
 Route::post('registerTest',[FirebaseController::class,'registerFunc']);
 
 Route::get('login',[FirebaseController::class,'loginDisplay']);
-Route::post('login',[FirebaseController::class,'loginFunc']);

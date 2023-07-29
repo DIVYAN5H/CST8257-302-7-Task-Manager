@@ -1,14 +1,20 @@
 <script setup>
-import { Head } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 import { Link } from "@inertiajs/vue3";
 import { reactive, ref } from "vue";
+import { useForm } from '@inertiajs/vue3';
 
 const show = ref(true);
 
-const form = reactive({
-    username:'',
-    password:""
-});
+const page = usePage();
+const users = page.props.user;
+
+console.log(users);
+
+const form = useForm({
+  user: null,
+  password: null,
+})
 
 // const csrfToken = ref(document.head.querySelector('meta[name="csrf-token"]').content);
 
@@ -43,14 +49,12 @@ const form = reactive({
           <img style="width: 50px" src="/img/Logo.png" alt="" />
         </div>
 
-        <form action="/login" method="POST">
-            {{ csrf }}
-          username: <input name="username" type="text" />
-          <br />
-          password: <input name="password" type="password" />
-
-          <button type="submit">Login</button>
+        <form @submit.prevent="form.post('/home')">
+          us: <input type="text" v-model="form.user">
+          pw: <input type="password" v-model="form.password">
+          <button type="submit" :disabled="form.processing">Login</button>
         </form>
+        
 <!-- 
         <div class="text-3xl mb-10 my-10 mx-auto text-center">Welcome!</div>
         <form action="{{ url('login') }}" method="POST">

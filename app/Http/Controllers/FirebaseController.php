@@ -21,7 +21,7 @@ class FirebaseController extends Controller
 
     public function index()
     {
-        if(!Session::get('user')){
+        if (!Session::get('user')) {
             return redirect('loginTest');
         }
 
@@ -63,7 +63,7 @@ class FirebaseController extends Controller
 
     public function registerDisplay()
     {
-        if(Session::get('user')){
+        if (Session::get('user')) {
             return redirect('firebaseTest');
         }
 
@@ -72,7 +72,7 @@ class FirebaseController extends Controller
 
     public function addform()
     {
-        
+
 
         return view('firebase.tasks.add');
     }
@@ -98,48 +98,59 @@ class FirebaseController extends Controller
 
     public function loginDisplay()
     {
-        if(Session::get('user')){
-            $userData = [
-                "user" => Session::get('user'),
-                "userTasks" => Session::get('userTasks'),
-            ];
-            return redirect('home')->with('userData', $userData);
+        if (Session::get('user')) {
+            $userData = Session::get('user');
+            $userTasks = Session::get('userTasks');
+            return Inertia::render('Home', [
+                'user' => $userData['username'],
+                'name' => $userData['name'],
+                'tasks' => $userTasks,
+            ]);
         }
-
         return Inertia::render('Landing');
     }
+
+
     public function loginFunc(Request $request)
     {
         $providedPassword = $request->password;
         $loggedIn = false;
         $loggedIn = true;
 
-        $userDB = $this->database->getReference('users/' . $request->username)->getValue();
+        if ($request->user != null) {
+            $userDB = $this->database->getReference('users/' . $request->user)->getValue();
+        } else {
+            $userDB = null;
+        }
 
         if ($userDB == null) {
-            return Inertia::render('Landing')->with('status', 'No account Found');
+            return redirect()->route('landing');
         } else {
+
             $loggedIn = decrypt($userDB['password']) == $providedPassword ? true : false;
 
             if ($loggedIn) {
+
+
+                $userTasks = json_encode($this->database->getReference('userTasks/' . $userDB['username'])->getValue());
+                
                 $user = [
                     "username" => $userDB['username'],
                     "email" => $userDB['email'],
                     "name" => $userDB['name'],
+                    "tasks" => $userTasks::all(),
                 ];
-
-                $userTasks = $this->database->getReference('userTasks/' . $user['username'])->getValue();
 
                 Session::put('user', $user);
-                Session::put('userTasks', $userTasks);
+                Session::put('tasks', $userTasks);
 
-                $userData = [
-                    "user" => Session::get('user'),
-                    "userTasks" => Session::get('userTasks'),
-                ];
-                return redirect('home')->with('userData', $userData);
+                return Inertia::render('Home', [
+                    'user' => $userDB['username'],
+                    'name' => $userDB['name'],
+                    'tasks' => $userTasks,
+                ]);
             } else {
-                return Inertia::render('Landing')->with('status', 'wrong password');
+                return redirect()->route('landing');
             }
         }
     }
