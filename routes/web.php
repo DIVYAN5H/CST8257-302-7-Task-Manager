@@ -58,6 +58,6 @@ Route::post('new',[FirebaseController::class,'addFunc']);
 
 // Route::get('firebaseTest',[FirebaseController::class,'index']);
 // Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
-// Route::post('register',[FirebaseController::class,'registerFunc']);
+    Route::post('register',[FirebaseController::class,'registerFunc']);
 
 //Route::get('login',[FirebaseController::class,'loginDisplay']);
