@@ -52,17 +52,12 @@ Route::get('add',[FirebaseController::class,'addform']);
 require __DIR__.'/auth.php';
 
 
-Route::get('firebaseTest',[FirebaseController::class,'index']);
-
-// [FirebaseController::class,'index']
-// public function index(){
-//     return view('firebase.tasks.index');
-// } 
 
 Route::get('new',[FirebaseController::class,'addDisplay']);
 Route::post('new',[FirebaseController::class,'addFunc']);
 
-Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
-Route::post('register',[FirebaseController::class,'registerFunc']);
+// Route::get('firebaseTest',[FirebaseController::class,'index']);
+// Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
+// Route::post('register',[FirebaseController::class,'registerFunc']);
 
 Route::get('login',[FirebaseController::class,'loginDisplay']);
