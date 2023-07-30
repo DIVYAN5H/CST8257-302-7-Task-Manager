@@ -109,6 +109,7 @@ class FirebaseController extends Controller
 
     public function loginDisplay()
     {
+
         if (Session::get('user')) {
             $userData = Session::get('user');
             $userTasks = json_encode($this->database->getReference('userTasks/' . $userData['username'])->getValue());
@@ -119,12 +120,14 @@ class FirebaseController extends Controller
                 'tasks' => $userTasks,
             ]);
         }
+
         return Inertia::render('Landing');
     }
 
 
     public function loginFunc(Request $request)
     {
+
         $providedPassword = $request->password;
         $loggedIn = false;
         $loggedIn = true;
@@ -156,6 +159,7 @@ class FirebaseController extends Controller
 
                 Session::put('user', $user);
                 Session::put('tasks', $userTasks);
+                Session::put('logged', true);
 
                 return Inertia::render('Home', [
                     'user' => $userDB['username'],

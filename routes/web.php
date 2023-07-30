@@ -23,9 +23,11 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
-Route::get('/landing', function () {
-    return Inertia::render('Landing');
-});
+//Route::get('/landing', function () {
+    //return Inertia::render('Landing');
+//});
+
+Route::get('/landing', [Controller::class, 'isLogged'])->name('landing');
 
 Route::get('/home', [FirebaseController::class,'loginDisplay']
 )->name('home');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
@@ -14,6 +15,18 @@ class Controller extends BaseController
     
     public function show(){
         return Inertia::render('/test2');
+    }
+
+    public function isLogged(){
+
+        if (Session::get('logged')){
+            return redirect()->route('home');
+        }
+        else{
+            var_dump('aaaaa');
+            exit();
+            return Inertia::render('Landing');
+        }
     }
 }
 
