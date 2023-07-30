@@ -89,6 +89,7 @@ class FirebaseController extends Controller
     public function registerFunc(Request $request)
     {
 
+        $postRef = null;
         $dataToSave = [
             "username" => $request->user,
             "email" => $request->email,
@@ -96,14 +97,14 @@ class FirebaseController extends Controller
             "password" => encrypt($request->password),
         ];
 
-        if ($dataToSave['username'] != null) {
+        if ($dataToSave['username'] != null && $dataToSave['email'] != null && $dataToSave['name'] != null && $dataToSave['password'] != null) {
             $postRef = $this->database->getReference('users/' . $dataToSave['username'])->set($dataToSave);
         }
-        if ($postRef) {
+        if ($postRef != null) {
             Session::put('user', $dataToSave);
             return redirect()->route('home');
         } else {
-            return redirect('firebaseTest')->with('status', 'failed');
+            return redirect()->route('landing');
         }
     }
 
@@ -121,7 +122,8 @@ class FirebaseController extends Controller
             ]);
         }
 
-        return Inertia::render('Landing');
+        return redirect()->route('landing');
+        //return Inertia::render('Landing');
     }
 
 

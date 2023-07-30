@@ -30,9 +30,6 @@ class Controller extends BaseController
 
     public function logOut(){
         Session::flush();
-        if(!Session::get('user')){
-            exit();
-        }
         return redirect()->route('landing');
     }
 }
