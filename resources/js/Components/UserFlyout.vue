@@ -1,7 +1,12 @@
 <script setup>
-
+import { useForm } from '@inertiajs/vue3';
 defineProps(['username']);
 
+
+
+const form = useForm({
+  loggingOut: true,
+})
 </script>
 
 <template>
@@ -28,6 +33,9 @@ defineProps(['username']);
                 </div>
             </div>
         </div>
+        <form @submit.prevent="form.post('/logout1')">
+            <button type="submit"> Logout </button>
+        </form>
 
     </div>
 </template>

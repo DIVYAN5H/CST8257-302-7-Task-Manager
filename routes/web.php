@@ -38,6 +38,9 @@ Route::get('/test2', function() {
     return Inertia::render('Test2');
 });
 
+Route::post('/logout1', [Controller::class, 'logOut']);
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

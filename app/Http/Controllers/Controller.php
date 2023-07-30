@@ -23,10 +23,17 @@ class Controller extends BaseController
             return redirect()->route('home');
         }
         else{
-            var_dump('aaaaa');
-            exit();
+
             return Inertia::render('Landing');
         }
+    }
+
+    public function logOut(){
+        Session::flush();
+        if(!Session::get('user')){
+            exit();
+        }
+        return redirect()->route('landing');
     }
 }
 
