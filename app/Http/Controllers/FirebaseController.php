@@ -65,7 +65,7 @@ class FirebaseController extends Controller
             $userTasks = $this->database->getReference('userTasks/' . $user['username'])->getValue();
             $userTaskJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
             Session::put('userTasks', $userTasks);
-            
+
             return redirect()->route('home')->with('tasks', $userTaskJson);
         } else {
             return redirect('new')->with('status', 'failed');
@@ -96,7 +96,7 @@ class FirebaseController extends Controller
             "password" => encrypt($request->password),
         ];
 
-        if($dataToSave['username'] != null){
+        if ($dataToSave['username'] != null) {
             $postRef = $this->database->getReference('users/' . $dataToSave['username'])->set($dataToSave);
         }
         if ($postRef) {
@@ -118,7 +118,6 @@ class FirebaseController extends Controller
                 'name' => $userData['name'],
                 'tasks' => $userTasks,
             ]);
-            
         }
         return Inertia::render('Landing');
     }
@@ -147,7 +146,7 @@ class FirebaseController extends Controller
 
 
                 $userTasks = json_encode($this->database->getReference('userTasks/' . $userDB['username'])->getValue());
-                
+
                 $user = [
                     "username" => $userDB['username'],
                     "email" => $userDB['email'],
@@ -188,4 +187,33 @@ class FirebaseController extends Controller
    //    }
 
    //}
+
+    public function updateTask(Request $request)
+    {
+        $listname = $request->listname;
+        $id = $request->taskId;
+
+        $dataToSave = [
+            "task" => $request->task,
+            "priority" => $request->priority,
+        ];
+
+        $username = Session::get('user')['username'];
+
+        $postRef = $this->database->getReference('userTasks/' . $username . $listname . $id)->set($dataToSave);
+
+        return redirect()->route('landing');
+    }
+
+    public function deleteTask(Request $request)
+    {
+        $listname = $request->listname;
+        $id = $request->taskId;
+
+        $username = Session::get('user')['username'];
+
+        $postRef = $this->database->getReference('userTasks/' . $username . $listname . $id)->remove();
+
+        return redirect()->route('landing');
+    }
 }

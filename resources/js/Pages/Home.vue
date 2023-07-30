@@ -34,13 +34,14 @@ console.log(newtask);
   opacity: 0.5;
 }*/
 ::-webkit-scrollbar-track {
-  /*box-shadow: inset 0 0 0 2px rgb(184, 184, 184);  Creates a single-line appearance */
+  /* Creates a single-line appearance */ 
+   box-shadow: inset 0 0 0 2px rgb(184, 184, 184);  
   background-color: transparent;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: white;
+  background: rgb(141, 141, 141);
   border-radius: 10px;
 
 }
