@@ -21,13 +21,13 @@ console.log(show);
   </Head>
   <div appear class="grid h-screen font-Poppins bg-texture-3">
     <Transition name="fade" mode="out-in">
-      <div class="transform top-0 left-0 w-full fixed overflow-auto ease-in-out transition-all duration-300 z-30"
+      <div class="transform top-0 left-0 w-full fixed overflow-auto ease-in-out transition-all duration-500 z-30"
         :class="show ? 'translate-x-50' : '-translate-x-full'">
         <LoginView @transition="show = !show"></LoginView>
       </div>
     </Transition>
     <Transition name="fade1" mode="out-in">
-      <div class="transform top-0 left-0 w-full fixed overflow-auto ease-in-out transition-all duration-300 z-30"
+      <div class="transform top-0 left-0 w-full fixed overflow-auto ease-in-out transition-all duration-500 z-30"
         :class="show ? '-translate-x-full' : 'translate-x-50'">
         <Register @transition="show = !show"> </Register>
       </div>

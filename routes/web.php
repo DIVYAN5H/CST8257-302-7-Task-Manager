@@ -23,9 +23,9 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
-Route::get('/landing', function(){
+Route::get('/landing', function () {
     return Inertia::render('Landing');
-})->name('landing');
+});
 
 Route::get('/home', [FirebaseController::class,'loginDisplay']
 )->name('home');
@@ -65,4 +65,4 @@ Route::post('new',[FirebaseController::class,'addFunc']);
 Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
 Route::post('register',[FirebaseController::class,'registerFunc']);
 
-Route::get('login',[FirebaseController::class,'loginDisplay']);
+//Route::get('login',[FirebaseController::class,'loginDisplay']);

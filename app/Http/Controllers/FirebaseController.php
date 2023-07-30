@@ -168,4 +168,24 @@ class FirebaseController extends Controller
             }
         }
     }
+
+        
+   //public function isLoggedIn(){
+   //    if(Session::get('user')){
+   //        $username = current(Session::get('user'));
+   //        $userDB = $this->database->getReference('users/' . $username )->getValue();
+   //        $userTasks = json_encode($this->database->getReference('userTasks/' . $userDB['username'])->getValue());
+
+   //        return redirect()->route('home')->with([
+   //            'user' => $userDB['username'],
+   //            'name' => $userDB['name'],
+   //            'tasks' => $userTasks,
+   //        ]);
+   //    }
+   //    else{
+
+   //        return Inertia::render('/landing');
+   //    }
+
+   //}
 }
