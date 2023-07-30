@@ -1,11 +1,11 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-defineProps(['username']);
+defineProps(['username', 'email', 'name']);
 
 
 
 const form = useForm({
-  loggingOut: true,
+    loggingOut: true,
 })
 </script>
 
@@ -20,22 +20,29 @@ const form = useForm({
                 </svg>
             </div>
             <div class="mx-auto text-center text-2xl w-full pt-4">
-                {{ username }}
+                {{ name }}
             </div>
             <div class="text-center text-sm">
                 0 Tasks Completed
             </div>
-            <div id="userInfoSection">
-                <div class="grid-cols-1 text-lg w-1/2 mx-auto py-16">
-                    <div> Email:  </div>
+            <div id="userInfoSection" class="grid grid-cols-2">
+                <div class="grid-cols-1 text-lg w-2/3 mx-auto py-16">
+                    <div> Email: </div>
                     <div> Username: </div>
-                    <div> c </div>
+                    <form @submit.prevent="form.post('/logout1')">
+                        <button type="submit"> Logout </button>
+                    </form>
+                </div>
+                <div class="grid-cols-1 text-lg w-2/3 mx-auto py-16">
+                    <div> {{ email }}</div>
+                    <div>{{ username }}</div>
+                    <form @submit.prevent="form.post('/logout1')">
+                        <button type="submit"> Logout </button>
+                    </form>
                 </div>
             </div>
         </div>
-        <form @submit.prevent="form.post('/logout1')">
-            <button type="submit"> Logout </button>
-        </form>
+
 
     </div>
 </template>

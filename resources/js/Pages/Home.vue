@@ -15,8 +15,6 @@ const newtask = page.props.newtask;
 const tasks = JSON.parse(page.props.tasks);
 
 console.log(name);
-console.log(tasks);
-console.log(newtask);
 
 </script>
 
@@ -53,7 +51,7 @@ console.log(newtask);
   <Transition>
     <div class="h-screen bg-texture-2">
       <div class="w-full">
-      <Navigation :username = name></Navigation>
+      <Navigation :username="users" :name="name" :email ="page.props.email"></Navigation>
 
 
 
@@ -131,7 +129,7 @@ console.log(newtask);
 
         </div>
         <div>
-          <h1>AAAA</h1>
+          <h1></h1>
         </div>
       </div>
 
