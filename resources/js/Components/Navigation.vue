@@ -16,7 +16,7 @@ defineProps(['username']);
 
       <a href="" class="flex items-center">
         <img src="/img/Logo.png" class="h-8 mr-3" alt="TaskMaster Logo" />
-        <span class="text-white self-center text-2xl font-semibold whitespace-nowrap">TaskMaster
+        <span class="text-white self-center text-2xl font-normal whitespace-nowrap">TaskMaster
 
         </span>
       </a>
