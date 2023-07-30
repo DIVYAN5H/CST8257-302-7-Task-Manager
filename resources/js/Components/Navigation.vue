@@ -16,7 +16,7 @@ defineProps(['username']);
 
       <a href="" class="flex items-center">
         <img src="/img/Logo.png" class="h-8 mr-3" alt="TaskMaster Logo" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap">TaskMaster
+        <span class="text-white self-center text-2xl font-semibold whitespace-nowrap">TaskMaster
 
         </span>
       </a>
@@ -27,17 +27,17 @@ defineProps(['username']);
             class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent">
             <li>
               <Link href="/home"
-                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:p-0 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0">
+                class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded ease-in-out duration-300 border-b-4 border-transparent md:bg-transparent md:p-0 hover:border-white hover:bg-gray-100 md:hover:bg-transparent md:hover:border-white md:p-0">
               Home</Link>
             </li>
             <li>
               <a href="#"
-                class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0 ">Task
+                class="block py-2 pl-3 pr-4 text-white rounded ease-in-out duration-300 border-b-4 border-transparent hover:border-white hover:bg-gray-100 md:hover:bg-transparent md:hover:border-white md:p-0 ">Task
                 Groups</a>
             </li>
             <li>
               <Link href="/new"
-                class="block py-2 pl-3 pr-4 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-purple-700 md:p-0 ">
+                class="block py-2 pl-3 pr-4 text-white rounded ease-in-out duration-300 border-b-4 border-transparent hover:border-white hover:bg-gray-100 md:hover:bg-transparent md:hover:border-white md:p-0 ">
               Add Task +</Link>
             </li>
           </ul>

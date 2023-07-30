@@ -11,7 +11,7 @@ const show = ref(false);
 const page = usePage();
 const users = page.props.user;
 const name = page.props.name;
-const newtask = page.props.newtask
+const newtask = page.props.newtask;
 const tasks = JSON.parse(page.props.tasks);
 
 console.log(name);
