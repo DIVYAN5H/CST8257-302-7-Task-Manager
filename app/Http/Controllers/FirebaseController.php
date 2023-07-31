@@ -223,4 +223,17 @@ class FirebaseController extends Controller
 
         return redirect()->route('landing');
     }
+
+    public function addTaskToList(Request $request){
+
+        $listName = $request->title;
+        $dataToSave = $request->task;
+        $id = $request->id;
+        $username = Session::get('user')['username'];
+
+        var_dump('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks' );
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks')->push($dataToSave);
+        return to_route('home');
+
+    }
 }

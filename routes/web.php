@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Application;
 use Inertia\Inertia;
+use Kreait\Laravel\Firebase\Facades\Firebase;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,7 @@ Route::get('add',[FirebaseController::class,'addform']);
 
 require __DIR__.'/auth.php';
 
-
+Route::post('/taskUpdate', [FirebaseController::class, 'addTaskToList']);
 
 Route::get('new',[FirebaseController::class,'addDisplay']);
 Route::post('new',[FirebaseController::class,'addFunc']);
