@@ -114,7 +114,6 @@ class FirebaseController extends Controller
         if (Session::get('user')) {
             $userData = Session::get('user');
             $userTasks = json_encode($this->database->getReference('userTasks/' . $userData['username'])->getValue());
-
             return Inertia::render('Home', [
                 'user' => $userData['username'],
                 'name' => $userData['name'],
@@ -233,7 +232,10 @@ class FirebaseController extends Controller
 
         var_dump('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks' );
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks')->push($dataToSave);
-        return to_route('home');
+        
+        $userTasks = json_encode($this->database->getReference('userTasks/' . $username)->getValue());
+        Session::put('tasks', $userTasks);
+        return redirect()->route('home');
 
     }
 }

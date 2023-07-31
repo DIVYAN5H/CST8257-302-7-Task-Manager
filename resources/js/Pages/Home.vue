@@ -1,6 +1,6 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, usePage, router } from '@inertiajs/vue3';
+import { ref, reactive, onUnmounted } from 'vue';
 import Navigation from '@/Components/Navigation.vue';
 import Popop from '@/Components/Popup.vue';
 import TaskComponent from '@/Components/TaskComponent.vue';
@@ -11,13 +11,16 @@ const show = ref(false);
 const page = usePage();
 const users = page.props.user;
 const name = page.props.name;
-const newtask = page.props.newtask;
-const tasks = JSON.parse(page.props.tasks);
+let tasks = ref(JSON.parse(page.props.tasks));
 
-console.log(name);
+const props = defineProps(['tasks'])
+
+console.log(tasks)
+
+onUpdated(() => tasks.value = JSON.parse(page.props.tasks));
+
 
 </script>
-
 
 
 <style>
@@ -116,10 +119,10 @@ console.log(name);
         </div>
 
         <div class="text-white flex justify-center">
-          <p>You can manage your tasks here based on their priority</p>
+          <p>You can manage your tasks here based on their priority {{ tasks }}</p>
         </div>
 
-        <div class="main flex justify-between flex-row mx-56 mt-10">
+        <div class="main w-full flex justify-between flex-row mx-56 mt-10">
 
           <div>
             <div v-for="(list, listName) in tasks" :key="listName">
@@ -137,53 +140,6 @@ console.log(name);
           </div>
         </div>
 
-        <div class="main text-white flex justify-evenly flex-row mx-5 mt-5 h-[24rem]">
-
-
-          <div id="low" style="overflow: hidden; overflow-y: scroll;" class=" w-80">
-            <!--<Link @click="show = true" as="button" type="div"
-            class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders">
-          Task Number 1
-          </Link>-->
-            <button @click="showPopup = true"
-              class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders high-box">
-              Task 2
-            </button>
-          </div>
-
-
-          <div id="mid" style="overflow: hidden; overflow-y: scroll;" class=" w-80">
-            <!--<Link @click="show = true" as="button" type="div"
-            class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders">
-          Task Number 1
-          </Link>-->
-            <button @click="showPopup = true"
-              class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders mid-box">
-              Task 2
-            </button>
-          </div>
-
-
-          <div id="high" style="overflow: hidden; overflow-y: scroll;" class=" w-80">
-
-            <!--<Link @click="show = true" as="button" type="div"
-            class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders">
-
-          Task Number 1
-          </Link>-->
-            <button @click="showPopup = true"
-              class="backdrop-blur w-[18.8rem] bg-white/30 rounded p-2 mx-2 my-4 box-borders low-box">
-              Task 2
-            </button>
-
-
-
-
-          </div>
-
-
-
-        </div>
       </div>
     </div>
   </Transition>
@@ -192,6 +148,10 @@ console.log(name);
 <script>
 
 import { ref } from 'vue';
+import { onMounted } from 'vue';
+import { onUnmounted } from 'vue';
+import { onUpdated } from 'vue';
+
 
 export default {
   setup() {
