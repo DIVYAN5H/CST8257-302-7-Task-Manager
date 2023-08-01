@@ -29,18 +29,15 @@ const form = useForm({
                 <div class="grid-cols-1 text-lg w-1/2 mx-auto py-16">
                     <div> Email: </div>
                     <div> Username: </div>
-                    <form @submit.prevent="form.post('/logout1')">
-                        <button type="submit"> Logout </button>
-                    </form>
                 </div>
                 <div class="grid-cols-1 text-lg w-1/2 py-16">
                     <div> {{ email }}</div>
                     <div>{{ username }}</div>
-                    <form @submit.prevent="form.post('/logout1')">
-                        <button type="submit"> Logout </button>
-                    </form>
                 </div>
             </div>
+            <form @submit.prevent="form.post('/logout1')" class="w-100 mx-auto flex ">
+                <button type="submit\" class="w-1/2 mx-auto rounded-full bg-white/30 p-3 border hover:bg-white/40"> Logout </button>
+            </form>
         </div>
     </div>
 </template>
