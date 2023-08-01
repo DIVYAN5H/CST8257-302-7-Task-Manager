@@ -41,7 +41,7 @@ Route::get('/test2', function() {
 
 Route::post('/logout1', [Controller::class, 'logOut']);
 
-
+Route::post('/taskDelete', [FirebaseController::class, 'deleteTask']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

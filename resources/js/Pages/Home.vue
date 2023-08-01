@@ -52,7 +52,7 @@ onUpdated(() => tasks.value = JSON.parse(page.props.tasks));
   <Head title="Home">
   </Head>
   <Transition>
-    <div class="h-screen bg-texture-2">
+    <div class="bg-texture-2 h-fit min-h-screen scroll-smooth">
       <div class="w-full">
         <Navigation :username="users" :name="name" :email="page.props.email"></Navigation>
 
@@ -119,7 +119,7 @@ onUpdated(() => tasks.value = JSON.parse(page.props.tasks));
         </div>
 
         <div class="text-white flex justify-center">
-          <p>You can manage your tasks here based on their priority {{ tasks }}</p>
+          <p>You can manage your tasks here based on their priority </p>
         </div>
 
         <div class="main w-full flex justify-between flex-row mx-56 mt-10">

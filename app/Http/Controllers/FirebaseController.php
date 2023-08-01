@@ -213,14 +213,15 @@ class FirebaseController extends Controller
 
     public function deleteTask(Request $request)
     {
-        $listname = $request->listname;
-        $id = $request->taskId;
+        $listName = $request->listName;
+        $id = $request->id;
+        $subtaskID = $request->subtaskId;
 
         $username = Session::get('user')['username'];
 
-        $postRef = $this->database->getReference('userTasks/' . $username . $listname . $id)->remove();
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks' . '/' . $subtaskID )->remove();
 
-        return redirect()->route('landing');
+        return redirect()->route('home');
     }
 
     public function addTaskToList(Request $request){

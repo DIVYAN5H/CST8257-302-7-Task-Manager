@@ -12,7 +12,7 @@ defineProps(['username', 'name', 'email']);
 </script>
 
 <template>
-  <nav class="backdrop-blur-lg shadow-lg bg-white/10 h-10">
+  <nav class="backdrop-blur-lg shadow-lg sticky top-0 z-30 bg-white/10 h-10">
     <div class="w-1/2 absolute top-0 left-0 h-full">
       <div class="w-1/6 h-full pl-5">
         <div class="text-white flex text-2xl font-normal whitespace-nowrap h-full"> 

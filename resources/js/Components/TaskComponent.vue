@@ -39,26 +39,25 @@ const form = useForm({
         <div class="text-white">
             <div class="grid grid-cols-1">
                 <div class="bg-white/50 h-full rounded-t-lg px-3">
-                    <TaskBadge :colour="'bg-white'"> {{ title }} </TaskBadge>
-                    <div class="text-xs pl-4 mt-1"> Due: 10/23/23 </div>
+                    <TaskBadge :colour="'bg-white' "> {{ title }} </TaskBadge>
+
                 </div>
             </div>
 
             <div class="transition text-sm duration-100 ease-in py-5 px-8 grid grid-cols-1">
                 <ul class="list-disc">
                     <div v-for="(task, taskName) in tasks" :key="taskName">
-                        <TaskListItem> {{ task }} </TaskListItem>
+                        <TaskListItem :id="id" :subtaskId="taskName" :title="title" > {{ task }} </TaskListItem>
                     </div>
                     <li @click="addingTask = !addingTask" class="hover:bg-white/20 select-none w-fit cursor-pointer"> Add New </li>
                 </ul>
 
             </div>
-
+            
             <div class="transition-all duration-200 h-8"
                 :class="addingTask ? 'opacity-100' : 'opacity-0'">
                 <form class="w-full" @submit.prevent="form.post('/taskUpdate')">
-                    <input type="text" class="w-full h-8 mb-4 text-black form-input" v-model="form.task">
-                    <input @click="$emit('submit')" type="submit" :disabled="form.processing"> Submit
+                    <input type="text" class="w-1/2 h-8 mb-4 mx-8 text-black form-input" v-model="form.task">
                 </form>
             </div>
         </div>
