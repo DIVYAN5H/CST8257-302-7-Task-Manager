@@ -2,12 +2,22 @@
 
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Homebtn from '@/Components/UserFlyout.vue';
 import UserFlyout from '@/Components/UserFlyout.vue';
+import { useForm } from '@inertiajs/vue3';
 
 const isOpen = ref(false);
 console.log(isOpen);
+const props = defineProps(['username', 'name', 'email']);
 
-defineProps(['username', 'name', 'email']);
+
+const form = useForm({
+  
+})
+
+const form2 = useForm({
+})
+
 
 </script>
 
@@ -22,6 +32,23 @@ defineProps(['username', 'name', 'email']);
         </div>
       </div>
     </div>
+
+
+    <div class="mr-6 mt-2 absolute inset-y-0 right-40 top-0 text-sm rounded-full md:mr-0  ">
+      <form @submit.prevent="form2.get('/home')">
+        <button class="text-white" type="submit">Home</button>
+    </form>
+    </div>
+
+    <div class="mr-6 mt-2 absolute inset-y-0 right-20 top-0 text-sm rounded-full md:mr-0  ">
+      <form @submit.prevent="form.get('/new')">
+        <button class="text-white" type="submit">Add task</button>
+    </form>
+    </div>
+
+   
+
+
     <div>
       <button @click="isOpen = !isOpen" type="button"
         class="mr-6 absolute inset-y-0 right-6 top-0 text-sm rounded-full md:mr-0  " id="user-menu-button"

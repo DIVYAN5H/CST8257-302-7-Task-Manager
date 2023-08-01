@@ -57,7 +57,7 @@ const form = useForm({
             <div class="transition-all duration-200 h-8"
                 :class="addingTask ? 'opacity-100' : 'opacity-0'">
                 <form class="w-full" @submit.prevent="form.post('/taskUpdate')">
-                    <input type="text" class="w-1/2 h-8 mb-4 mx-8 text-black form-input" v-model="form.task">
+                    <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md backdrop-blur-lg bg-white/30" v-model="form.task">
                 </form>
             </div>
         </div>

@@ -3,6 +3,7 @@ import { Head, usePage } from "@inertiajs/vue3";
 import { Link } from "@inertiajs/vue3";
 import { reactive, ref } from "vue";
 import { useForm } from '@inertiajs/vue3';
+import Navigation from '@/Components/Navigation.vue';
 
 const page = usePage();
 const users = page.props.user;
