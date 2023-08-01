@@ -122,23 +122,26 @@ onUpdated(() => tasks.value = JSON.parse(page.props.tasks));
           <p>You can manage your tasks here based on their priority </p>
         </div>
 
-        <div class="main w-full flex justify-between flex-row mx-56 mt-10">
+        <div class="flex justify-center">
+          <div class="main flex justify-between flex-row mt-10">
 
-          <div>
-            <div v-for="(list, listName) in tasks" :key="listName">
-              <div v-for="(item, taskId) in list" :key="taskId">
+            <div>
+              <div v-for="(list, listName) in tasks" :key="listName">
+                <div v-for="(item, taskId) in list" :key="taskId">
 
-                <TaskComponent :title="listName" :body="item.tasks" :taskID="taskId"> </TaskComponent>
+                  <TaskComponent :title="listName" :body="item.tasks" :taskID="taskId"> </TaskComponent>
+
+                </div>
 
               </div>
 
             </div>
-
-          </div>
-          <div>
-            <h1></h1>
+            <div>
+              <h1></h1>
+            </div>
           </div>
         </div>
+
 
       </div>
     </div>
