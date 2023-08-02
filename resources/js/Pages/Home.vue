@@ -127,12 +127,7 @@ onUpdated(() => tasks.value = JSON.parse(page.props.tasks));
 
             <div>
               <div v-for="(list, listName) in tasks" :key="listName">
-                <div v-for="(item, taskId) in list" :key="taskId">
-
-                  <TaskComponent :title="listName" :body="item.tasks" :taskID="taskId"> </TaskComponent>
-
-                </div>
-
+                  <TaskComponent :title="listName" :body="list.tasks"> </TaskComponent>
               </div>
 
             </div>

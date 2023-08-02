@@ -33,7 +33,7 @@ Route::get('/home', [FirebaseController::class,'loginDisplay']
 Route::post('/home',[FirebaseController::class,'loginFunc']);
 Route::post('register',[FirebaseController::class,'registerFunc']);
 
-Route::post('/logout', [Controller::class, 'logOut']);
+Route::post('/logout1', [Controller::class, 'logOut']);
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');

@@ -36,7 +36,7 @@ const form = useForm({
                 </div>
             </div>
             <form @submit.prevent="form.post('/logout1')" class="w-100 mx-auto flex ">
-                <button type="submit\" class="w-1/2 mx-auto rounded-full bg-white/30 p-3 border hover:bg-white/40"> Logout </button>
+                <button type="submit" class="w-1/2 mx-auto rounded-full bg-white/30 p-3 border hover:bg-white/40"> Logout </button>
             </form>
         </div>
     </div>
