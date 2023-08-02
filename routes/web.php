@@ -24,46 +24,33 @@ Route::get('/', function () {
     return Inertia::render('Home');
 });
 
-//Route::get('/landing', function () {
-    //return Inertia::render('Landing');
-//});
-
 Route::get('/landing', [Controller::class, 'isLogged'])->name('landing');
 
 Route::get('/home', [FirebaseController::class,'loginDisplay']
 )->name('home');
 
+// User Management
 Route::post('/home',[FirebaseController::class,'loginFunc']);
+Route::post('register',[FirebaseController::class,'registerFunc']);
 
-Route::get('/test2', function() {
-    return Inertia::render('Test2');
-});
+Route::post('/logout', [Controller::class, 'logOut']);
 
-Route::post('/logout1', [Controller::class, 'logOut']);
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/taskDelete', [FirebaseController::class, 'deleteTask']);
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('add',[FirebaseController::class,'addform']);
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// require __DIR__.'/auth.php';
+Route::get('newList',[FirebaseController::class,'addListDisplay']);
+Route::post('newList',[FirebaseController::class,'addListFunc']);
 
-Route::get('add',[FirebaseController::class,'addform']);
-
-require __DIR__.'/auth.php';
 
 Route::post('/taskUpdate', [FirebaseController::class, 'addTaskToList']);
-
-Route::get('new',[FirebaseController::class,'addDisplay']);
-Route::post('new',[FirebaseController::class,'addFunc']);
-
-// Route::get('firebaseTest',[FirebaseController::class,'index']);
-// Route::get('registerTest',[FirebaseController::class,'registerDisplay']);
-    Route::post('register',[FirebaseController::class,'registerFunc']);
-
-//Route::get('login',[FirebaseController::class,'loginDisplay']);
+Route::post('/taskDelete', [FirebaseController::class, 'deleteTask']);

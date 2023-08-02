@@ -33,12 +33,22 @@ class FirebaseController extends Controller
         return view('firebase.tasks.index')->with('userData', $userData);
     }
 
-    /*public function addDisplay()
-    {
-        return view('firebase.tasks.add');
-    }*/
+    private function validation(Request $request){
+        $error = [];
+        $user = $request->user ?? Session::get('user');
 
-    public function addDisplay()
+        if($user == null ){
+            array_push($error, "Please Enter Username");
+        }
+
+        if(count($error) !== 0){
+            return $error;
+        }
+
+        return $request;
+    }
+
+    public function addListDisplay()
     {
         if (Session::get('user')) {
             $userData = Session::get('user');
@@ -52,38 +62,28 @@ class FirebaseController extends Controller
         return Inertia::render('Landing');
     }
 
-    public function addFunc(Request $request)
+    public function addListFunc(Request $request)
     {
         $user = Session::get('user');
-        $listName = $request->list;
-        $dataToSave = [
-            "task" => $request->task,
-            "priority" => $request->priority,
-        ];
-        $postRef = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName)->push($dataToSave);
-        if ($postRef) {
-            $userTasks = $this->database->getReference('userTasks/' . $user['username'])->getValue();
-            $userTaskJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
-            Session::put('userTasks', $userTasks);
 
-            return redirect()->route('home')->with('tasks', $userTaskJson);
+        $listName = $request->list;
+        
+        $color = $request->color;
+        $priority = $request->priority;
+        $date = $request->date;
+
+        $postRefColor = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/color")->set($color);
+        $postRefPriority = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/priority")->set($priority);
+        $postRefDate = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/date")->set($date);
+
+        if ($postRefColor && $postRefPriority && $postRefDate) {
+            $userTasksJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
+            Session::put('userTasks', $userTasksJson);
+
+            return redirect()->route('home')->with('tasks', $userTasksJson);
         } else {
             return redirect('new')->with('status', 'failed');
         }
-    }
-
-    public function registerDisplay()
-    {
-
-
-        return view('firebase.tasks.register');
-    }
-
-    public function addform()
-    {
-
-
-        return view('firebase.tasks.add');
     }
 
     public function registerFunc(Request $request)
@@ -174,26 +174,6 @@ class FirebaseController extends Controller
         }
     }
 
-        
-   //public function isLoggedIn(){
-   //    if(Session::get('user')){
-   //        $username = current(Session::get('user'));
-   //        $userDB = $this->database->getReference('users/' . $username )->getValue();
-   //        $userTasks = json_encode($this->database->getReference('userTasks/' . $userDB['username'])->getValue());
-
-   //        return redirect()->route('home')->with([
-   //            'user' => $userDB['username'],
-   //            'name' => $userDB['name'],
-   //            'tasks' => $userTasks,
-   //        ]);
-   //    }
-   //    else{
-
-   //        return Inertia::render('/landing');
-   //    }
-
-   //}
-
     public function updateTask(Request $request)
     {
         $listname = $request->listname;
@@ -206,7 +186,7 @@ class FirebaseController extends Controller
 
         $username = Session::get('user')['username'];
 
-        $postRef = $this->database->getReference('userTasks/' . $username . $listname . $id)->set($dataToSave);
+        $postRef = $this->database->getReference('userTasks/' . $username . $listname ."/tasks"."/". $id)->set($dataToSave);
 
         return redirect()->route('landing');
     }
@@ -214,12 +194,11 @@ class FirebaseController extends Controller
     public function deleteTask(Request $request)
     {
         $listName = $request->listName;
-        $id = $request->id;
-        $subtaskID = $request->subtaskId;
+        $taskId = $request->taskId;
 
         $username = Session::get('user')['username'];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks' . '/' . $subtaskID )->remove();
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId )->remove();
 
         return redirect()->route('home');
     }
@@ -227,12 +206,10 @@ class FirebaseController extends Controller
     public function addTaskToList(Request $request){
 
         $listName = $request->title;
-        $dataToSave = $request->task;
-        $id = $request->id;
+        $task = $request->task;
         $username = Session::get('user')['username'];
 
-        var_dump('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks' );
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/'. $id . '/tasks')->push($dataToSave);
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($task);
         
         $userTasks = json_encode($this->database->getReference('userTasks/' . $username)->getValue());
         Session::put('tasks', $userTasks);
