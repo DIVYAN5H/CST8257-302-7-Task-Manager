@@ -5,13 +5,11 @@ import { useForm } from '@inertiajs/vue3';
 
 const completed = ref(false);
 
-const props = defineProps(['id', 'subtaskId', 'title']);
+const props = defineProps(['taskId', 'title']);
 
 const form = useForm({
     listName: props.title,
-    id: props.id,
-    subtaskId: props.subtaskId,
-
+    taskId: props.taskId,
 });
 
 </script>

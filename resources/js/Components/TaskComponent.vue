@@ -8,7 +8,7 @@ import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { onUpdated } from "vue";
 
-const props = defineProps(["title", "body", "priority", "taskID"]);
+const props = defineProps(["title", "body", "priority", "tasks"]);
 const page = usePage();
 const isOpen = ref(false);
 const addingTask = ref(false);
@@ -20,7 +20,6 @@ onUpdated(() => (tasks.value = props.body));
 const id = props.taskID;
 
 const form = useForm({
-  id: props.taskID,
   task: null,
   title: props.title,
 });
@@ -44,7 +43,7 @@ const form = useForm({
         >
           <ul class="list-disc">
             <div v-for="(task, taskName) in tasks" :key="taskName">
-              <TaskListItem :id="id" :subtaskId="taskName" :title="title">
+              <TaskListItem :taskId="taskName" :title="title">
                 {{ task }}
               </TaskListItem>
             </div>

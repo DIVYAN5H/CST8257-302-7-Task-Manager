@@ -19,20 +19,6 @@ class FirebaseController extends Controller
         $this->database = $database;
     }
 
-    public function index()
-    {
-        if (!Session::get('user')) {
-            return redirect('loginTest');
-        }
-
-        $userData = [
-            "user" => Session::get('user'),
-            "userTasks" => Session::get('userTasks'),
-        ];
-
-        return view('firebase.tasks.index')->with('userData', $userData);
-    }
-
     private function validation(Request $request){
         $error = [];
         $user = $request->user ?? Session::get('user');
@@ -52,11 +38,11 @@ class FirebaseController extends Controller
     {
         if (Session::get('user')) {
             $userData = Session::get('user');
-            $userTasks = Session::get('tasks');
+            $userLists = Session::get('lists');
             return Inertia::render('New', [
                 'user' => $userData['username'],
                 'name' => $userData['name'],
-                'tasks' => $userTasks,
+                'lists' => $userLists,
             ]);
         }
         return Inertia::render('Landing');
@@ -77,10 +63,10 @@ class FirebaseController extends Controller
         $postRefDate = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/date")->set($date);
 
         if ($postRefColor && $postRefPriority && $postRefDate) {
-            $userTasksJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
-            Session::put('userTasks', $userTasksJson);
+            $userListsJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
+            Session::put('listsJson', $userListsJson);
 
-            return redirect()->route('home')->with('tasks', $userTasksJson);
+            return redirect()->route('home')->with('lists', $userListsJson);
         } else {
             return redirect('new')->with('status', 'failed');
         }
@@ -113,12 +99,12 @@ class FirebaseController extends Controller
 
         if (Session::get('user')) {
             $userData = Session::get('user');
-            $userTasks = json_encode($this->database->getReference('userTasks/' . $userData['username'])->getValue());
+            $userLists = json_encode($this->database->getReference('userTasks/' . $userData['username'])->getValue());
             return Inertia::render('Home', [
                 'user' => $userData['username'],
                 'name' => $userData['name'],
                 'email' =>$userData['email'],
-                'tasks' => $userTasks,
+                'lists' => $userLists,
             ]);
         }
 
@@ -150,23 +136,23 @@ class FirebaseController extends Controller
             if ($loggedIn) {
 
 
-                $userTasks = json_encode($this->database->getReference('userTasks/' . $userDB['username'])->getValue());
+                $userLists = json_encode($this->database->getReference('userTasks/' . $userDB['username'])->getValue());
 
                 $user = [
                     "username" => $userDB['username'],
                     "email" => $userDB['email'],
                     "name" => $userDB['name'],
-                    "tasks" => $userTasks,
+                    "lists" => $userLists,
                 ];
 
                 Session::put('user', $user);
-                Session::put('tasks', $userTasks);
+                Session::put('lists', $userLists);
                 Session::put('logged', true);
 
                 return Inertia::render('Home', [
                     'user' => $userDB['username'],
                     'name' => $userDB['name'],
-                    'tasks' => $userTasks,
+                    'lists' => $userLists,
                 ]);
             } else {
                 return redirect()->route('landing');
@@ -211,8 +197,8 @@ class FirebaseController extends Controller
 
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($task);
         
-        $userTasks = json_encode($this->database->getReference('userTasks/' . $username)->getValue());
-        Session::put('tasks', $userTasks);
+        $userLists = json_encode($this->database->getReference('userTasks/' . $username)->getValue());
+        Session::put('lists', $userLists);
         return redirect()->route('home');
 
     }

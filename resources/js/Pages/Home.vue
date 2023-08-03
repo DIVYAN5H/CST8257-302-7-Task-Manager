@@ -11,13 +11,13 @@ const show = ref(false);
 const page = usePage();
 const users = page.props.user;
 const name = page.props.name;
-let tasks = ref(JSON.parse(page.props.tasks));
+let lists = ref(JSON.parse(page.props.lists));
 
-const props = defineProps(['tasks'])
+const props = defineProps(['lists'])
 
-console.log(tasks)
+console.log(JSON.parse(page.props.lists))
 
-onUpdated(() => tasks.value = JSON.parse(page.props.tasks));
+onUpdated(() => lists.value = JSON.parse(page.props.lists));
 
 
 </script>
@@ -126,7 +126,7 @@ onUpdated(() => tasks.value = JSON.parse(page.props.tasks));
           <div class="main flex justify-between flex-row mt-10">
 
             <div>
-              <div v-for="(list, listName) in tasks" :key="listName">
+              <div v-for="(list, listName) in lists" :key="listName">
                   <TaskComponent :title="listName" :body="list.tasks"> </TaskComponent>
               </div>
 
