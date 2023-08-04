@@ -61,7 +61,7 @@ onUpdated(() => lists.value = JSON.parse(page.props.lists));
 
         <!--This is a popup that will show up when a user clicks a task so tehy can add more subtasks???-->
 
-        <div v-if="showPopup" class="popup">
+        <!-- <div v-if="showPopup" class="popup">
           <Popup class="popup-box box-borders" v-if="showPopup">
             <h1 class="text-xl">The task opened!</h1>
 
@@ -105,7 +105,7 @@ onUpdated(() => lists.value = JSON.parse(page.props.lists));
             </button>
 
           </Popup>
-        </div>
+        </div> -->
 
         <!--------------------------------------------------------------------------------->
 
@@ -127,7 +127,7 @@ onUpdated(() => lists.value = JSON.parse(page.props.lists));
 
             <div>
               <div v-for="(list, listName) in lists" :key="listName">
-                  <TaskComponent :title="listName" :body="list.tasks"> </TaskComponent>
+                  <TaskComponent :title="listName" :color="list.color" :priority="list.priority" :body="list.tasks"> </TaskComponent>
               </div>
 
             </div>

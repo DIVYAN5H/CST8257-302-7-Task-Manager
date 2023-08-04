@@ -8,7 +8,7 @@ import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { onUpdated } from "vue";
 
-const props = defineProps(["title", "body", "priority", "tasks"]);
+const props = defineProps(["title", "body", "priority", "tasks", "color"]);
 const page = usePage();
 const isOpen = ref(false);
 const addingTask = ref(false);
@@ -34,7 +34,7 @@ const form = useForm({
     <div class="text-white">
       <div class="grid grid-cols-1">
         <div class="bg-white/50 h-full rounded-t-lg px-3">
-          <TaskBadge :colour="'bg-white'"> {{ title }} </TaskBadge>
+          <TaskBadge :color="color"> {{ title }} </TaskBadge>
         </div>
       </div>
       <div class="h-96 overflow-auto pb-20">
