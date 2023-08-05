@@ -12,22 +12,22 @@ use Inertia\Inertia;
 class FirebaseController extends Controller
 {
     private $database;
-    private $userId = "testUserId";
 
     public function __construct(Database $database)
     {
         $this->database = $database;
     }
 
-    private function validation(Request $request){
+    private function validation(Request $request)
+    {
         $error = [];
         $user = $request->user ?? Session::get('user');
 
-        if($user == null ){
+        if ($user == null) {
             array_push($error, "Please Enter Username");
         }
 
-        if(count($error) !== 0){
+        if (count($error) !== 0) {
             return $error;
         }
 
@@ -53,7 +53,7 @@ class FirebaseController extends Controller
         $user = Session::get('user');
 
         $listName = $request->list;
-        
+
         $color = $request->color;
         $priority = $request->priority;
         $date = $request->date;
@@ -103,13 +103,12 @@ class FirebaseController extends Controller
             return Inertia::render('Home', [
                 'user' => $userData['username'],
                 'name' => $userData['name'],
-                'email' =>$userData['email'],
+                'email' => $userData['email'],
                 'lists' => $userLists,
             ]);
         }
 
         return redirect()->route('landing');
-        //return Inertia::render('Landing');
     }
 
 
@@ -162,17 +161,18 @@ class FirebaseController extends Controller
 
     public function updateTask(Request $request)
     {
-        $listname = $request->listname;
-        $id = $request->taskId;
+
+        $listName = $request->listName;
+        $taskId = $request->taskId;
 
         $dataToSave = [
-            "task" => $request->task,
-            "priority" => $request->priority,
+            "taskDisplay" => $request->taskDisplay,
+            "status" => $request->status
         ];
 
         $username = Session::get('user')['username'];
 
-        $postRef = $this->database->getReference('userTasks/' . $username . $listname ."/tasks"."/". $id)->set($dataToSave);
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->set($dataToSave);
 
         return redirect()->route('landing');
     }
@@ -184,22 +184,27 @@ class FirebaseController extends Controller
 
         $username = Session::get('user')['username'];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId )->remove();
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
 
         return redirect()->route('home');
     }
 
-    public function addTaskToList(Request $request){
+    public function addTaskToList(Request $request)
+    {
 
         $listName = $request->title;
-        $task = $request->task;
+
+        $dataToSave = [
+            "taskDisplay" => $request->task,
+            "status" => $request->status ?? false 
+        ];
+
         $username = Session::get('user')['username'];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($task);
-        
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($dataToSave);
+
         $userLists = json_encode($this->database->getReference('userTasks/' . $username)->getValue());
         Session::put('lists', $userLists);
         return redirect()->route('home');
-
     }
 }

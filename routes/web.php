@@ -52,5 +52,6 @@ Route::get('newList',[FirebaseController::class,'addListDisplay']);
 Route::post('newList',[FirebaseController::class,'addListFunc']);
 
 
-Route::post('/taskUpdate', [FirebaseController::class, 'addTaskToList']);
+Route::post('/taskAdd', [FirebaseController::class, 'addTaskToList']);
 Route::post('/taskDelete', [FirebaseController::class, 'deleteTask']);
+Route::post('/taskUpdate', [FirebaseController::class, 'updateTask']);

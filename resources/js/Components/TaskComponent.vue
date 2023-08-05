@@ -8,7 +8,14 @@ import { router } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { onUpdated } from "vue";
 
-const props = defineProps(["title", "body", "priority", "tasks","date", "color"]);
+const props = defineProps([
+  "listName",
+  "body",
+  "priority",
+  "tasks",
+  "date",
+  "color",
+]);
 const page = usePage();
 const isOpen = ref(false);
 const addingTask = ref(false);
@@ -21,7 +28,7 @@ const id = props.taskID;
 
 const form = useForm({
   task: null,
-  title: props.title,
+  listName: props.listName,
 });
 </script>
 
@@ -34,7 +41,7 @@ const form = useForm({
     <div class="text-white">
       <div class="grid grid-cols-1">
         <div class="bg-white/50 h-full rounded-t-lg px-3">
-          <TaskBadge :color="color" :date="date"> {{ title }} </TaskBadge>
+          <TaskBadge :color="color" :date="date"> {{ listName }} </TaskBadge>
         </div>
       </div>
       <div class="h-96 overflow-auto pb-20">
@@ -42,9 +49,14 @@ const form = useForm({
           class="transition text-sm duration-100 ease-in py-5 px-8 grid grid-cols-1"
         >
           <ul class="list-disc">
-            <div v-for="(task, taskName) in tasks" :key="taskName">
-              <TaskListItem :taskId="taskName" :title="title">
-                {{ task }}
+            <div v-for="(task, taskId) in tasks" :key="taskId">
+              <TaskListItem
+                :taskId="taskId"
+                :listName="listName"
+                :status="task.status"
+                :taskDisplay = "task.taskDisplay"
+              >
+                {{ task.taskDisplay }}
               </TaskListItem>
             </div>
             <li
@@ -60,7 +72,7 @@ const form = useForm({
           class="transition-all duration-200 h-8"
           :class="addingTask ? 'opacity-100' : 'opacity-0'"
         >
-          <form class="w-full" @submit.prevent="form.post('/taskUpdate')">
+          <form class="w-full" @submit.prevent="form.post('/taskAdd')">
             <input
               type="text"
               class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md backdrop-blur-lg bg-white/30"
