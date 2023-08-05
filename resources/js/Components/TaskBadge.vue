@@ -1,7 +1,7 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
-const props = defineProps(['color']);
+const props = defineProps(['color','date']);
 
 const page = usePage();
 
@@ -18,7 +18,7 @@ const page = usePage();
       class="rounded rounded-full w-5 h-5 my-auto mr-5"
     ></div>
 <slot></slot>
-<div class="text-base my-1 pl-4 absolute right-0 mr-3 "> Due: 10/23/23 </div>
+<div class="text-base my-1 pl-4 absolute right-0 mr-3 ">{{ date }} </div>
 </div>
 
 

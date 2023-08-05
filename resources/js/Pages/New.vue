@@ -72,23 +72,46 @@ const form = useForm({
                 </div>
              </div>-->
 
-        <div class="mb-6">
-          <label
-            class="block text-gray-700 text-sm font-bold mb-2"
-            for="description"
-          >
-            Priority
-          </label>
-          <select
-            v-model="form.priority"
-            name="priority"
-            class="shadow appearance-none border border-purple-500 rounded-full w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="priority"
-          >
-            <option value="1">Low</option>
-            <option selected value="2">Medium</option>
-            <option value="3">High</option>
-          </select>
+        <div class="mb-6 flex justify-start">
+          <div >
+
+            <label
+              class="block text-gray-700 text-sm font-bold mb-2"
+              for="description"
+            >
+              Priority
+            </label>
+            <select
+              v-model="form.priority"
+              name="priority"
+              class="shadow appearance-none w-40 border border-purple-500 rounded-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="priority"
+            >
+              <option value="1">Low</option>
+              <option selected value="2">Medium</option>
+              <option value="3">High</option>
+            </select>
+          </div>
+          <div>
+
+            <label
+              class="block ml-10 text-gray-700 text-sm font-bold mb-2"
+              for="description"
+            >
+              Due Date
+            </label>
+            <input
+              type="date"
+              v-model="form.date"
+              name="date"
+              placeholder="dd-mm-yy"
+              class="shadow appearance-none ml-10 border border-purple-500 rounded-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="date"
+            />
+          </div>
+
+            
+          
         </div>
 
         <!-- Need Date input with name="date"-->
@@ -106,7 +129,7 @@ const form = useForm({
             name="color"
             id="color"
             style="border-radius: 15px; resize: none; scrollbar-width: none"
-            class="shadow appearance-none border border-purple-500 rounded-full w-1/2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="colorstyle shadow p-1 w-40 appearance-none border border-purple-500 rounded-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
 
