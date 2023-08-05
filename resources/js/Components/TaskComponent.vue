@@ -27,9 +27,24 @@ onUpdated(() => (tasks.value = props.body));
 const id = props.taskID;
 
 const form = useForm({
-  task: null,
+  taskDisplay: null,
   listName: props.listName,
 });
+
+const submitAddTaskForm = async () => {
+  try {
+    const response = await form.post('/taskAdd', {
+      taskDisplay: form.taskDisplay,
+      listName: props.listName,
+    });
+
+    form.taskDisplay = '';
+
+  } catch (error) {
+    // Handle error, if needed
+    console.error(error);
+  }
+};
 </script>
 
 
@@ -54,7 +69,7 @@ const form = useForm({
                 :taskId="taskId"
                 :listName="listName"
                 :status="task.status"
-                :taskDisplay = "task.taskDisplay"
+                :taskDisplay="task.taskDisplay"
               >
                 {{ task.taskDisplay }}
               </TaskListItem>
@@ -72,11 +87,11 @@ const form = useForm({
           class="transition-all duration-200 h-8"
           :class="addingTask ? 'opacity-100' : 'opacity-0'"
         >
-          <form class="w-full" @submit.prevent="form.post('/taskAdd')">
+          <form class="w-full" @submit.prevent="submitAddTaskForm">
             <input
               type="text"
               class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md backdrop-blur-lg bg-white/30"
-              v-model="form.task"
+              v-model="form.taskDisplay"
             />
           </form>
         </div>

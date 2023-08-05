@@ -192,10 +192,10 @@ class FirebaseController extends Controller
     public function addTaskToList(Request $request)
     {
 
-        $listName = $request->title;
+        $listName = $request->listName;
 
         $dataToSave = [
-            "taskDisplay" => $request->task,
+            "taskDisplay" => $request->taskDisplay,
             "status" => $request->status ?? false 
         ];
 
