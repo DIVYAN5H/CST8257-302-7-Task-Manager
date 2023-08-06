@@ -11,15 +11,25 @@ const show = ref(false);
 const page = usePage();
 const users = page.props.user;
 const name = page.props.name;
+
 let lists = ref(JSON.parse(page.props.lists));
 
 const props = defineProps(['lists'])
 
-console.log(JSON.parse(page.props.lists))
-
 onUpdated(() => lists.value = JSON.parse(page.props.lists));
 
+// Define the sorting function
+const sortListsByPriority = () => {
+  const listsArray = Object.entries(lists.value);
+  listsArray.sort((a, b) => b[1].priority - a[1].priority);
+  lists.value = Object.fromEntries(listsArray);
+};
 
+onUpdated(() => {
+  sortListsByPriority();
+});
+
+sortListsByPriority();
 </script>
 
 
