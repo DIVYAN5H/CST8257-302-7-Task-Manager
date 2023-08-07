@@ -1,8 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-defineProps(['username', 'email', 'name']);
-
-
+const props = defineProps(['username', 'email', 'name']);
 
 const form = useForm({
     loggingOut: true,

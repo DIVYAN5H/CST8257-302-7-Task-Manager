@@ -6,10 +6,10 @@ import { useForm } from "@inertiajs/vue3";
 import Navigation from "@/Components/Navigation.vue";
 
 const page = usePage();
-const users = page.props.user;
-//const tasks = JSON.parse(page.props.tasks);
+const user = page.props.user;
+const email = page.props.email
+const name = page.props.name;
 
-console.log(users);
 
 const form = useForm({
   list: null,
@@ -24,7 +24,7 @@ const form = useForm({
   <div
     class="flex justify-start flex-col items-center bg-texture-5 h-fit min-h-screen scroll-smooth">
     <div class="w-full">
-      <Navigation></Navigation>
+      <Navigation :username="user" :name="name" :email="email"></Navigation>
     </div>
     <div class="text-4xl text-white py-10">
       <h1>Add a New List</h1>

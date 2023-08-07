@@ -11,6 +11,7 @@ const show = ref(false);
 const page = usePage();
 const users = page.props.user;
 const name = page.props.name;
+console.log(page.props.email)
 
 let lists = ref(JSON.parse(page.props.lists));
 

@@ -6,7 +6,7 @@ import UserFlyout from '@/Components/UserFlyout.vue';
 
 const isOpen = ref(false);
 console.log(isOpen);
-defineProps(['username']);
+const props = defineProps(['username', 'name', 'email']);
 
 </script>
 
