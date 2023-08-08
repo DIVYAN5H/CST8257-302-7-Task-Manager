@@ -7,20 +7,20 @@
   --white : #ffffff;
   --black: #000000;
   --color-main : rgb(139, 49, 181);
-  --color-accent: rgb(210, 207, 121);
+  --color-accent: RGBA: rgba(255, 255, 255, 0.3)
   --box-border: rgb(184, 184, 184);
 
 }
 
   .button{
-    background-color: var(--color-main);
+    background-color: var(--color-accent);
     color: var(--white);
     transition: background-color 0.3s ease-in-out;
 
   }
 
   .button:hover{
-    background-color: var(--color-accent);
+    background-color: var(--color-main);
 
   }
 
