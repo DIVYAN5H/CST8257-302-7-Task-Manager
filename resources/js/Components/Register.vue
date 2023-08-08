@@ -1,14 +1,8 @@
 <script setup>
-import { usePage } from "@inertiajs/vue3";
-import { Link } from "@inertiajs/vue3";
 import { useForm } from '@inertiajs/vue3';
 
-
-const page = usePage();
-const users = page.props.user;
-
 const form = useForm({
-  user: null,
+  username: null,
   password: null,
   email: null,
   name: null
@@ -28,7 +22,7 @@ const form = useForm({
                     <label class="ml-2" for="username"> Username </label>
                     <input type="text" name="username"
                         class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
-                        placeholder="Username" id="username" v-model="form.user" />
+                        placeholder="Username" id="username" v-model="form.username" />
                 </div>
                 <div class="grid mx-auto w-full grid-cols-1">
                     <label class="ml-2" for="pass"> Password </label>

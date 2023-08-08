@@ -19,6 +19,21 @@ class FirebaseController extends Controller
         $this->database = $database;
     }
 
+    private function updateSessionList(){
+        $user = Session::get('user');
+
+        $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
+
+        $userWithNewList = [
+            "username" => $user['username'],
+            "email" => $user['email'],
+            "name" => $user['name'],
+            "lists" => $userLists,
+        ];
+
+        Session::put('user', $userWithNewList);
+    }
+
     private function validation(Request $request)
     {
         $error = [];
@@ -35,136 +50,67 @@ class FirebaseController extends Controller
         return $request;
     }
 
-    public function addListDisplay()
-    {
-        if (Session::get('user')) {
-            $userData = Session::get('user');
-            $userLists = Session::get('lists');
-            return Inertia::render('New', [
-                'user' => $userData['username'],
-                'name' => $userData['name'],
-                'email' => $userData['email'],
-                'lists' => $userLists,
-            ]);
-        }
-        return Inertia::render('Landing');
-    }
-
-    public function addList(Request $request)
-    {
-        $user = Session::get('user');
-
-        $listName = $request->list;
-
-        $color = $request->color;
-        $priority = $request->priority;
-        $date = $request->date;
-
-        $postRefColor = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/color")->set($color);
-        $postRefPriority = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/priority")->set($priority);
-        $postRefDate = $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/date")->set($date);
-
-        if ($postRefColor && $postRefPriority && $postRefDate) {
-            $userListsJson = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
-            Session::put('listsJson', $userListsJson);
-
-            return redirect()->route('home')->with('lists', $userListsJson);
-        } else {
-            return redirect('new')->with('status', 'failed');
-        }
-    }
-
-    public function deleteList(Request $request){
-        $listName = $request->listName;
-
-        $username = Session::get('user')['username'];
-
-        $this->database->getReference('userTasks/' . $username . '/' . $listName)->remove();
-
-        return redirect()->route('home');
-    }
-
+    // ----------------------
+    // -------- USER --------
+    // ----------------------
     public function registerFunc(Request $request)
     {
-
-        $postRef = null;
         $dataToSave = [
-            "username" => $request->user,
+            "username" => $request->username,
             "email" => $request->email,
             "name" => $request->name,
             "password" => encrypt($request->password),
         ];
 
-        if ($dataToSave['username'] != null && $dataToSave['email'] != null && $dataToSave['name'] != null && $dataToSave['password'] != null) {
-            $postRef = $this->database->getReference('users/' . $dataToSave['username'])->set($dataToSave);
-        }
-        if ($postRef != null) {
-            Session::put('user', $dataToSave);
-            return redirect()->route('home');
-        } else {
-            return redirect()->route('landing');
-        }
+        //this should run only after validation
+        $this->database->getReference('users/' . $dataToSave['username'])->set($dataToSave);
+
+        $user = [
+            "username" => $dataToSave['username'],
+            "email" => $dataToSave['email'],
+            "name" => $dataToSave['name'],
+            "lists" => [],
+        ];
+
+        Session::put('user', $user);
+        Session::put('logged', true);
+        $this->loginDisplay();
+
+        return redirect()->route('home');
     }
 
     public function loginDisplay()
     {
-
-        if (Session::get('user')) {
-            $userData = Session::get('user');
-            $userLists = json_encode($this->database->getReference('userTasks/' . $userData['username'])->getValue());
-            return Inertia::render('Home', [
-                'user' => $userData['username'],
-                'name' => $userData['name'],
-                'email' => $userData['email'],
-                'lists' => $userLists,
-            ]);
+        if (Session::get('logged')) {
+            return Inertia::render('Home', Session::get('user'));
         }
 
-        return redirect()->route('landing');
+        return Inertia::render('Landing');
     }
-
 
     public function loginFunc(Request $request)
     {
 
+        //this should run only after validation
         $providedPassword = $request->password;
-        $loggedIn = false;
-        $loggedIn = true;
 
-        $userDB = $this->database->getReference('users/' . $request->user)->getValue();
+        $userFromDB = $this->database->getReference('users/' . $request->username)->getValue();
 
-        if ($userDB == null) {
-            return redirect()->route('landing');
+        if (decrypt($userFromDB['password']) == $providedPassword) {
+            $user = [
+                "username" => $userFromDB['username'],
+                "email" => $userFromDB['email'],
+                "name" => $userFromDB['name'],
+                "lists" => [],
+            ];
+
+            Session::put('user', $user);
+            Session::put('logged', true);
+            $this->updateSessionList();
+
+            return redirect()->route('home');
         } else {
-
-
-            $loggedIn = decrypt($userDB['password']) == $providedPassword ? true : false;
-
-            if ($loggedIn) {
-
-
-                $userLists = json_encode($this->database->getReference('userTasks/' . $userDB['username'])->getValue());
-
-                $user = [
-                    "username" => $userDB['username'],
-                    "email" => $userDB['email'],
-                    "name" => $userDB['name'],
-                    "lists" => $userLists,
-                ];
-
-                Session::put('user', $user);
-                Session::put('lists', $userLists);
-                Session::put('logged', true);
-
-                return Inertia::render('Home', [
-                    'user' => $userDB['username'],
-                    'email' => $userDB['email'],
-                    'name' => $userDB['name'],
-                    'lists' => $userLists,
-                ]);
-            } else {
-                return redirect()->route('landing');
-            }
+            return redirect()->route('landing');
         }
     }
 
@@ -182,35 +128,57 @@ class FirebaseController extends Controller
         return redirect()->route('home');
     }
 
-    public function updateTask(Request $request)
+
+
+    // ----------------------
+    // -------- LIST --------
+    // ----------------------
+
+    public function addListDisplay()
     {
+        if (Session::get('logged')) {
+            return Inertia::render('New', Session::get('user'));
+        }
 
-        $listName = $request->listName;
-        $taskId = $request->taskId;
+        return Inertia::render('Landing');
+    }
 
-        $dataToSave = [
-            "taskDisplay" => $request->taskDisplay,
-            "status" => $request->status
-        ];
+    public function addList(Request $request)
+    {
+        $user = Session::get('user');
 
-        $username = Session::get('user')['username'];
+        $listName = $request->list;
+        $color = $request->color;
+        $priority = $request->priority;
+        $date = $request->date;
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->set($dataToSave);
+        // should run after validation
+        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/color")->set($color);
+        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/priority")->set($priority);
+        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/date")->set($date);
+        
+        $this->updateSessionList();
 
         return redirect()->route('home');
     }
 
-    public function deleteTask(Request $request)
+    public function deleteList(Request $request)
     {
         $listName = $request->listName;
-        $taskId = $request->taskId;
 
-        $username = Session::get('user')['username'];
+        $user = Session::get('user');
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
+        $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->remove();
+
+        $this->updateSessionList();
 
         return redirect()->route('home');
     }
+
+
+    // ----------------------
+    // -------- TASK --------
+    // ----------------------
 
     public function addTaskToList(Request $request)
     {
@@ -226,8 +194,43 @@ class FirebaseController extends Controller
 
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($dataToSave);
 
-        $userLists = json_encode($this->database->getReference('userTasks/' . $username)->getValue());
-        Session::put('lists', $userLists);
+        $this->updateSessionList();
+
         return redirect()->route('home');
     }
+    
+    public function updateTask(Request $request)
+    {
+
+        $listName = $request->listName;
+        $taskId = $request->taskId;
+
+        $dataToSave = [
+            "taskDisplay" => $request->taskDisplay,
+            "status" => $request->status
+        ];
+
+        $username = Session::get('user')['username'];
+
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->set($dataToSave);
+
+        $this->updateSessionList();
+
+        return redirect()->route('home');
+    }
+
+    public function deleteTask(Request $request)
+    {
+        $listName = $request->listName;
+        $taskId = $request->taskId;
+
+        $username = Session::get('user')['username'];
+
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
+
+        $this->updateSessionList();
+
+        return redirect()->route('home');
+    }
+
 }

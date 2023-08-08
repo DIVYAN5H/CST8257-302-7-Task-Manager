@@ -1,37 +1,45 @@
 <script setup>
-import { Head, usePage, router } from '@inertiajs/vue3';
-import { ref, reactive, onUnmounted } from 'vue';
-import Navigation from '@/Components/Navigation.vue';
-import Popop from '@/Components/Popup.vue';
-import TaskComponent from '@/Components/TaskComponent.vue';
-
-const showPopup = ref(false);
-const show = ref(false);
-
-const page = usePage();
-const users = page.props.user;
-const name = page.props.name;
-
-let lists = ref(JSON.parse(page.props.lists));
-
-const props = defineProps(['lists'])
-
-onUpdated(() => lists.value = JSON.parse(page.props.lists));
+import { Head, usePage } from "@inertiajs/vue3";
+import { ref } from "vue";
+import Navigation from "@/Components/Navigation.vue";
+import Popop from "@/Components/Popup.vue";
+import TaskComponent from "@/Components/TaskComponent.vue";
 
 // Define the sorting function
-const sortListsByPriority = () => {
-  const listsArray = Object.entries(lists.value);
+const sortListsByPriority = (unSortedLists) => {
+  const listsArray = Object.entries(unSortedLists.value);
   listsArray.sort((a, b) => b[1].priority - a[1].priority);
-  lists.value = Object.fromEntries(listsArray);
+  return Object.fromEntries(listsArray);
 };
 
-onUpdated(() => {
-  sortListsByPriority();
-});
+const page = usePage();
+const username = page.props.username;
+const name = page.props.name;
 
-if(lists.length > 0){
-  sortListsByPriority();
+var lists = [];
+var tasksCompleted = 0;
+
+if (page.props.lists.length > 0) {
+  lists = ref(JSON.parse(page.props.lists));
+
+  lists = sortListsByPriority(lists);
+
+  Object.entries(lists).forEach((list) => {
+    if (list[1].tasks) {
+      //if list have no task
+      Object.entries(list[1].tasks).forEach((task) => {
+        if (task[1].status) {
+          tasksCompleted++;
+        }
+      });
+    }
+  });
 }
+
+onUpdated(() => {
+  lists.value = JSON.parse(page.props.lists);
+  sortListsByPriority(lists);
+});
 </script>
 
 
@@ -56,20 +64,20 @@ if(lists.length > 0){
 ::-webkit-scrollbar-thumb {
   background: rgb(141, 141, 141);
   border-radius: 10px;
-
 }
 </style>
 
 <template>
-  <Head title="Home">
-  </Head>
+  <Head title="Home"> </Head>
   <Transition>
     <div class="bg-texture-2 h-fit min-h-screen scroll-smooth">
       <div class="w-full">
-        <Navigation :username="users" :name="name" :email="page.props.email"></Navigation>
-
-
-
+        <Navigation
+          :username="username"
+          :name="name"
+          :email="page.props.email"
+          :tasksCompleted="tasksCompleted"
+        ></Navigation>
 
         <!--This is a popup that will show up when a user clicks a task so tehy can add more subtasks???-->
 
@@ -121,54 +129,52 @@ if(lists.length > 0){
 
         <!--------------------------------------------------------------------------------->
 
-
-        <div class=" flex justify-center mt-10">
+        <div class="flex justify-center mt-10">
           <h1 class="text-2xl text-white">
             Welcome to your dashboard, {{ $page.props.name }}.
           </h1>
-          <br>
-
+          <br />
         </div>
 
         <div class="text-white flex justify-center">
-          <p>You can manage your tasks here based on their priority </p>
+          <p>You can manage your tasks here based on their priority</p>
         </div>
 
         <div class="flex justify-center">
           <div class="main flex justify-between flex-row mt-10">
-
             <div>
-                <div v-for="(list, listName) in lists" :key="listName">
-                  <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date" :body="list.tasks"> </TaskComponent>
-                </div>
-
+              <div v-for="(list, listName) in lists" :key="listName">
+                <TaskComponent
+                  :listName="listName"
+                  :color="list.color"
+                  :priority="list.priority"
+                  :date="list.date"
+                  :tasks="list.tasks"
+                >
+                </TaskComponent>
+              </div>
             </div>
             <div>
               <h1></h1>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   </Transition>
 </template>
 
 <script>
-
-import { ref } from 'vue';
-import { onMounted } from 'vue';
-import { onUnmounted } from 'vue';
-import { onUpdated } from 'vue';
-
+import { ref } from "vue";
+import { onMounted } from "vue";
+import { onUnmounted } from "vue";
+import { onUpdated } from "vue";
 
 export default {
   setup() {
-
     return {
-      Popop
-    }
-  }
-}
+      Popop,
+    };
+  },
+};
 </script>

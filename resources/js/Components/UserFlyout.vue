@@ -1,6 +1,10 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+<<<<<<< HEAD
 const props = defineProps(['username', 'email', 'name', 'password']);
+=======
+const props = defineProps(['username', 'email', 'name', 'tasksCompleted']);
+>>>>>>> 714bc1379e1f1c96cfd512223007722f33c88757
 
 
 const email = props.email
@@ -42,7 +46,7 @@ function getInitials(name) {
                 {{ name }}
             </div>
             <div class="text-center text-sm">
-                0 Tasks Completed
+                {{ tasksCompleted }} Tasks Completed
             </div>
             <div id="userInfoSection" class="grid grid-cols-2">
                 <div class="grid-cols-1 text-lg w-1/2 mx-auto py-16">
