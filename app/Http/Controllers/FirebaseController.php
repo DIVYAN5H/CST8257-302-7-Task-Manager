@@ -130,11 +130,7 @@ class FirebaseController extends Controller
         $loggedIn = false;
         $loggedIn = true;
 
-        if ($request->user != null) {
-            $userDB = $this->database->getReference('users/' . $request->user)->getValue();
-        } else {
-            $userDB = null;
-        }
+        $userDB = $this->database->getReference('users/' . $request->user)->getValue();
 
         if ($userDB == null) {
             return redirect()->route('landing');
