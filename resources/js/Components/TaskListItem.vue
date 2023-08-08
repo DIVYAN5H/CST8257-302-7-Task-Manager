@@ -32,7 +32,7 @@ const submitDeleteForm = () => {
 </script>
 
 <template>
-  <div class="bg-red" :class="status ? 'w-full border-l-5 border-green-500 bg-red' : 'w-full bg-red'">
+  <div :class="status ? 'w-full border-l-5 border-green-500' : 'w-full'">
     <li class="select-none group hover:bg-white/40 py-1 w-full flex cursor-pointer">
       <div>
         <form @submit.prevent="submitUpdateForm">
