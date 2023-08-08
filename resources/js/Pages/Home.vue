@@ -11,7 +11,6 @@ const show = ref(false);
 const page = usePage();
 const users = page.props.user;
 const name = page.props.name;
-console.log(page.props.email)
 
 let lists = ref(JSON.parse(page.props.lists));
 
@@ -30,7 +29,9 @@ onUpdated(() => {
   sortListsByPriority();
 });
 
-sortListsByPriority();
+if(lists.length > 0){
+  sortListsByPriority();
+}
 </script>
 
 
@@ -137,9 +138,9 @@ sortListsByPriority();
           <div class="main flex justify-between flex-row mt-10">
 
             <div>
-              <div v-for="(list, listName) in lists" :key="listName">
+                <div v-for="(list, listName) in lists" :key="listName">
                   <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date" :body="list.tasks"> </TaskComponent>
-              </div>
+                </div>
 
             </div>
             <div>
