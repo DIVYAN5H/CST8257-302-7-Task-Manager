@@ -72,6 +72,8 @@ class FirebaseController extends Controller
         ];
 
         Session::put('user', $user);
+        Session::put('logged', true);
+        $this->loginDisplay();
 
         return redirect()->route('home');
     }
