@@ -10,7 +10,7 @@ import { onUpdated } from "vue";
 
 const props = defineProps([
   "listName",
-  "body",
+  "tasks",
   "priority",
   "tasks",
   "date",
@@ -20,9 +20,9 @@ const page = usePage();
 const isOpen = ref(false);
 const addingTask = ref(false);
 
-let tasks = ref(props.body);
+let tasks = ref(props.tasks);
 
-onUpdated(() => (tasks.value = props.body));
+onUpdated(() => (tasks.value = props.tasks));
 
 const id = props.taskID;
 

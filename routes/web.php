@@ -21,17 +21,17 @@ use Kreait\Laravel\Firebase\Facades\Firebase;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Home');
+    return redirect()->route('landing');
 });
 
-Route::get('/landing', [Controller::class, 'isLogged'])->name('landing');
+Route::get('/landing', [FirebaseController::class,'loginDisplay'])->name('landing');
 
 Route::get('/home', [FirebaseController::class,'loginDisplay']
 )->name('home');
 
 // User Management
 Route::post('/home',[FirebaseController::class,'loginFunc']);
-Route::post('register',[FirebaseController::class,'registerFunc']);
+Route::post('/register',[FirebaseController::class,'registerFunc']);
 
 Route::post('/logout1', [Controller::class, 'logOut']);
 

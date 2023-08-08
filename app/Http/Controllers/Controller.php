@@ -12,10 +12,6 @@ use Inertia\Inertia;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-    
-    public function show(){
-        return Inertia::render('/test2');
-    }
 
     public function isLogged(){
 
@@ -23,8 +19,7 @@ class Controller extends BaseController
             return redirect()->route('home');
         }
         else{
-
-            return Inertia::render('Landing');
+            return redirect()->route('landing');
         }
     }
 
