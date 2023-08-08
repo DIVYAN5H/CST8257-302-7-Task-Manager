@@ -118,12 +118,24 @@ class FirebaseController extends Controller
     {
         $user = Session::get('user');
 
-        $dataToSave = [
+        $name = $request->name ?? $user['name'];
+
+        if($request->password){
+            $this->database->getReference('user/' . $user['username'] . '/password')->set(encrypt($request->password));
+        }
+        
+        $this->database->getReference('user/' . $user['username'] . '/name')->set($name);
+
+        $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
+
+        $userWithNewName = [
+            "username" => $user['username'],
+            "email" => $user['email'],
             "name" => $request->name,
-            "password" => encrypt($request->password)
+            "lists" => $userLists,
         ];
 
-        $this->database->getReference('userTasks/' . $user['username'])->set($dataToSave);
+        Session::put('user', $userWithNewName);
 
         return redirect()->route('home');
     }
