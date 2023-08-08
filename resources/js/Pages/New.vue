@@ -9,6 +9,9 @@ const page = usePage();
 const user = page.props.user;
 const email = page.props.email
 const name = page.props.name;
+const password = page.props.password
+
+console.log(password);
 
 
 const form = useForm({
@@ -24,7 +27,7 @@ const form = useForm({
   <div
     class="flex justify-start flex-col items-center bg-texture-5 h-fit min-h-screen scroll-smooth">
     <div class="w-full">
-      <Navigation :username="user" :name="name" :email="email"></Navigation>
+      <Navigation :username="user" :name="name" :email="email" :password="password"></Navigation>
     </div>
     <div class="text-4xl text-white py-10">
       <h1>Add a New List</h1>

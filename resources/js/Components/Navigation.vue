@@ -6,7 +6,7 @@ import UserFlyout from '@/Components/UserFlyout.vue';
 
 const isOpen = ref(false);
 console.log(isOpen);
-const props = defineProps(['username', 'name', 'email']);
+const props = defineProps(['username', 'name', 'email', 'password']);
 
 </script>
 
@@ -61,6 +61,6 @@ const props = defineProps(['username', 'name', 'email']);
         </svg>
       </button>
     </div>
-    <UserFlyout :username="username" :name="name" :email="email"></UserFlyout>
+    <UserFlyout :username="username" :name="name" :email="email" :password="password"></UserFlyout>
   </aside>
 </template>

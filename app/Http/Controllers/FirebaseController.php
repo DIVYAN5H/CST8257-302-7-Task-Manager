@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 use Kreait\Firebase\Contract\Database;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
@@ -171,12 +172,16 @@ class FirebaseController extends Controller
     {
         $username = Session::get('user')['username'];
 
+        //Log::info("UserName: " . Session::get('user')['username']);
+        //Log::info("Name: " . $request->name);
+        //Log::info("Password: " . $request->password);
+
         $dataToSave = [
             "name" => $request->name,
             "password" => encrypt($request->password)
         ];
 
-        $this->database->getReference('users' . $username)->set($dataToSave);
+        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/color")->set($color);
 
         return redirect()->route('home');
     }
