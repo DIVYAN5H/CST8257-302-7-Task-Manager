@@ -32,12 +32,12 @@ const submitDeleteForm = () => {
 </script>
 
 <template>
-  <div :class="status ? 'w-full border-l-5 border-green-500' : 'w-full'">
+  <div class="w-full">
     <li class="select-none group hover:bg-white/40 py-1 w-full flex cursor-pointer">
-      <div>
+      <div class="w-4/5">
         <form @submit.prevent="submitUpdateForm">
-          <input class="w-1/2 bg-transparent border-none" type="text" v-model="form.taskDisplay">
-          <button type="submit" class="right-40">
+          <input class="w-10/12 bg-transparent border-x-0 border-y-0 border-r-0" :class="form.status ? 'border-l-4 border-green-500' : ''" type="text" v-model="form.taskDisplay">
+          <button type="submit">
             Update
           </button>
         </form>
