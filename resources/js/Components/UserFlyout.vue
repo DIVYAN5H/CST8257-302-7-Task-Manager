@@ -2,13 +2,17 @@
 import { useForm } from '@inertiajs/vue3';
 const props = defineProps(['username', 'email', 'name', 'tasksCompleted']);
 
-const name = props.name
 
-const initials = getInitials(name);
+const email = props.email
+
 
 const form = useForm({
-    loggingOut: true,
-})
+ loggingOut: true,
+ name: props.name,
+ password: ''
+});
+
+const initials = getInitials(form.name);
 
 function getInitials(name) {
 
@@ -42,12 +46,17 @@ function getInitials(name) {
             </div>
             <div id="userInfoSection" class="grid grid-cols-2">
                 <div class="grid-cols-1 text-lg w-1/2 mx-auto py-16">
-                    <div> Email: </div>
-                    <div> Username: </div>
+                    <div class="mb-4 mt-2"> Name: </div>
+                    <div> Password: </div>
                 </div>
                 <div class="grid-cols-1 text-lg w-1/2 py-16">
-                    <div> {{ email }}</div>
-                    <div>{{ username }}</div>
+                <form @submit.prevent="form.post('/userUpdate')">
+                    <input type="text" name="name" v-model="form.name" class="bg-transparent rounded-full w-40 mb-1">
+                    <input type="text" name="password" v-model="form.password" placeholder="password" class="bg-transparent rounded-full w-40">
+                    <!-- <div> {{ email }}</div>
+                    <div>{{ username }}</div> -->
+                    <button type="submit" class="grid-cols-1 rounded-full bg-white/30 p-3 border hover:bg-white/40"> Update </button>
+                </form>
                 </div>
             </div>
             <form @submit.prevent="form.post('/logout1')" class="w-100 mx-auto flex ">

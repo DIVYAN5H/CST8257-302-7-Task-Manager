@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 use Kreait\Firebase\Contract\Database;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
@@ -127,14 +128,26 @@ class FirebaseController extends Controller
 
     public function updateUser(Request $request)
     {
-        $username = Session::get('user')['username'];
+        $user = Session::get('user');
 
-        $dataToSave = [
+        $name = $request->name ?? $user['name'];
+
+        if ($request->password) {
+            $this->database->getReference('user/' . $user['username'] . '/password')->set(encrypt($request->password));
+        }
+
+        $this->database->getReference('user/' . $user['username'] . '/name')->set($name);
+
+        $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
+
+        $userWithNewName = [
+            "username" => $user['username'],
+            "email" => $user['email'],
             "name" => $request->name,
-            "password" => encrypt($request->password)
+            "lists" => $userLists,
         ];
 
-        $this->database->getReference('users' . $username)->set($dataToSave);
+        Session::put('user', $userWithNewName);
 
         return redirect()->route('home');
     }
@@ -216,14 +229,10 @@ class FirebaseController extends Controller
         $listName = $request->listName;
         $taskId = $request->taskId;
 
-        $dataToSave = [
-            "taskDisplay" => $request->taskDisplay,
-            "status" => $request->status
-        ];
-
         $username = Session::get('user')['username'];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->set($dataToSave);
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/taskDisplay')->set($request->taskDisplay);
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->set($request->status);
 
         $this->updateSessionList();
 
@@ -237,7 +246,7 @@ class FirebaseController extends Controller
 
         $username = Session::get('user')['username'];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
+        $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
 
         $this->updateSessionList();
 

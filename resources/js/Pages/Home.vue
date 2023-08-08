@@ -12,6 +12,7 @@ const sortListsByPriority = (unSortedLists) => {
   return Object.fromEntries(listsArray);
 };
 
+
 const page = usePage();
 const username = page.props.username;
 const name = page.props.name;
@@ -19,7 +20,7 @@ const name = page.props.name;
 var lists = [];
 var tasksCompleted = 0;
 
-if (page.props.lists.length > 0) {
+if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
   lists = ref(JSON.parse(page.props.lists));
 
   lists = sortListsByPriority(lists);
@@ -34,11 +35,14 @@ if (page.props.lists.length > 0) {
       });
     }
   });
+
 }
 
 onUpdated(() => {
   lists.value = JSON.parse(page.props.lists);
-  sortListsByPriority(lists);
+  lists = sortListsByPriority(lists);
+
+  console.log(lists)
 });
 </script>
 

@@ -34,6 +34,7 @@ Route::post('/home',[FirebaseController::class,'loginFunc']);
 Route::post('/register',[FirebaseController::class,'registerFunc']);
 
 Route::post('/logout1', [Controller::class, 'logOut']);
+Route::post('/userUpdate', [FirebaseController::class, 'updateUser']);
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
