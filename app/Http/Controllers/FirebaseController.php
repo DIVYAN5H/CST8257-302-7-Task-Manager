@@ -170,18 +170,14 @@ class FirebaseController extends Controller
 
     public function updateUser(Request $request)
     {
-        $username = Session::get('user')['username'];
-
-        //Log::info("UserName: " . Session::get('user')['username']);
-        //Log::info("Name: " . $request->name);
-        //Log::info("Password: " . $request->password);
+        $user = Session::get('user');
 
         $dataToSave = [
             "name" => $request->name,
             "password" => encrypt($request->password)
         ];
 
-        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/color")->set($color);
+        $this->database->getReference('userTasks/' . $user['username'])->set($dataToSave);
 
         return redirect()->route('home');
     }
