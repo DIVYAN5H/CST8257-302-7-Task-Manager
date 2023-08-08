@@ -160,6 +160,20 @@ class FirebaseController extends Controller
         }
     }
 
+    public function updateUser(Request $request)
+    {
+        $username = Session::get('user')['username'];
+
+        $dataToSave = [
+            "name" => $request->name,
+            "password" => encrypt($request->password)
+        ];
+
+        $this->database->getReference('users' . $username)->set($dataToSave);
+
+        return redirect()->route('home');
+    }
+
     public function updateTask(Request $request)
     {
 
@@ -175,7 +189,7 @@ class FirebaseController extends Controller
 
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->set($dataToSave);
 
-        return redirect()->route('landing');
+        return redirect()->route('home');
     }
 
     public function deleteTask(Request $request)
@@ -197,7 +211,7 @@ class FirebaseController extends Controller
 
         $dataToSave = [
             "taskDisplay" => $request->taskDisplay,
-            "status" => $request->status ?? false 
+            "status" => $request->status ?? false
         ];
 
         $username = Session::get('user')['username'];
