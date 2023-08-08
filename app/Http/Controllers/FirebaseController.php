@@ -49,7 +49,7 @@ class FirebaseController extends Controller
         return Inertia::render('Landing');
     }
 
-    public function addListFunc(Request $request)
+    public function addList(Request $request)
     {
         $user = Session::get('user');
 
@@ -71,6 +71,16 @@ class FirebaseController extends Controller
         } else {
             return redirect('new')->with('status', 'failed');
         }
+    }
+
+    public function deleteList(Request $request){
+        $listName = $request->listName;
+
+        $username = Session::get('user')['username'];
+
+        $this->database->getReference('userTasks/' . $username . '/' . $listName)->remove();
+
+        return redirect()->route('home');
     }
 
     public function registerFunc(Request $request)

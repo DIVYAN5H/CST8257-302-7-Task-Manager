@@ -36,6 +36,7 @@ const submitAddTaskForm = async () => {
     const response = await form.post('/taskAdd', {
       taskDisplay: form.taskDisplay,
       listName: props.listName,
+      preserveScroll: true,
     });
 
     form.taskDisplay = '';
@@ -56,7 +57,7 @@ const submitAddTaskForm = async () => {
     <div class="text-white">
       <div class="grid grid-cols-1">
         <div class="bg-white/50 h-full rounded-t-lg px-3">
-          <TaskBadge :color="color" :date="date"> {{ listName }} </TaskBadge>
+          <TaskBadge :color="color" :date="date" :listName="listName"> {{ listName }} </TaskBadge>
         </div>
       </div>
       <div class="h-96 overflow-auto pb-20">

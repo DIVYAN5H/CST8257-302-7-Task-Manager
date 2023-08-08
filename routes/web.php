@@ -49,9 +49,12 @@ Route::post('/logout1', [Controller::class, 'logOut']);
 
 // require __DIR__.'/auth.php';
 Route::get('newList',[FirebaseController::class,'addListDisplay']);
-Route::post('newList',[FirebaseController::class,'addListFunc']);
+Route::post('newList',[FirebaseController::class,'addList']);
+Route::post('/listDelete', [FirebaseController::class, 'deleteList']);
 
 
 Route::post('/taskAdd', [FirebaseController::class, 'addTaskToList']);
 Route::post('/taskDelete', [FirebaseController::class, 'deleteTask']);
 Route::post('/taskUpdate', [FirebaseController::class, 'updateTask']);
+
+
