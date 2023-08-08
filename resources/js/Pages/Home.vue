@@ -36,7 +36,6 @@ if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
     }
   });
 
-  console.log(lists)
 }
 
 onUpdated(() => {

@@ -123,7 +123,7 @@ class FirebaseController extends Controller
         if($request->password){
             $this->database->getReference('user/' . $user['username'] . '/password')->set(encrypt($request->password));
         }
-        
+
         $this->database->getReference('user/' . $user['username'] . '/name')->set($name);
 
         $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
@@ -217,14 +217,10 @@ class FirebaseController extends Controller
         $listName = $request->listName;
         $taskId = $request->taskId;
 
-        $dataToSave = [
-            "taskDisplay" => $request->taskDisplay,
-            "status" => $request->status
-        ];
-
         $username = Session::get('user')['username'];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->set($dataToSave);
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/taskDisplay')->set($request->taskDisplay);
+        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->set($request->status);
 
         $this->updateSessionList();
 

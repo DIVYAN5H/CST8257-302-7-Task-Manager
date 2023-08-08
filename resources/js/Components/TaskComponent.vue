@@ -46,14 +46,31 @@ const submitAddTaskForm = async () => {
     console.error(error);
   }
 };
+
+const updateTaskForm = useForm({
+  taskId: null,
+  taskDisplay: null,
+  status: null,
+});
+
+const submitUpdateTaskForm = async (taskId) => {
+  try {
+    const response = await updateTaskForm.post(`/taskUpdate`, {
+      taskId: updateTaskForm.taskId,
+      taskDisplay: updateTaskForm.taskDisplay,
+      status: updateTaskForm.status,
+    });
+  } catch (error) {
+    // Handle error, if needed
+    console.error(error);
+  }
+};
 </script>
 
 
 <template>
-  <div
-    class="backdrop-blur w-[38.8rem] bg-white/20 rounded-t-lg transition-all duration-400 ease-in-out overflow-hidden"
-    :class="isOpen ? 'h-96' : 'h-20'"
-  >
+  <div class="backdrop-blur w-[38.8rem] bg-white/20 rounded-t-lg transition-all duration-400 ease-in-out overflow-hidden"
+    :class="isOpen ? 'h-96' : 'h-20'">
     <div class="text-white">
       <div class="grid grid-cols-1">
         <div class="bg-white/50 h-full rounded-t-lg px-3">
@@ -61,60 +78,38 @@ const submitAddTaskForm = async () => {
         </div>
       </div>
       <div class="h-96 overflow-auto pb-20">
-        <div
-          class="transition text-sm duration-100 ease-in py-5 px-8 grid grid-cols-1"
-        >
+        <div class="transition text-sm duration-100 ease-in py-5 px-8 grid grid-cols-1">
           <ul class="list-disc">
+
+
+
+
             <div v-for="(task, taskId) in tasks" :key="taskId">
-              <TaskListItem
-                :taskId="taskId"
-                :listName="listName"
-                :status="task.status"
-                :taskDisplay="task.taskDisplay"
-              >
-                {{ task.taskDisplay }}
+              <TaskListItem :taskId="taskId" :listName="listName" :status="task.status" :taskDisplay="task.taskDisplay">
               </TaskListItem>
             </div>
-            <li
-              @click="addingTask = !addingTask"
-              class="hover:bg-white/20 select-none w-fit cursor-pointer"
-            >
+            <li @click="addingTask = !addingTask" class="hover:bg-white/20 select-none w-fit cursor-pointer">
               Add New
             </li>
           </ul>
         </div>
 
-        <div
-          class="transition-all duration-200 h-8"
-          :class="addingTask ? 'opacity-100' : 'opacity-0'"
-        >
+        <div class="transition-all duration-200 h-8" :class="addingTask ? 'opacity-100' : 'opacity-0'">
           <form class="w-full" @submit.prevent="submitAddTaskForm">
-            <input
-              type="text"
-              class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md backdrop-blur-lg bg-white/30"
-              v-model="form.taskDisplay"
-            />
+            <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md backdrop-blur-lg bg-white/30"
+              v-model="form.taskDisplay" />
           </form>
         </div>
       </div>
     </div>
   </div>
-  <div
-    @click="isOpen = !isOpen"
-    class="bg-white/20 hover:bg-white/30 mx-auto select-none rounded-b-lg text-base cursor-pointer pt-2 mb-8"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      class="w-6 h-6 w-full transtion duration-200 delay-200 ease-in-out"
-      :class="isOpen ? 'rotate-180' : 'rotate-0'"
-    >
-      <path
-        fill-rule="evenodd"
+  <div @click="isOpen = !isOpen"
+    class="bg-white/20 hover:bg-white/30 mx-auto select-none rounded-b-lg text-base cursor-pointer pt-2 mb-8">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+      class="w-6 h-6 w-full transtion duration-200 delay-200 ease-in-out" :class="isOpen ? 'rotate-180' : 'rotate-0'">
+      <path fill-rule="evenodd"
         d="M20.03 4.72a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 11.69l6.97-6.97a.75.75 0 011.06 0zm0 6a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 111.06-1.06L12 17.69l6.97-6.97a.75.75 0 011.06 0z"
-        clip-rule="evenodd"
-      />
+        clip-rule="evenodd" />
     </svg>
   </div>
 </template>
