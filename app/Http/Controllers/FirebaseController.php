@@ -161,6 +161,7 @@ class FirebaseController extends Controller
 
                 return Inertia::render('Home', [
                     'user' => $userDB['username'],
+                    'email' => $userDB['email'],
                     'name' => $userDB['name'],
                     'lists' => $userLists,
                 ]);

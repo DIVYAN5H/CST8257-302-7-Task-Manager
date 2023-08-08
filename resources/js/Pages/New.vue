@@ -33,9 +33,9 @@ const form = useForm({
     <div
       class="w-2/5 backdrop-blur-lg bg-white/30 drop-shadow-xl rounded-lg new-box-border"
     >
-      <form @submit.prevent="form.post('/newList')" class="px-8 pt-6 pb-8">
+      <form @submit.prevent="form.post('/newList')" class="px-8 pt-6 pb-8 text-white">
         <div class="mb-6">
-          <label class="block text-gray-700 text-sm font-bold mb-2" for="title">
+          <label class="block  text-sm font-bold mb-2" for="title">
             List Name
           </label>
           <input
@@ -76,7 +76,7 @@ const form = useForm({
           <div >
 
             <label
-              class="block text-gray-700 text-sm font-bold mb-2"
+              class="block  text-sm font-bold mb-2"
               for="description"
             >
               Priority
@@ -84,7 +84,7 @@ const form = useForm({
             <select
               v-model="form.priority"
               name="priority"
-              class="shadow appearance-none w-40 border border-purple-500 rounded-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class=" shadow appearance-none w-44 border border-purple-500 rounded-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="priority"
             >
               <option value="1">Low</option>
@@ -95,7 +95,7 @@ const form = useForm({
           <div>
 
             <label
-              class="block ml-10 text-gray-700 text-sm font-bold mb-2"
+              class="block ml-10  text-sm font-bold mb-2"
               for="description"
             >
               Due Date
@@ -105,7 +105,7 @@ const form = useForm({
               v-model="form.date"
               name="date"
               placeholder="dd-mm-yy"
-              class="shadow appearance-none ml-10 border border-purple-500 rounded-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              class="w-full shadow appearance-none ml-10 border border-purple-500 rounded-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="date"
             />
           </div>
@@ -116,9 +116,9 @@ const form = useForm({
 
         <!-- Need Date input with name="date"-->
 
-        <div class="mb-6">
+        <div class="mb-8">
           <label
-            class="block text-gray-700 text-sm font-bold mb-2"
+            class="block  text-sm font-bold mb-2"
             for="description"
           >
             Color
@@ -129,15 +129,15 @@ const form = useForm({
             name="color"
             id="color"
             style="border-radius: 15px; resize: none; scrollbar-width: none"
-            class="colorstyle shadow p-1 w-40 appearance-none border border-purple-500 rounded-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            class="colorstyle shadow p-1 w-44 appearance-none border border-purple-500 rounded-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
 
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-center">
           <button
             type="submit"
             :disabled="form.processing"
-            class="button py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+            class="button py-2 px-4 w-1/3 rounded-full border"
           >
             Add task
           </button>
