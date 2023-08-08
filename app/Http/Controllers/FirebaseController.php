@@ -19,7 +19,8 @@ class FirebaseController extends Controller
         $this->database = $database;
     }
 
-    private function updateSessionList(){
+    private function updateSessionList()
+    {
         $user = Session::get('user');
 
         $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
@@ -120,7 +121,7 @@ class FirebaseController extends Controller
 
         $name = $request->name ?? $user['name'];
 
-        if($request->password){
+        if ($request->password) {
             $this->database->getReference('user/' . $user['username'] . '/password')->set(encrypt($request->password));
         }
 
@@ -168,7 +169,7 @@ class FirebaseController extends Controller
         $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/color")->set($color);
         $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/priority")->set($priority);
         $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/date")->set($date);
-        
+
         $this->updateSessionList();
 
         return redirect()->route('home');
@@ -210,7 +211,7 @@ class FirebaseController extends Controller
 
         return redirect()->route('home');
     }
-    
+
     public function updateTask(Request $request)
     {
 
@@ -234,11 +235,10 @@ class FirebaseController extends Controller
 
         $username = Session::get('user')['username'];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
+        $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
 
         $this->updateSessionList();
 
         return redirect()->route('home');
     }
-
 }
