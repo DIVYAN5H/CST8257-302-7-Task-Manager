@@ -96,8 +96,16 @@ class FirebaseController extends Controller
         $userFromDB = $this->database->getReference('users/' . $request->username)->getValue();
 
         if (decrypt($userFromDB['password']) == $providedPassword) {
-            $this->updateSessionList();
+            $user = [
+                "username" => $userFromDB['username'],
+                "email" => $userFromDB['email'],
+                "name" => $userFromDB['name'],
+                "lists" => [],
+            ];
+
+            Session::put('user', $user);
             Session::put('logged', true);
+            $this->updateSessionList();
 
             return redirect()->route('home');
         } else {
