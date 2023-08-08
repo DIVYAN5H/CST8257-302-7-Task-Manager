@@ -94,6 +94,9 @@ class FirebaseController extends Controller
     public function loginDisplay()
     {
         if (Session::get('logged')) {
+
+            $this->updateSessionList();
+
             return Inertia::render('Home', Session::get('user'));
         }
 
@@ -118,7 +121,6 @@ class FirebaseController extends Controller
 
             Session::put('user', $user);
             Session::put('logged', true);
-            $this->updateSessionList();
 
             return redirect()->route('home');
         } else {
@@ -133,10 +135,10 @@ class FirebaseController extends Controller
         $name = $request->name ?? $user['name'];
 
         if ($request->password) {
-            $this->database->getReference('user/' . $user['username'] . '/password')->set(encrypt($request->password));
+            $this->database->getReference('users/' . $user['username'] . '/password')->set(encrypt($request->password));
         }
 
-        $this->database->getReference('user/' . $user['username'] . '/name')->set($name);
+        $this->database->getReference('users/' . $user['username'] . '/name')->set($name);
 
         $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
 
@@ -181,8 +183,6 @@ class FirebaseController extends Controller
         $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/priority")->set($priority);
         $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/date")->set($date);
 
-        $this->updateSessionList();
-
         return redirect()->route('home');
     }
 
@@ -193,8 +193,6 @@ class FirebaseController extends Controller
         $user = Session::get('user');
 
         $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->remove();
-
-        $this->updateSessionList();
 
         return redirect()->route('home');
     }
@@ -218,8 +216,6 @@ class FirebaseController extends Controller
 
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($dataToSave);
 
-        $this->updateSessionList();
-
         return redirect()->route('home');
     }
 
@@ -234,8 +230,6 @@ class FirebaseController extends Controller
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/taskDisplay')->set($request->taskDisplay);
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->set($request->status);
 
-        $this->updateSessionList();
-
         return redirect()->route('home');
     }
 
@@ -247,8 +241,6 @@ class FirebaseController extends Controller
         $username = Session::get('user')['username'];
 
         $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
-
-        $this->updateSessionList();
 
         return redirect()->route('home');
     }
