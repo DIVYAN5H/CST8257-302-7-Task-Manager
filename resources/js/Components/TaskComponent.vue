@@ -83,7 +83,7 @@ const submitUpdateTaskForm = async (taskId) => {
         <div class="transition text-sm duration-100 ease-in py-5 px-2 grid grid-cols-1">
           <ul class="list-disc">
             <div v-for="(task, taskId) in tasks" :key="taskId">
-              <TaskListItem :taskId="taskId" :listName="listName" :colour="task.color" :status="task.status" :taskDisplay="task.taskDisplay">
+              <TaskListItem :taskId="taskId" :listName="listName" :colour="props.color" :status="task.status" :taskDisplay="task.taskDisplay">
               </TaskListItem>
             </div>
             <li @click="addingTask = !addingTask" class="hover:bg-white/20 ml-4 select-none w-fit cursor-pointer">

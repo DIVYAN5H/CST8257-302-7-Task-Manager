@@ -6,6 +6,8 @@ const completed = ref(false);
 
 const props = defineProps(["taskId", "taskDisplay", "listName", "status", "colour"]);
 
+console.log(props.colour);
+
 const form = useForm({
   listName: props.listName,
   taskId: props.taskId,

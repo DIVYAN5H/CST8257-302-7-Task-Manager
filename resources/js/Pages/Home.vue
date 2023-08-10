@@ -20,6 +20,7 @@ function sortListsByPriority() {
 
   if(true) {
   var object = JSON.parse(page.props.lists);
+  if(object != null) {
   var key = Object.entries(object);
   key.sort((a, b) => b[1].priority - a[1].priority);
   //return Object.fromEntries(key);
@@ -29,13 +30,16 @@ function sortListsByPriority() {
     return [];
   }
 }
+}
 
 function sortListsByName() {
   var object = JSON.parse(page.props.lists);
+  if(object != null) {
   var key = Object.entries(object);
   key.sort((a, b) => a[1] - (b[1]));
   //return Object.fromEntries(key);
   lists.value = Object.fromEntries(key);
+  }
 }
 
 onUpdated(() => {
