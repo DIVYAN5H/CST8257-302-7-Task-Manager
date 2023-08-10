@@ -55,12 +55,12 @@ const form = useForm({
                     id="date" />
                 </div>
                 <div class="col-span-1">
-                    <label class="block  text-sm font-bold mb-2" for="description">
+                    <label class="block text-sm font-bold mb-2" for="description">
                         Color
                     </label>
                     <input v-model="form.color" type="color" name="color" id="color"
                   
-                    class="rounded-full h-9 p-1 w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    class="rounded-full h-9  w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
                 <div class="col-span-1">
 
