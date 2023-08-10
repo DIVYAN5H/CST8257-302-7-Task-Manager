@@ -119,8 +119,11 @@ onMounted(() => {
                 </div>
               </button>
             </Transition>
-            <Transition enter-from-class="opacity-0 delay-400" leave-to-class="opacity-0"
-              enter-active-class="transition delay-200 duration-300" leave-active-class="transition duration-0">
+            <Transition 
+              enter-from-class="opacity-0 delay-400" 
+              leave-to-class="opacity-0 translate-x-full"
+              enter-active-class="transition delay-200 duration-300" 
+              leave-active-class="transition duration-100">
               <div v-if="addingList" >
                 <NewList @close="addingList = !addingList" @addedNewList="addingList = !addingList"> </NewList>
               </div>
