@@ -32,7 +32,7 @@ const props = defineProps(['username', 'name', 'email', 'tasksCompleted']);
   <aside
     class="transform shadow-2xl top-0 right-0 w-full md:w-1/2 lg:w-1/4 fixed h-full overflow-hidden rounded ease-in-out transition-all duration-300 z-30"
     :class="isOpen ? '-translate-x-0' : 'translate-x-full focus:ring-4 focus:ring-gray-300'">
-    <div class="backdrop-blur bg-white/30 w-full h-10 flex content-center">
+    <div class="backdrop-blur bg-white/30 w-full h-16 flex content-center">
       <button class="rounded-full pl-2" @click="isOpen = !isOpen"> <svg xmlns="http://www.w3.org/2000/svg" fill="none"
           viewBox="0 0 24 24" stroke-width="1.5" stroke="#BB342F" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round"
