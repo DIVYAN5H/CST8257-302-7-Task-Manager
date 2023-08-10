@@ -64,7 +64,7 @@ const form = useForm({
                 </div>
                 <div class="col-span-1">
 
-                    <button @click="$emit('close')" class="button w-full  rounded-full border"> Close </button>
+
                 </div>
                 <div class="col-span-2">
                     
@@ -77,6 +77,7 @@ const form = useForm({
         
     </div>
     </form>
+    <button @click="$emit('close')" class="button w-full  rounded-full border"> Close </button>
 
 
     <!--
