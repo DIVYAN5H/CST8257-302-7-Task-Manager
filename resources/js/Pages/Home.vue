@@ -75,7 +75,7 @@ onUpdated(() => {
 <template>
   <Head title="Home"> </Head>
   <Transition>
-    <div class="bg-texture-2 h-fit min-h-screen scroll-smooth">
+    <div class="bg-texture-6 h-fit min-h-screen scroll-smooth">
       <div class="w-full">
         <Navigation :username="username" :name="name" :email="page.props.email" :tasksCompleted="tasksCompleted">
         </Navigation>
