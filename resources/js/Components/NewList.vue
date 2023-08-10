@@ -23,14 +23,14 @@ const form = useForm({
 </script>
 <template>
     <form @submit.prevent="form.post('/newList')" class="text-white transition-all">
-        <div class="bg-white/20 h-48 w-100 p-4">
+        <div class="bg-white/20 h-auto w-100 p-4 rounded-lg">
             <div class="grid justify-center grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-4 mx-4">
                 <div class="col-span-2">
                     <label class="block text-sm font-bold my-1" for="title">
                         List Name
                     </label>
                     <input v-model="form.list" name="list"
-                        class="shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="rounded-full shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="list" type="text" />
                 </div>
                 <div class="col-span-1">
@@ -38,20 +38,20 @@ const form = useForm({
                         Priority
                     </label>
                     <select v-model="form.priority" name="priority"
-                        class=" shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="rounded-full shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="priority">
                         <option value="1">Low</option>
                         <option selected value="2">Medium</option>
                         <option value="3">High</option>
                     </select>
                 </div>
-                <div class="col-span-1">
+                <div class="col-span-2">
 
                     <label class="block text-sm font-bold mb-2" for="description">
                         Due Date
                     </label>
                     <input type="date" v-model="form.date" name="date" placeholder="dd-mm-yy"
-                    class="w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    class="rounded-full w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     id="date" />
                 </div>
                 <div class="col-span-1">
@@ -60,15 +60,21 @@ const form = useForm({
                     </label>
                     <input v-model="form.color" type="color" name="color" id="color"
                   
-                    class=" w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    class="rounded-full h-9 p-1 w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
-                <button @click="$emit('addedNewList')" type="submit" :disabled="form.processing" class="col-span-1 w-full h-1/2 rounded-full border">
-                Add List
-            </button>
+                <div class="col-span-1">
+
+                    <button @click="$emit('close')" class="button w-full  rounded-full border"> Close </button>
+                </div>
+                <div class="col-span-2">
+                    
+                    <button @click="$emit('addedNewList')" type="submit" :disabled="form.processing" class="button w-full  rounded-full border mb-2">
+                    Add List
+                </button>
+            </div>
         </div>
 
         
-        <button @click="$emit('close')"> Close </button>
     </div>
     </form>
 
