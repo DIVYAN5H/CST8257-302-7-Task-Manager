@@ -23,12 +23,16 @@ class FirebaseController extends Controller
     {
         $user = Session::get('user');
 
+
         $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
+        $userValue = $this->database->getReference('users/'. $user['username'] . '/completedTasks')->getValue();
+
         $userWithNewList = [
             "username" => $user['username'],
             "email" => $user['email'],
             "name" => $user['name'],
             "lists" => $userLists,
+            "completedTasks" => $userValue
         ];
 
         Session::put('user', $userWithNewList);
@@ -71,6 +75,7 @@ class FirebaseController extends Controller
             "email" => $request->email,
             "name" => $request->name,
             "password" => encrypt($request->password),
+            "completedTasks" => 0
         ];
 
         //this should run only after validation
@@ -81,6 +86,7 @@ class FirebaseController extends Controller
             "email" => $dataToSave['email'],
             "name" => $dataToSave['name'],
             "lists" => [],
+            "completedTasks" => 0
         ];
 
         Session::put('user', $user);
@@ -110,12 +116,14 @@ class FirebaseController extends Controller
 
         $userFromDB = $this->database->getReference('users/' . $request->username)->getValue();
 
+
         if (decrypt($userFromDB['password']) == $providedPassword) {
             $user = [
                 "username" => $userFromDB['username'],
                 "email" => $userFromDB['email'],
                 "name" => $userFromDB['name'],
                 "lists" => [],
+                "completedTasks" => $userFromDB['completedTasks'],
             ];
 
             Session::put('user', $user);
@@ -233,6 +241,22 @@ class FirebaseController extends Controller
         $taskId = $request->taskId;
 
         $username = Session::get('user')['username'];
+        $completedTasks = $this->database->getReference('users/' . $username . '/completedTasks')->getValue();
+
+        /*
+        if the task is already completed, and the new task is not completed:
+            subtract 1 from the users completed task count
+        if the task is not already completed, and the new task is completed:
+            add 1 to the users completed task count
+        otherwise:
+            do nothing
+        */
+
+        if($this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->getValue() == true && $request->status == false) {
+            $this->database->getReference('users/'. $username. '/completedTasks')->set($completedTasks - 1);
+        } else if($this->database->getReference('userTasks/'. $username. '/'. $listName. '/tasks'. '/'. $taskId. '/status')->getValue() == false && $request->status == true){
+            $this->database->getReference('users/'. $username. '/completedTasks')->set($completedTasks + 1);
+        }
 
 
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/taskDisplay')->set($request->taskDisplay);
