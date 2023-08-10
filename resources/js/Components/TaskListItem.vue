@@ -13,12 +13,20 @@ const form = useForm({
 });
 
 const completedForm = useForm({
-  status: props.status,
+  listName: props.listName,
+  taskId: props.taskId,
+  taskDisplay: props.taskDisplay,
+  status: ref(props.status),
 });
 
 const toggleStatusAndSubmit = () => {
   completedForm.status = !completedForm.status; // Invert the status
-  submitUpdateForm(); // Submit the form
+  submitUpdateForm1(); // Submit the form
+};
+const submitUpdateForm1 = () => {
+  completedForm.post('/taskUpdate', {
+    preserveScroll: true,
+  });
 };
 
 const submitUpdateForm = () => {
@@ -46,7 +54,7 @@ const submitDeleteForm = () => {
         </form>
       </div>
       <div class="grid grid-cols-2 items-center">
-        <form @submit.prevent="submitUpdateForm">
+        <form @submit.prevent="submitUpdateForm1">
           <button type="submit" class="">
             <svg @click="toggleStatusAndSubmit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="transparent"
               class="opacity-0 group-hover:opacity-100 w-8 h-8 pt-1">

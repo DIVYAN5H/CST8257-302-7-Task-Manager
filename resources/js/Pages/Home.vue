@@ -6,21 +6,20 @@ import Popop from "@/Components/Popup.vue";
 import TaskComponent from "@/Components/TaskComponent.vue";
 import NewList from "@/Components/NewList.vue";
 
-// Define the sorting function
+const page = usePage();
+const username = ref(page.props.username);
+let name = ref(page.props.name);
+const addingList = ref(false);
+let lists = ref(JSON.parse(page.props.lists));
+var tasksCompleted = getCompletedTasks(page.props.lists);
 
 
 function sortListsByPriority(listsArray) {
-  console.log(listsArray);
+
   if(true) {
   var object = JSON.parse(listsArray);
   var key = Object.entries(object);
-
   key.sort((a, b) => b[1].priority - a[1].priority);
-
-  console.log('Key:', key);
-
-  //return Object.fromEntries(key);
-  console.log(Object.fromEntries(key));  
   return Object.fromEntries(key);
   }
   else{
@@ -28,19 +27,32 @@ function sortListsByPriority(listsArray) {
   }
 }
 
-const page = usePage();
-const username = ref(page.props.username);
-let name = ref(page.props.name);
-const addingList = ref(false);
-let lists = ref(JSON.parse(page.props.lists));
-var tasksCompleted = 0;
-
+function getCompletedTasks(listsArray) {
+  let count = 0;
+  let newArray = Object.entries(JSON.parse(listsArray));
+  console.log('Getting Completed Start: ', JSON.parse(listsArray));
+  console.log('Testing Key Values: ', newArray);
+  for (const [, object] of newArray) {
+    console.log('Task Loop Inner: ', object);
+    const tasks = object.tasks;
+    for(const taskId in tasks) {
+      console.log('Task Loop Inner 2: ', taskId);
+      if(tasks[taskId].status == true) {
+        count++;
+      }
+    }
+  }
+  return count;
+};
 
 
 onUpdated(() => {
   console.log('onUpdated')
   lists.value = sortListsByPriority(page.props.lists);
+
+  console.log(getCompletedTasks(page.props.lists));
   name.value = page.props.name;
+
   //if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
   //  lists = sortListsByPriority(lists);
   //  Object.entries(lists).forEach((list) => {
@@ -55,14 +67,7 @@ onUpdated(() => {
   //  });
 
   //}
-
-  console.log('hello again');
-  console.log(lists);
 });
-
-
-
-  
 </script>
 
 
@@ -113,8 +118,6 @@ onUpdated(() => {
         <div class="flex w-full grow justify-center px-10 mt-10">
           <div class="grid grow w-100 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-4">
             <div  v-for="(list, listName) in lists" :key="listName">
-              {{ listName }}
-              {{ list }}
               <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date"
                 :tasks="list.tasks">
               </TaskComponent>

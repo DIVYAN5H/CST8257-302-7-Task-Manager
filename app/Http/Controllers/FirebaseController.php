@@ -216,7 +216,7 @@ class FirebaseController extends Controller
 
         $dataToSave = [
             "taskDisplay" => $request->taskDisplay,
-            "status" => $request->status ?? false
+            "status" => false
         ];
 
         $username = Session::get('user')['username'];
@@ -233,6 +233,7 @@ class FirebaseController extends Controller
         $taskId = $request->taskId;
 
         $username = Session::get('user')['username'];
+
 
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/taskDisplay')->set($request->taskDisplay);
         $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->set($request->status);
