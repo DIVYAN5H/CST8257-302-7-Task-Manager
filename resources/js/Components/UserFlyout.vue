@@ -20,11 +20,12 @@ onUpdated(() => { initials = getInitials(form.name); console.log(initials) });
 
 
 function getInitials(name) {
-
   const words = name.trim().split(/\s+/);
-  const initials = words.map(word => word.charAt(0).toUpperCase());
+  const maxInitials = 2; 
+  const initials = words
+    .slice(0, maxInitials) 
+    .map(word => word.charAt(0).toUpperCase());
   const initialsString = initials.join('');
-
   return initialsString;
 }
 </script>
@@ -49,18 +50,17 @@ function getInitials(name) {
             <div class="text-center text-sm">
                 {{ tasksCompleted }} Tasks Completed
             </div>
-            <div id="userInfoSection" class="grid grid-cols-2">
-                <div class="grid-cols-1 text-lg w-1/2 mx-auto py-16">
+            <div id="userInfoSection" class="grid grid-cols-2 mt-4 mb-5">
+                <div class="grid-cols-1 text-lg w-1/2 mx-auto">
                     <div class="mb-4 mt-2"> Name: </div>
                     <div> Password: </div>
                 </div>
-                <div class="grid-cols-1 text-lg w-1/2 py-16">
+                <div class="grid-cols-1 text-lg w-1/2 -translate-x-[1rem]">
                 <form @submit.prevent="form.post('/userUpdate')">
                     <input type="text" name="name" v-model="form.name" class="bg-transparent rounded-full w-40 mb-1">
                     <input type="text" name="password" v-model="form.password" placeholder="password" class="bg-transparent rounded-full w-40">
-                    <!-- <div> {{ email }}</div>
-                    <div>{{ username }}</div> -->
-                    <button type="submit" class="grid-cols-1 rounded-full bg-white/30 p-3 border hover:bg-white/40"> Update </button>
+                    
+                    <button type="submit" class="w-40 text-sm rounded-full bg-white/30 m-3 p-3 border hover:bg-white/40 mt-5 -translate-x-[5rem]"> Update </button>
                 </form>
                 </div>
             </div>

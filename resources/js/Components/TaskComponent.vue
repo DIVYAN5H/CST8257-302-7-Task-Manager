@@ -71,7 +71,7 @@ const submitUpdateTaskForm = async (taskId) => {
 
 
 <template>
-  <div class="w-100 bg-white/20  transition-all duration-400 ease-in-out overflow-hidden"
+  <div class="w-100 bg-white/20  transition-all duration-400 ease-in-out overflow-hidden rounded-t-lg"
     :class="isOpen ? 'h-96' : 'h-16'">
     <div class="text-white">
       <div class="grid grid-cols-1">
@@ -101,9 +101,9 @@ const submitUpdateTaskForm = async (taskId) => {
       </div>
     </div>
   </div>
-  <div @click="isOpen = !isOpen"
-    class="bg-white/20 hover:bg-white/30 mx-auto select-none  text-base cursor-pointer pt-1 mb-8">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+  <div @click="isOpen = !isOpen "
+    class="rounded-b-lg bg-white/20 hover:bg-white/30 mx-auto select-none  text-base cursor-pointer pt-1 mb-8">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"
       class="w-6 h-6 w-full transtion duration-200 delay-200 ease-in-out" :class="isOpen ? 'rotate-180' : 'rotate-0'">
       <path fill-rule="evenodd"
         d="M20.03 4.72a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 11.69l6.97-6.97a.75.75 0 011.06 0zm0 6a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 111.06-1.06L12 17.69l6.97-6.97a.75.75 0 011.06 0z"

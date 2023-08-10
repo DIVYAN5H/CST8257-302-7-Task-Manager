@@ -92,7 +92,7 @@ onUpdated(() => {
             <Transition enter-from-class="opacity-0 delay-500 duration-300" leave-to-class="opacity-0"
               enter-active-class="transition delay-200 duration-300" leave-active-class="transition duration-100">
               <button v-if="!addingList" @click="addingList = !addingList"
-                class="backdrop-blur w-100 bg-white/10 hover:bg-white/40 hover:border-solid group border-dashed border-2 transition-all duration-400 ease-in-out overflow-hidden h-24">
+                class="rounded-lg backdrop-blur w-100 bg-white/10 hover:bg-white/40 hover:border-solid group border-dashed border-2 transition-all duration-400 ease-in-out overflow-hidden h-24">
                 <div class="w-full h-full grid justify-items-center content-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="white"
