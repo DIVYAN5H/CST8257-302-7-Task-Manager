@@ -93,7 +93,7 @@ const submitUpdateTaskForm = async (taskId) => {
         </div>
 
         <div class="transition-all duration-200 h-8" :class="addingTask ? 'opacity-100' : 'opacity-0'">
-          <form class="w-full" @submit.prevent="form.post('/taskAdd')">
+          <form class="w-full" @submit.prevent="form.post('/taskAdd'), addingTask = !addingTask">
             <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md bg-white/30"
               v-model="form.taskDisplay" />
           </form>

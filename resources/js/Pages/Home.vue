@@ -33,7 +33,6 @@ onUpdated(() => {
   console.log('onUpdated')
   lists.value = sortListsByPriority(page.props.lists);
   tasksCompleted = ref(page.props.completedTasks);
-  console.log(getCompletedTasks(page.props.lists));
   name.value = page.props.name;
 });
 </script>
