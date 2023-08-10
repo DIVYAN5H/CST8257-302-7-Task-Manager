@@ -25,23 +25,20 @@ var tasksCompleted = 0;
 
 onUpdated(() => {
   lists.value = JSON.parse(page.props.lists);
-  if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
+  //if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
+  //  lists = sortListsByPriority(lists);
+  //  Object.entries(lists).forEach((list) => {
+  //    if (list[1].tasks) {
+  //      //if list have no task
+  //      Object.entries(list[1].tasks).forEach((task) => {
+  //        if (task[1].status) {
+  //          tasksCompleted++;
+  //        }
+  //      });
+  //    }
+  //  });
 
-    console.log('hello');
-    lists = sortListsByPriority(lists);
-
-    Object.entries(lists).forEach((list) => {
-      if (list[1].tasks) {
-        //if list have no task
-        Object.entries(list[1].tasks).forEach((task) => {
-          if (task[1].status) {
-            tasksCompleted++;
-          }
-        });
-      }
-    });
-
-  }
+  //}
 
   console.log('hello again');
   console.log(lists);
@@ -93,21 +90,17 @@ onUpdated(() => {
           <p>You can manage your tasks here based on their priority</p>
         </div>
 
-        <div class="flex justify-center">
-          <div class="main flex justify-between flex-row mt-10">
-            <div>
-              <div v-for="(list, listName) in lists" :key="listName">
-                <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date"
-                  :tasks="list.tasks">
-                </TaskComponent>
-              </div>
-              <Transition
-              enter-from-class="opacity-0 delay-400"
-              leave-to-class="opacity-0"
-              enter-active-class="transition delay-200 duration-300"
-              leave-active-class="transition duration-100">
+        <div class="flex w-full grow justify-center px-10 mt-10">
+          <div class="grid grow w-100 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-4">
+            <div v-for="(list, listName) in lists" :key="listName">
+              <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date"
+                :tasks="list.tasks">
+              </TaskComponent>
+            </div>
+            <Transition enter-from-class="opacity-0 delay-500 duration-300" leave-to-class="opacity-0"
+              enter-active-class="transition delay-200 duration-300" leave-active-class="transition duration-100">
               <button v-if="!addingList" @click="addingList = !addingList"
-                class="backdrop-blur w-[40rem] bg-white/10 hover:bg-white/40 group border-dashed border-2 transition-all duration-400 ease-in-out overflow-hidden h-24">
+                class="backdrop-blur w-100 bg-white/10 hover:bg-white/40 hover:border-solid group border-dashed border-2 transition-all duration-400 ease-in-out overflow-hidden h-24">
                 <div class="w-full h-full grid justify-items-center content-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="white"
@@ -116,22 +109,19 @@ onUpdated(() => {
                   </svg>
                 </div>
               </button>
-              </Transition> 
-              <Transition 
-              enter-from-class="opacity-0 delay-400"
-              leave-to-class="opacity-0"
-              enter-active-class="transition delay-200 duration-300"
-              leave-active-class="transition duration-0">
+            </Transition>
+            <Transition enter-from-class="opacity-0 delay-400" leave-to-class="opacity-0"
+              enter-active-class="transition delay-200 duration-300" leave-active-class="transition duration-0">
               <div v-if="addingList">
                 <NewList @close="addingList = !addingList"> </NewList>
               </div>
-              </Transition>
+            </Transition>
 
-            </div>
-            <div>
-              <h1></h1>
-            </div>
           </div>
+          <div>
+            <h1></h1>
+          </div>
+
         </div>
       </div>
     </div>

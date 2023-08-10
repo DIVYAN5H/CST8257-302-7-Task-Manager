@@ -22,6 +22,7 @@ const addingTask = ref(false);
 
 let tasks = ref(props.tasks);
 
+
 onUpdated(() => {
 
   tasks.value = props.tasks});
@@ -70,22 +71,22 @@ const submitUpdateTaskForm = async (taskId) => {
 
 
 <template>
-  <div class="backdrop-blur w-[40rem] bg-white/20  transition-all duration-400 ease-in-out overflow-hidden"
-    :class="isOpen ? 'h-96' : 'h-11'">
+  <div class="w-100 bg-white/20  transition-all duration-400 ease-in-out overflow-hidden"
+    :class="isOpen ? 'h-96' : 'h-16'">
     <div class="text-white">
       <div class="grid grid-cols-1">
-        <div class="bg-white/50 h-11  px-3 my-auto">
+        <div class=" bg-white/10 shadow-xl h-16">
           <TaskBadge :color="color" :date="date" :listName="listName"> {{ listName }} </TaskBadge>
         </div>
       </div>
       <div class="h-96 overflow-auto pb-20">
-        <div class="transition text-sm duration-100 ease-in py-5 px-8 grid grid-cols-1">
+        <div class="transition text-sm duration-100 ease-in py-5 px-2 grid grid-cols-1">
           <ul class="list-disc">
             <div v-for="(task, taskId) in tasks" :key="taskId">
               <TaskListItem :taskId="taskId" :listName="listName" :status="task.status" :taskDisplay="task.taskDisplay">
               </TaskListItem>
             </div>
-            <li @click="addingTask = !addingTask" class="hover:bg-white/20 select-none w-fit cursor-pointer">
+            <li @click="addingTask = !addingTask" class="hover:bg-white/20 ml-4 select-none w-fit cursor-pointer">
               Add New
             </li>
           </ul>
@@ -93,7 +94,7 @@ const submitUpdateTaskForm = async (taskId) => {
 
         <div class="transition-all duration-200 h-8" :class="addingTask ? 'opacity-100' : 'opacity-0'">
           <form class="w-full" @submit.prevent="form.post('/taskAdd')">
-            <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md backdrop-blur-lg bg-white/30"
+            <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md bg-white/30"
               v-model="form.taskDisplay" />
           </form>
         </div>
@@ -101,7 +102,7 @@ const submitUpdateTaskForm = async (taskId) => {
     </div>
   </div>
   <div @click="isOpen = !isOpen"
-    class="bg-white/20 hover:bg-white/30 mx-auto select-none rounded-b-lg text-base cursor-pointer pt-2 mb-8">
+    class="bg-white/20 hover:bg-white/30 mx-auto select-none  text-base cursor-pointer pt-1 mb-8">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
       class="w-6 h-6 w-full transtion duration-200 delay-200 ease-in-out" :class="isOpen ? 'rotate-180' : 'rotate-0'">
       <path fill-rule="evenodd"
