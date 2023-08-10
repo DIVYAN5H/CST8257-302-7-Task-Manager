@@ -7,12 +7,26 @@ import TaskComponent from "@/Components/TaskComponent.vue";
 import NewList from "@/Components/NewList.vue";
 
 // Define the sorting function
-const sortListsByPriority = (unSortedLists) => {
-  const listsArray = Object.entries(unSortedLists.value);
-  listsArray.sort((a, b) => b[1].priority - a[1].priority);
-  return Object.fromEntries(listsArray);
-};
 
+
+function sortListsByPriority(listsArray) {
+  console.log(listsArray);
+  if(true) {
+  var object = JSON.parse(listsArray);
+  var key = Object.entries(object);
+
+  key.sort((a, b) => b[1].priority - a[1].priority);
+
+  console.log('Key:', key);
+
+  //return Object.fromEntries(key);
+  console.log(Object.fromEntries(key));  
+  return Object.fromEntries(key);
+  }
+  else{
+    return [];
+  }
+}
 
 const page = usePage();
 const username = ref(page.props.username);
@@ -24,7 +38,8 @@ var tasksCompleted = 0;
 
 
 onUpdated(() => {
-  lists.value = JSON.parse(page.props.lists);
+  console.log('onUpdated')
+  lists.value = sortListsByPriority(page.props.lists);
   name.value = page.props.name;
   //if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
   //  lists = sortListsByPriority(lists);
@@ -44,6 +59,10 @@ onUpdated(() => {
   console.log('hello again');
   console.log(lists);
 });
+
+
+
+  
 </script>
 
 
@@ -93,7 +112,9 @@ onUpdated(() => {
 
         <div class="flex w-full grow justify-center px-10 mt-10">
           <div class="grid grow w-100 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-4">
-            <div v-for="(list, listName) in lists" :key="listName">
+            <div  v-for="(list, listName) in lists" :key="listName">
+              {{ listName }}
+              {{ list }}
               <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date"
                 :tasks="list.tasks">
               </TaskComponent>
@@ -134,6 +155,7 @@ import { ref } from "vue";
 import { onMounted } from "vue";
 import { onUnmounted } from "vue";
 import { onUpdated } from "vue";
+import { onBeforeMount } from "vue";
 
 export default {
   setup() {
