@@ -22,9 +22,10 @@ const addingTask = ref(false);
 
 let tasks = ref(props.tasks);
 
-onUpdated(() => (tasks.value = props.tasks));
+onUpdated(() => {
 
-const id = props.taskID;
+  tasks.value = props.tasks});
+
 
 const form = useForm({
   taskDisplay: null,
@@ -69,11 +70,11 @@ const submitUpdateTaskForm = async (taskId) => {
 
 
 <template>
-  <div class="backdrop-blur w-[38.8rem] bg-white/20 rounded-t-lg transition-all duration-400 ease-in-out overflow-hidden"
-    :class="isOpen ? 'h-96' : 'h-20'">
+  <div class="backdrop-blur w-[40rem] bg-white/20  transition-all duration-400 ease-in-out overflow-hidden"
+    :class="isOpen ? 'h-96' : 'h-11'">
     <div class="text-white">
       <div class="grid grid-cols-1">
-        <div class="bg-white/50 h-full rounded-t-lg px-3">
+        <div class="bg-white/50 h-11  px-3 my-auto">
           <TaskBadge :color="color" :date="date" :listName="listName"> {{ listName }} </TaskBadge>
         </div>
       </div>

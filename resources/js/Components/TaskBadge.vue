@@ -28,9 +28,9 @@ const submitDeleteForm = () => {
       class="rounded rounded-full w-5 h-5 my-auto mr-5"
     ></div>
 <slot></slot>
-<div class="text-base my-1 pl-4 absolute right-5 mr-3 ">{{ date }} </div>
-<form @submit.prevent="submitDeleteForm">
-        <button type="submit" class="absolute right-0">
+<div class="text-base my-2 pl-4 absolute right-5 mr-3 ">Due: {{ date }} </div>
+<form @submit.prevent="submitDeleteForm" class="h-full my-2">
+        <button type="submit" class="absolute my-2 right-0">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

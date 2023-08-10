@@ -22,21 +22,9 @@ const form = useForm({
 });
 </script>
 <template>
-  <Head title="New"></Head>
+    <button @click="$emit('close')"> Close </button>
 
-  <div
-    class="flex justify-start flex-col items-center bg-texture-5 h-fit min-h-screen scroll-smooth">
-    <div class="w-full">
-      <Navigation :username="user" :name="name" :email="email" :password="password"></Navigation>
-    </div>
-    <div class="text-4xl text-white py-10">
-      <h1>Add a New List</h1>
-    </div>
-
-    <div
-      class="w-2/5 backdrop-blur-lg bg-white/30 drop-shadow-xl rounded-lg new-box-border"
-    >
-      <form @submit.prevent="form.post('/newList')" class="px-8 pt-6 pb-8 text-white">
+      <form @submit.prevent="form.post('/newList')" class="px-8 pt-6 pb-8 text-white transition-all">
         <div class="mb-6">
           <label class="block  text-sm font-bold mb-2" for="title">
             List Name
@@ -122,6 +110,6 @@ const form = useForm({
           </button>
         </div>
       </form>
-    </div>
-  </div>
+
+
 </template>
