@@ -9,12 +9,15 @@ const props = defineProps(["taskId", "taskDisplay", "listName", "status"]);
 const form = useForm({
   listName: props.listName,
   taskId: props.taskId,
-  status: props.status,
   taskDisplay: props.taskDisplay
 });
 
+const completedForm = useForm({
+  status: props.status,
+});
+
 const toggleStatusAndSubmit = () => {
-  form.status = !form.status; // Invert the status
+  completedForm.status = !completedForm.status; // Invert the status
   submitUpdateForm(); // Submit the form
 };
 
@@ -36,7 +39,7 @@ const submitDeleteForm = () => {
     <li class="select-none group hover:bg-white/40 py-1 w-full flex cursor-pointer">
       <div class="w-4/5">
         <form @submit.prevent="submitUpdateForm">
-          <input class="w-10/12 bg-transparent border-x-0 border-y-0 border-r-0" :class="form.status ? 'border-l-4 border-green-500' : ''" type="text" v-model="form.taskDisplay">
+          <input class="w-10/12 bg-transparent border-x-0 border-y-0 border-r-0" :class="completedForm.status ? 'border-l-4 border-green-500' : ''" type="text" v-model="form.taskDisplay">
           <button v-if="form.isDirty" type="submit">
             Update
           </button>
@@ -48,7 +51,7 @@ const submitDeleteForm = () => {
             <svg @click="toggleStatusAndSubmit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="transparent"
               class="opacity-0 group-hover:opacity-100 w-8 h-8 pt-1">
               <!-- X -->
-              <path v-if="form.status"
+              <path v-if="completedForm.status"
                 d="M6.99486 7.00636C6.60433 7.39689 6.60433 8.03005 6.99486 8.42058L10.58 12.0057L6.99486 15.5909C6.60433 15.9814 6.60433 16.6146 6.99486 17.0051C7.38538 17.3956 8.01855 17.3956 8.40907 17.0051L11.9942 13.4199L15.5794 17.0051C15.9699 17.3956 16.6031 17.3956 16.9936 17.0051C17.3841 16.6146 17.3841 15.9814 16.9936 15.5909L13.4084 12.0057L16.9936 8.42059C17.3841 8.03007 17.3841 7.3969 16.9936 7.00638C16.603 6.61585 15.9699 6.61585 15.5794 7.00638L11.9942 10.5915L8.40907 7.00636Z"
                 fill="currentColor" />
               <!-- ✓  -->
