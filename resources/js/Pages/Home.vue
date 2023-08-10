@@ -79,10 +79,7 @@ onUpdated(() => {
       <div class="w-full">
         <Navigation :username="username" :name="name" :email="page.props.email" :tasksCompleted="tasksCompleted">
         </Navigation>
-
-        <button @click="sortListsByName"> By Name </button>
-        <button @click="sortListsByPriority"> By Priority </button>
-
+        
         <div class="flex justify-center mt-10">
           <h1 class="text-2xl text-white">
             Welcome to your dashboard, {{ $page.props.name }}.
@@ -93,18 +90,23 @@ onUpdated(() => {
         <div class="text-white flex justify-center">
           <p>You can manage your tasks here based on their priority</p>
         </div>
-
-        <div class="flex w-full grow justify-center px-10 mt-10">
+        
+        <div class="flex justify-start text-white">
+          
+          <button @click="sortListsByName" class="button py-2 px-4  rounded-full border m-2"> By Name </button>
+          <button @click="sortListsByPriority" class="button py-2 px-4  rounded-full border m-2"> By Priority </button>
+        </div>
+        <div class="flex w-full grow justify-center px-10 mt-5">
           <div class="grid grow w-100 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-4">
             <div  v-for="(list, listName) in lists" :key="listName">
               <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date"
-                :tasks="list.tasks">
-              </TaskComponent>
+              :tasks="list.tasks">
+            </TaskComponent>
             </div>
             <Transition enter-from-class="opacity-0 delay-500 duration-300" leave-to-class="opacity-0"
               enter-active-class="transition delay-200 duration-300" leave-active-class="transition duration-100">
               <button v-if="!addingList" @click="addingList = !addingList"
-                class="backdrop-blur w-100 bg-white/10 hover:bg-white/40 hover:border-solid group border-dashed border-2 transition-all duration-400 ease-in-out overflow-hidden h-24">
+                class="rounded-lg backdrop-blur w-100 bg-white/10 hover:bg-white/40 hover:border-solid group border-dashed border-2 transition-all duration-400 ease-in-out overflow-hidden h-24">
                 <div class="w-full h-full grid justify-items-center content-center">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="white"
