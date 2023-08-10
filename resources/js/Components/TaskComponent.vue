@@ -101,7 +101,7 @@ const submitUpdateTaskForm = async (taskId) => {
       </div>
     </div>
   </div>
-  <div @click="isOpen = !isOpen "
+  <div @click="isOpen = !isOpen, addingTask = false"
     class="rounded-b-lg bg-white/20 hover:bg-white/30 mx-auto select-none  text-base cursor-pointer pt-1 mb-8">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"
       class="w-6 h-6 w-full transtion duration-200 delay-200 ease-in-out" :class="isOpen ? 'rotate-180' : 'rotate-0'">

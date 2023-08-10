@@ -4,6 +4,7 @@ import { Link } from "@inertiajs/vue3";
 import { reactive, ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import Navigation from "@/Components/Navigation.vue";
+import ColourPickComponent from "./ColourPickComponent.vue";
 
 const page = usePage();
 const user = page.props.user;
@@ -13,6 +14,9 @@ const password = page.props.password
 
 console.log(password);
 
+function setColour(colour) {
+    form.color = colour;
+};
 
 const form = useForm({
     list: null,
@@ -23,14 +27,14 @@ const form = useForm({
 </script>
 <template>
     <form @submit.prevent="form.post('/newList')" class="text-white transition-all">
-        <div class="bg-white/20 h-auto w-100 p-4 rounded-lg">
+        <div class="bg-white/20 h-auto w-100 p-4 rounded-t-lg">
             <div class="grid justify-center grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-4 mx-4">
                 <div class="col-span-2">
                     <label class="block text-sm font-bold my-1" for="title">
                         List Name
                     </label>
                     <input v-model="form.list" name="list"
-                        class="rounded-full shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="rounded rounded-md shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="list" type="text" />
                 </div>
                 <div class="col-span-1">
@@ -38,7 +42,7 @@ const form = useForm({
                         Priority
                     </label>
                     <select v-model="form.priority" name="priority"
-                        class="rounded-full shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        class="rounded-md shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="priority">
                         <option value="1">Low</option>
                         <option selected value="2">Medium</option>
@@ -51,33 +55,40 @@ const form = useForm({
                         Due Date
                     </label>
                     <input type="date" v-model="form.date" name="date" placeholder="dd-mm-yy"
-                    class="rounded-full w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="date" />
+                        class="rounded-md w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="date" />
                 </div>
-                <div class="col-span-1">
+                <div class="col-span-1 group">
                     <label class="block text-sm font-bold mb-2" for="description">
                         Color
                     </label>
-                    <input v-model="form.color" type="color" name="color" id="color"
-                  
-                    class="rounded-full h-9  w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    <div class="relative">
+                        <input v-model="form.color" disabled type="color" name="color" id="color"
+                            class="rounded-full h-10 z-10 w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                        <ColourPickComponent class="opacity-0 scale-0 absolute inset-0 z-0 transition duration-200 group-hover:opacity-100 group-hover:scale-100"
+                            @colour="setColour"></ColourPickComponent>
+                    </div>
+
                 </div>
                 <div class="col-span-1">
 
 
                 </div>
-                <div class="col-span-2">
-                    
-                    <button @click="$emit('addedNewList')" type="submit" :disabled="form.processing" class="button w-full  rounded-full border mb-2">
-                    Add List
-                </button>
-            </div>
-        </div>
 
-        
-    </div>
+                <div class="col-span-4">
+
+                    <button @click="$emit('addedNewList')" type="submit" :disabled="form.processing"
+                        class="button w-full  rounded-full border mb-2">
+                        Add List
+                    </button>
+                </div>
+            </div>
+
+
+
+        </div>
     </form>
-    <button @click="$emit('close')" class="button w-full  rounded-full border"> Close </button>
+    <button @click="$emit('close')" class="hover:bg-white/60 rounded-b-lg bg-white/10 w-full transition duration-200"> Cancel </button>
 
 
     <!--

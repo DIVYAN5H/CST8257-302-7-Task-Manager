@@ -20,7 +20,8 @@
   }
 
   .button:hover{
-    background-color: var(--color-main);
+    background-color: white;
+    color: var(--black);
 
   }
 
@@ -126,10 +127,10 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 
 
 .tmWhite{
-  background-color: white;
+  background-color: #FFFAFF;
 }
 .tmBlue{
-  background-color: #007bff;
+  background-color: #8390FA;
 }
 
 .tmGreen{
@@ -138,7 +139,7 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 
 
 .tmRed{
-  background-color: #dc3545;
+  background-color: #CE5374;
 }
 
 .tmYellow{
@@ -146,5 +147,5 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 }
 
 .tmPurple{
-  background-color: #6f42c1;
+  background-color: #372554;
 }
