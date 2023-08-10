@@ -149,3 +149,27 @@ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 .tmPurple{
   background-color: #372554;
 }
+
+.border-tm-white{
+  border-color: #FFFAFF;
+}
+
+.border-tm-blue{
+  border-color: #8390FA;
+}
+
+.border-tm-green{
+  border-color: #28a745;
+}
+
+.border-tm-red{
+  border-color: #CE5374;
+}
+
+.border-tm-yellow{
+  border-color: #ffc107;
+}
+
+.border-tm-purple{
+  border-color: #372554;
+}

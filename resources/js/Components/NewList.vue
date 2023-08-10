@@ -64,7 +64,7 @@ const form = useForm({
                     </label>
                     <div class="relative">
                         <input v-model="form.color" disabled type="color" name="color" id="color"
-                            class="rounded-full h-10 z-10 w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                            class="rounded-full h-10 z-10 w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                         <ColourPickComponent class="opacity-0 scale-0 absolute inset-0 z-0 transition duration-200 group-hover:opacity-100 group-hover:scale-100"
                             @colour="setColour"></ColourPickComponent>
                     </div>

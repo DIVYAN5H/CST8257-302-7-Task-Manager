@@ -4,7 +4,7 @@ import { useForm } from "@inertiajs/vue3";
 
 const completed = ref(false);
 
-const props = defineProps(["taskId", "taskDisplay", "listName", "status"]);
+const props = defineProps(["taskId", "taskDisplay", "listName", "status", "colour"]);
 
 const form = useForm({
   listName: props.listName,
@@ -47,7 +47,7 @@ const submitDeleteForm = () => {
     <li class="select-none group hover:bg-white/40 py-1 w-full flex cursor-pointer">
       <div class="w-4/5">
         <form @submit.prevent="submitUpdateForm">
-          <input class="w-10/12 bg-transparent border-x-0 border-y-0 border-r-0" :class="completedForm.status ? 'border-l-4 border-green-500' : ''" type="text" v-model="form.taskDisplay">
+          <input class="w-10/12 bg-transparent border-x-0 border-y-0 border-r-0" :class="completedForm.status ? 'border-l-4' : ''" :style="{borderColor: props.colour}" type="text" v-model="form.taskDisplay">
           <button v-if="form.isDirty" type="submit">
             Update
           </button>
