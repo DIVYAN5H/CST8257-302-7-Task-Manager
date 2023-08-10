@@ -91,7 +91,7 @@ onUpdated(() => {
           <p>You can manage your tasks here based on their priority</p>
         </div>
         
-        <div class="  w-screen justify-center lg:ml-10 md:justify-start lg:justify-start flex text-white">
+        <div class=" transition transition-all duration-200 w-screen justify-center md:ml-10 lg:ml-10 md:justify-start lg:justify-start flex text-white">
           
           <button @click="sortListsByName" class="button py-2 px-4  rounded-full border m-2"> By Name </button>
           <button @click="sortListsByPriority" class="button py-2 px-4  rounded-full border m-2"> By Priority </button>
