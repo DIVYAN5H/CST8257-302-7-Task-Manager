@@ -51,8 +51,8 @@ const form = useForm({
                         Due Date
                     </label>
                     <input type="date" v-model="form.date" name="date" placeholder="dd-mm-yy"
-                        class="w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        id="date" />
+                    class="w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="date" />
                 </div>
                 <div class="col-span-1">
                     <label class="block  text-sm font-bold mb-2" for="description">
@@ -60,15 +60,16 @@ const form = useForm({
                     </label>
                     <input v-model="form.color" type="color" name="color" id="color"
                   
-                        class=" w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    class=" w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
                 <button @click="$emit('addedNewList')" type="submit" :disabled="form.processing" class="col-span-1 w-full h-1/2 rounded-full border">
                 Add List
             </button>
-            </div>
-
-
         </div>
+
+        
+        <button @click="$emit('close')"> Close </button>
+    </div>
     </form>
 
 
@@ -136,5 +137,4 @@ const form = useForm({
         </div>
     </form>
 -->
-    <button @click="$emit('close')"> Close </button>
 </template>
