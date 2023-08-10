@@ -15,8 +15,8 @@ const sortListsByPriority = (unSortedLists) => {
 
 
 const page = usePage();
-const username = page.props.username;
-const name = page.props.name;
+const username = ref(page.props.username);
+let name = ref(page.props.name);
 const addingList = ref(false);
 let lists = ref(JSON.parse(page.props.lists));
 var tasksCompleted = 0;
@@ -25,6 +25,7 @@ var tasksCompleted = 0;
 
 onUpdated(() => {
   lists.value = JSON.parse(page.props.lists);
+  name.value = page.props.name;
   //if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
   //  lists = sortListsByPriority(lists);
   //  Object.entries(lists).forEach((list) => {

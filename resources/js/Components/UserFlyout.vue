@@ -1,5 +1,8 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import { onUpdated, ref } from 'vue';
+
+
 const props = defineProps(['username', 'email', 'name', 'tasksCompleted']);
 
 
@@ -12,7 +15,9 @@ const form = useForm({
  password: ''
 });
 
-const initials = getInitials(form.name);
+let initials = ref(getInitials(props.name));
+onUpdated(() => { initials = getInitials(form.name); console.log(initials) });
+
 
 function getInitials(name) {
 
