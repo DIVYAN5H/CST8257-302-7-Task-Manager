@@ -62,7 +62,7 @@ const form = useForm({
                   
                         class=" w-full h-2/3 shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                 </div>
-                <button type="submit" :disabled="form.processing" class="col-span-1 w-full h-1/2 rounded-full border">
+                <button @click="$emit('addedNewList')" type="submit" :disabled="form.processing" class="col-span-1 w-full h-1/2 rounded-full border">
                 Add List
             </button>
             </div>

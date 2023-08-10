@@ -104,8 +104,8 @@ onUpdated(() => {
             </Transition>
             <Transition enter-from-class="opacity-0 delay-400" leave-to-class="opacity-0"
               enter-active-class="transition delay-200 duration-300" leave-active-class="transition duration-0">
-              <div v-if="addingList">
-                <NewList @close="addingList = !addingList"> </NewList>
+              <div v-if="addingList" >
+                <NewList @close="addingList = !addingList" @addedNewList="addingList = !addingList"> </NewList>
               </div>
             </Transition>
 
