@@ -16,13 +16,16 @@ const sortListsByPriority = (unSortedLists) => {
 const page = usePage();
 const username = page.props.username;
 const name = page.props.name;
-
-var lists = [];
+let lists = ref(JSON.parse(page.props.lists));
 var tasksCompleted = 0;
 
-if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
-  lists = ref(JSON.parse(page.props.lists));
 
+
+onUpdated(() => {
+  lists.value = JSON.parse(page.props.lists);
+  if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
+  lists = ref(JSON.parse(page.props.lists));
+  console.log('hello');
   lists = sortListsByPriority(lists);
 
   Object.entries(lists).forEach((list) => {
@@ -37,12 +40,8 @@ if (page.props.lists != "null" && Object.entries(page.props.lists).length > 0) {
   });
 
 }
-
-onUpdated(() => {
-  lists.value = JSON.parse(page.props.lists);
-  lists = sortListsByPriority(lists);
-
-  console.log(lists)
+  console.log('hello again');
+  console.log(lists);
 });
 </script>
 
@@ -83,55 +82,6 @@ onUpdated(() => {
           :tasksCompleted="tasksCompleted"
         ></Navigation>
 
-        <!--This is a popup that will show up when a user clicks a task so tehy can add more subtasks???-->
-
-        <!-- <div v-if="showPopup" class="popup">
-          <Popup class="popup-box box-borders" v-if="showPopup">
-            <h1 class="text-xl">The task opened!</h1>
-
-            <ul>
-              <li class="my-3">
-                <div class="flex items-center pl-4 border border-gray-200 rounded-full ">
-                  <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
-                    class="w-4 h-4 text-blue-600 bg-blue rounded ">
-                  <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor
-                    sit
-                    amet consectet</label>
-                </div>
-              </li>
-              <li class="my-3">
-                <div class="flex items-center pl-4 border border-gray-200 rounded-full ">
-                  <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
-                    class="w-4 h-4 text-blue-600 bg-blue rounded ">
-                  <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor
-                    sit
-                    amet consectetur a</label>
-                </div>
-              </li>
-              <li class="my-3">
-                <div class="flex items-center pl-4 border border-gray-200 rounded-full ">
-                  <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
-                    class="w-4 h-4 text-blue-600 bg-blue rounded ">
-                  <label for="bordered-checkbox-2" class="w-full py-2 text-sm font-medium text-white">Lorem ipsum dolor
-                    sit
-                    amet consec</label>
-                </div>
-              </li>
-            </ul>
-
-            <button class="button py-2 px-4 mr-2 rounded-full focus:outline-none focus:shadow-outline">
-              +
-            </button>
-
-            <button @click="showPopup = false"
-              class="button py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">
-              Close
-            </button>
-
-          </Popup>
-        </div> -->
-
-        <!--------------------------------------------------------------------------------->
 
         <div class="flex justify-center mt-10">
           <h1 class="text-2xl text-white">

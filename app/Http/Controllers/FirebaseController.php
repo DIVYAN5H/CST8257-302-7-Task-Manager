@@ -24,7 +24,6 @@ class FirebaseController extends Controller
         $user = Session::get('user');
 
         $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
-
         $userWithNewList = [
             "username" => $user['username'],
             "email" => $user['email'],
@@ -173,15 +172,23 @@ class FirebaseController extends Controller
     {
         $user = Session::get('user');
 
+        $listName = $request->listName;
+        $listToAdd =[
+            'color' => $request->color,
+            'priority' => $request->priority,
+            'date' => $request->date,
+        ];
+
         $listName = $request->list;
         $color = $request->color;
         $priority = $request->priority;
         $date = $request->date;
 
+
         // should run after validation
-        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/color")->set($color);
-        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/priority")->set($priority);
-        $this->database->getReference('userTasks/' . $user['username'] . "/" . $listName . "/date")->set($date);
+
+        $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->set($listToAdd);
+
 
         return redirect()->route('home');
     }

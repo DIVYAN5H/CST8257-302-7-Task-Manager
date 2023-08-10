@@ -80,10 +80,6 @@ const submitUpdateTaskForm = async (taskId) => {
       <div class="h-96 overflow-auto pb-20">
         <div class="transition text-sm duration-100 ease-in py-5 px-8 grid grid-cols-1">
           <ul class="list-disc">
-
-
-
-
             <div v-for="(task, taskId) in tasks" :key="taskId">
               <TaskListItem :taskId="taskId" :listName="listName" :status="task.status" :taskDisplay="task.taskDisplay">
               </TaskListItem>
@@ -95,7 +91,7 @@ const submitUpdateTaskForm = async (taskId) => {
         </div>
 
         <div class="transition-all duration-200 h-8" :class="addingTask ? 'opacity-100' : 'opacity-0'">
-          <form class="w-full" @submit.prevent="submitAddTaskForm">
+          <form class="w-full" @submit.prevent="form.post('/taskAdd')">
             <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md backdrop-blur-lg bg-white/30"
               v-model="form.taskDisplay" />
           </form>
