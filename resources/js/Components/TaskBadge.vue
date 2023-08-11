@@ -37,7 +37,7 @@ const submitDeleteForm = () => {
     <!-- <button @click="color = !color" :class=" color ? 'bg-white ring-4 ring-['+ color +']' : 'bg-black ring-4 ring-['+color+']'" class="rounded rounded-full  w-2 h-2 my-auto mr-2">
     </button> -->
     <div :style="{ backgroundColor: color }" class="h-full mr-4"></div>
-    <div class="col-span-6">
+    <div class="col-span-6 py-2">
       <slot></slot>
   
       <hr />
