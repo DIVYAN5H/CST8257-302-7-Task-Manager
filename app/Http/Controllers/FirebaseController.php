@@ -364,11 +364,13 @@ class FirebaseController extends Controller
 
     public function addList(Request $request)
     {
+        $user = Session::get('user');
+
         $validationResult = $this->listValidation($request);
 
-        if (empty($validationResult)) {
+        $listExists = $this->database->getReference('userTasks/' . $user['username'] . '/' . $request->list)->getSnapshot()->exists();
 
-            $user = Session::get('user');
+        if (empty($validationResult) && !$listExists) {
 
             $listName = $this->sanitize($request->list);
             $listToAdd = [
