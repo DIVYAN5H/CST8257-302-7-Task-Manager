@@ -23,6 +23,7 @@ const addingTask = ref(false);
 let tasks = ref(props.tasks);
 let completedTasks = ref(0);
 let totalTasks = ref(0);
+let priority = ref(props.priority);
 
 
 function getCount(status) {
@@ -107,7 +108,7 @@ const submitUpdateTaskForm = async (taskId) => {
     <div class="text-white">
       <div class="grid grid-cols-1">
         <div class=" bg-white/10 shadow-xl h-16">
-          <TaskBadge :color="color" :date="date" :listName="listName" :completed="completedTasks" :total="totalTasks"> {{ listName }}
+          <TaskBadge :priority="priority" :color="color" :date="date" :listName="listName" :completed="completedTasks" :total="totalTasks"> {{ listName }}
           </TaskBadge>
         </div>
       </div>
