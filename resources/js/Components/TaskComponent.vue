@@ -103,10 +103,10 @@ const submitUpdateTaskForm = async (taskId) => {
 
 <template>
   <div class="w-50 bg-white/20  transition-all duration-400 ease-in-out overflow-hidden rounded-t-lg"
-    :class="isOpen ? 'h-96' : 'h-16'">
+    :class="isOpen ? 'h-96' : 'h-20'">
     <div class="text-white">
       <div class="grid grid-cols-1">
-        <div class=" bg-white/10 shadow-xl h-16">
+        <div class=" bg-white/10 shadow-xl h-fit">
           <TaskBadge :priority="priority" :color="color" :date="date" :listName="listName" :completed="completedTasks" :total="totalTasks"> {{ listName }}
           </TaskBadge>
         </div>
@@ -135,9 +135,9 @@ const submitUpdateTaskForm = async (taskId) => {
     </div>
   </div>
   <div @click="isOpen = !isOpen, addingTask = false"
-    class="rounded-b-lg bg-white/20 hover:bg-white/30 mx-auto select-none  text-base cursor-pointer pt-1 mb-8">
+    class="rounded-b-lg bg-white/20 hover:bg-white/30 mx-auto select-none  text-base cursor-pointer shadow-lg mb-8">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"
-      class="w-6 h-6 w-full transtion duration-200 delay-200 ease-in-out" :class="isOpen ? 'rotate-180' : 'rotate-0'">
+      class="w-5 h-5 w-full transtion duration-200 delay-200 ease-in-out" :class="isOpen ? 'rotate-180' : 'rotate-0'">
       <path fill-rule="evenodd"
         d="M20.03 4.72a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 11.69l6.97-6.97a.75.75 0 011.06 0zm0 6a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 111.06-1.06L12 17.69l6.97-6.97a.75.75 0 011.06 0z"
         clip-rule="evenodd" />
