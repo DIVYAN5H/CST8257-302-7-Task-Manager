@@ -72,7 +72,21 @@ class FirebaseController extends Controller
             return $validator->errors()->toArray(); // Return errors indicate validation failure
         }
 
-        // Return emtpty array to indicate successful validation
+        // Check if username and listName already exist in Firebase
+        $providedUsername = $request->username;
+        $listName = $request->listName;
+
+        $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
+        $listExists = $this->database->getReference('lists/' . $listName)->getSnapshot()->exists();
+
+        if ($userExists) {
+            return ['user' => 'Username already exists'];
+        }
+        if ($listExists) {
+            return ['listName' => 'listName already exists'];
+        }
+
+        // Return an empty array to indicate successful validation
         return [];
     }
 
