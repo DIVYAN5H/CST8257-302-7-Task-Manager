@@ -1,9 +1,24 @@
 <script setup>
 import { usePage, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-const props = defineProps(['color', 'date', 'listName', 'completed', 'total']);
+const props = defineProps(['color', 'date', 'listName', 'completed', 'total', 'priority',]);
 
-let completedStatus = ref(props.completed);
+let priority = convertPriority(props.priority);
+
+console.log(typeof(props.priority));
+
+function convertPriority(priority) {
+  switch (priority) {
+    case '1':
+      return 'Low';
+    case '2':
+      return 'Medium';
+    case '3':
+      return 'High';
+    default:
+      return 'Low';
+  }
+};
 
 const form = useForm({
   listName: props.listName,
@@ -22,9 +37,9 @@ const submitDeleteForm = () => {
     <!-- <button @click="color = !color" :class=" color ? 'bg-white ring-4 ring-['+ color +']' : 'bg-black ring-4 ring-['+color+']'" class="rounded rounded-full  w-2 h-2 my-auto mr-2">
     </button> -->
     <div :style="{ backgroundColor: color }" class="h-full mr-4"></div>
-    <div class="col-span-5">
+    <div class="col-span-6">
       <slot></slot>
-
+  
       <hr />
       <div class="text-sm flex items-center">
         <div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
@@ -41,11 +56,13 @@ const submitDeleteForm = () => {
               d="M2 4.5A2.5 2.5 0 014.5 2h11a2.5 2.5 0 010 5h-11A2.5 2.5 0 012 4.5zM2.75 9.083a.75.75 0 000 1.5h14.5a.75.75 0 000-1.5H2.75zM2.75 12.663a.75.75 0 000 1.5h14.5a.75.75 0 000-1.5H2.75zM2.75 16.25a.75.75 0 000 1.5h14.5a.75.75 0 100-1.5H2.75z" />
           </svg>
         </div>
-        <div v-if="total > 0" class="h-full  ml-1 pt-1 flex items-center font-normal"> {{ parseInt((completed / total) * 100) }}% Completed</div>
-        <div></div>
+        <div v-if="total > 0" class="h-full border-r-2 pr-2 ml-1 pt-1 flex items-center font-normal"> {{ parseInt((completed / total) * 100) }}% Completed</div>
+        <span class=" ml-6 mt-1 text-xs p-1 rounded-lg border border-white"> {{ priority }} </span>
       </div>
+      
     </div>
     <div class="opacity-0 group-hover:opacity-100 right-0 ml-4 mt-2">
+      
       <form @submit.prevent="submitDeleteForm" class="h-full">
         <button type="submit" class="">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="opacity-100 w-5 h-5">
