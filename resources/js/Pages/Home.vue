@@ -7,7 +7,6 @@ import TaskComponent from "@/Components/TaskComponent.vue";
 import NewList from "@/Components/NewList.vue";
 
 const page = usePage();
-console.log(page.props);
 const username = ref(page.props.username);
 let name = ref(page.props.name);
 const addingList = ref(false);

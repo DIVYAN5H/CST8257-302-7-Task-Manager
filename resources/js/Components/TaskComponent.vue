@@ -12,7 +12,6 @@ const props = defineProps([
   "listName",
   "tasks",
   "priority",
-  "tasks",
   "date",
   "color",
 ]);
@@ -21,11 +20,27 @@ const isOpen = ref(false);
 const addingTask = ref(false);
 
 let tasks = ref(props.tasks);
+let completedTasks = ref(0);
+let totalTasks = ref(0);
+
+
+function getCount(status) {
+  let c = 0;
+  console.log('Emit Status', status);
+  for (let i in props.tasks) {
+    c = c + 1;
+  };
+  return c;
+}
 
 
 onUpdated(() => {
+  tasks.value = props.tasks
+  totalTasks = getCount(1);
+  console.log('Updated Total Tasks', totalTasks);
+});
 
-  tasks.value = props.tasks});
+
 
 
 const form = useForm({
@@ -71,19 +86,21 @@ const submitUpdateTaskForm = async (taskId) => {
 
 
 <template>
-  <div class="w-100 bg-white/20  transition-all duration-400 ease-in-out overflow-hidden rounded-t-lg"
+  <div class="w-50 bg-white/20  transition-all duration-400 ease-in-out overflow-hidden rounded-t-lg"
     :class="isOpen ? 'h-96' : 'h-16'">
     <div class="text-white">
       <div class="grid grid-cols-1">
         <div class=" bg-white/10 shadow-xl h-16">
-          <TaskBadge :color="color" :date="date" :listName="listName"> {{ listName }} </TaskBadge>
+          <TaskBadge :color="color" :date="date" :listName="listName" :completed="totalTasks"> {{ listName }}
+          </TaskBadge>
         </div>
       </div>
       <div class="h-96 overflow-auto pb-20">
         <div class="transition text-sm duration-100 ease-in py-5 px-2 grid grid-cols-1">
           <ul class="list-disc">
             <div v-for="(task, taskId) in tasks" :key="taskId">
-              <TaskListItem :taskId="taskId" :listName="listName" :colour="props.color" :status="task.status" :taskDisplay="task.taskDisplay">
+              <TaskListItem @update="getCount" :taskId="taskId" :listName="listName" :colour="props.color"
+                :status="task.status" :taskDisplay="task.taskDisplay">
               </TaskListItem>
             </div>
             <li @click="addingTask = !addingTask" class="hover:bg-white/20 ml-4 select-none w-fit cursor-pointer">
@@ -91,9 +108,9 @@ const submitUpdateTaskForm = async (taskId) => {
             </li>
           </ul>
         </div>
-
         <div class="transition-all duration-200 h-8" :class="addingTask ? 'opacity-100' : 'opacity-0'">
-          <form class="w-full" @submit.prevent="form.post('/taskAdd', { onSuccess: () => form.reset('taskDisplay')}), addingTask = !addingTask">
+          <form class="w-full"
+            @submit.prevent="form.post('/taskAdd', { onSuccess: () => form.reset('taskDisplay') }), addingTask = !addingTask">
             <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md bg-white/30"
               v-model="form.taskDisplay" />
           </form>

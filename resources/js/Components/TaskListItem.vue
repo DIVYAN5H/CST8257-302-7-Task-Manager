@@ -6,8 +6,6 @@ const completed = ref(false);
 
 const props = defineProps(["taskId", "taskDisplay", "listName", "status", "colour"]);
 
-console.log(props.colour);
-
 const form = useForm({
   listName: props.listName,
   taskId: props.taskId,
@@ -57,7 +55,7 @@ const submitDeleteForm = () => {
       </div>
       <div class="grid grid-cols-2 items-center">
         <form @submit.prevent="submitUpdateForm1">
-          <button type="submit" class="">
+          <button @click="$emit('update', completedForm.status)" type="submit" class="">
             <svg @click="toggleStatusAndSubmit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="transparent"
               class="opacity-0 group-hover:opacity-100 w-8 h-8 pt-1">
               <!-- X -->
