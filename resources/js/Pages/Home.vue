@@ -50,7 +50,7 @@ function sortListsByName() {
 onUpdated(() => {
   console.log('onUpdated')
   lists.value = JSON.parse(page.props.lists);
-  //lists.value = sortListsByPriority(page.props.lists);
+  sortListsByPriority(page.props.lists);
   tasksCompleted = ref(page.props.completedTasks);
   name.value = page.props.name;
 });

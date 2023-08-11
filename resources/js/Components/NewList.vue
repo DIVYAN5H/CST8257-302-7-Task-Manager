@@ -11,7 +11,11 @@ const user = page.props.user;
 const email = page.props.email
 const name = page.props.name;
 const password = page.props.password
-const errors = page.props.errors;
+//const errors = page.props.errors;
+
+const props = defineProps([
+  "errors"
+]);
 
 console.log(password);
 
@@ -37,7 +41,7 @@ const form = useForm({
                     <input v-model="form.list" name="list"
                         class="rounded rounded-md shadow appearance-none w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="list" type="text" />
-                        <div v-if="errors.list" class="text-xs text-red-900 px-2 mb-2">{{ errors.list }}</div>
+                        <div v-if="props.errors.list" class="text-xs text-red-300 px-2 mb-2">{{ errors.list }}</div>
                 </div>
                 <div class="col-span-1">
                     <label class="block  text-sm font-bold my-1" for="description">
@@ -50,7 +54,7 @@ const form = useForm({
                         <option selected value="2">Medium</option>
                         <option value="3">High</option>
                     </select>
-                    <div v-if="errors.priority" class="text-xs text-red-900 px-2 mb-2">{{ errors.priority }}</div>
+                    <div v-if="props.errors.priority" class="text-xs text-red-300 px-2 mb-2">{{ errors.priority }}</div>
                 </div>
                 <div class="col-span-2">
 
@@ -60,7 +64,7 @@ const form = useForm({
                     <input type="date" v-model="form.date" name="date" placeholder="dd-mm-yy"
                         class="rounded-md w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         id="date" />
-                        <div v-if="errors.date" class="text-xs text-red-900 px-2 mb-2">{{ errors.date }}</div>
+                        <div v-if="props.errors.date" class="text-xs text-red-300 px-2 mb-2">{{ errors.date }}</div>
                 </div>
                 <div class="col-span-1 group">
                     <label class="block text-sm font-bold mb-2" for="description">
@@ -71,7 +75,7 @@ const form = useForm({
                             class="rounded-full h-10 z-10 w-full shadow appearance-none text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
                         <ColourPickComponent class="opacity-0 scale-0 absolute inset-0 z-0 transition duration-200 group-hover:opacity-100 group-hover:scale-100"
                             @colour="setColour"></ColourPickComponent>
-                            <div v-if="errors.color" class="text-xs text-red-900 px-2 mb-2">{{ errors.color }}</div>
+                            <div v-if="props.errors.color" class="text-xs text-red-300 px-2 mb-2">{{ errors.color }}</div>
                     </div>
 
                 </div>
@@ -82,7 +86,7 @@ const form = useForm({
 
                 <div class="col-span-4">
 
-                    <button @click="$emit('addedNewList')" type="submit" :disabled="form.processing"
+                    <button type="submit" :disabled="form.processing"
                         class="button w-full  rounded-full border mb-2">
                         Add List
                     </button>

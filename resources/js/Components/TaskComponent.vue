@@ -116,7 +116,7 @@ const submitUpdateTaskForm = async (taskId) => {
         <div class="transition text-sm duration-100 ease-in py-5 px-2 grid grid-cols-1">
           <ul class="list-disc">
             <div v-for="(task, taskId) in tasks" :key="taskId">
-              <TaskListItem @update="getCount" :taskId="taskId" :listName="listName" :colour="props.color"
+              <TaskListItem @update="getCount" :errors="props.errors" :taskId="taskId" :listName="listName" :colour="props.color"
                 :status="task.status" :taskDisplay="task.taskDisplay">
               </TaskListItem>
             </div>
@@ -130,6 +130,7 @@ const submitUpdateTaskForm = async (taskId) => {
             @submit.prevent="form.post('/taskAdd', { onSuccess: () => form.reset('taskDisplay') }), addingTask = !addingTask">
             <input type="text" class="w-2/3 h-8 mb-4 mx-8 text-white form-input rounded-md bg-white/30"
               v-model="form.taskDisplay" />
+              <div v-if="props.errors.taskDisplay" class="text-xs text-red-900 px-2 mb-2">{{ props.errors.taskDisplay }}</div>
           </form>
         </div>
       </div>

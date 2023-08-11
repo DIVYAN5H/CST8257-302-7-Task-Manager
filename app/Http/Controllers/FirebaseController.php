@@ -113,36 +113,13 @@ class FirebaseController extends Controller
             'email' => ['required' ,'email','max:255' ],
         ]);
 
+        $providedUsername = $request->username;
 
-        // $rules = [
-        //     'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
-        //     'password' => 'required|string|min:5|max:20|',
-        //     'name' => 'required|string|max:30|',
-        //     'email' => 'required|email|max:255',
-        // ];
+        $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
 
-        // $validator = Validator::make($request->all(), $rules);
-
-        // if ($validator->fails()) {
-
-        //     exit(); 
-        //     return Inertia::render('Landing', 
-        //     [
-        //         'errors' => $validator->errors(),
-        //         'show' => false,
-        //     ]);
-        //     //return $validator->errors()->toArray(); // Return errors indicate validation failure
-        // }
-
-        // $providedUsername = $request->username;
-
-        // $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
-
-        // if ($userExists) {
-        //     return ['user' => 'Username already exists'];
-        // }
-        // // Return an empty array to indicate successful validation
-        // return [];
+        if ($userExists) {
+            return ['user' => 'Username already exists'];
+        }
     }
 
 
@@ -152,7 +129,7 @@ class FirebaseController extends Controller
             'list' => ['required','string','max:20'],
             'priority' => ['required','integer','between:1,3'],
             'date' => ['required','date'],
-            'color' => ['required' ,'email','^#[0-9a-fA-F]{6}$/' ],
+            'color' => ['required' ,'string','regex:/^#[0-9a-fA-F]{6}$/' ],
         ]);
 
 
@@ -187,7 +164,7 @@ class FirebaseController extends Controller
     {
 
         $request->validate([
-            'taskDisplay' => ['required','string','max:50','regex:/^[a-zA-Z\s]+$/'],
+            'taskDisplay' => ['required','string','max:50'],
         ]);
 
         // $rules = [
