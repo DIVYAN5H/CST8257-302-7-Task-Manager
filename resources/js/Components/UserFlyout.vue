@@ -3,7 +3,7 @@ import { useForm } from '@inertiajs/vue3';
 import { onUpdated, ref } from 'vue';
 
 
-const props = defineProps(['username', 'email', 'name', 'tasksCompleted']);
+const props = defineProps(['username', 'email', 'name', 'tasksCompleted', 'errors']);
 
 
 const email = props.email
@@ -58,7 +58,9 @@ function getInitials(name) {
                 <div class="grid-cols-1 text-lg w-1/2 -translate-x-[1rem]">
                 <form @submit.prevent="form.post('/userUpdate')">
                     <input type="text" name="name" v-model="form.name" class="bg-transparent rounded-full w-40 mb-1">
+                    <div v-if="errors.name" class="text-xs text-red-900 px-2 mb-2">{{ errors.name }}</div>
                     <input type="password" name="password" v-model="form.password" placeholder="password" class="bg-transparent rounded-full w-40">
+                    <div v-if="errors.password" class="text-xs text-red-900 px-2 mb-2">{{ errors.password }}</div>
                     
                     <button type="submit" class="w-40 text-sm rounded-full bg-white/30 m-3 p-3 border hover:bg-white/40 mt-5 -translate-x-[5rem]"> Update </button>
                 </form>

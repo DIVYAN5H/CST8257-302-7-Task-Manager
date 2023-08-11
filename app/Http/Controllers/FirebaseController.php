@@ -81,19 +81,25 @@ class FirebaseController extends Controller
     //user update validation --------------------------------------------------
     public function updateValidation(Request $request)
     {
-        $rules = [
-            'name' => 'required|string|max:15|',
-            'password' => 'required|string|min:5|max:20|',
-        ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $request->validate([
+            'name' => ['required','string','min:5','max:15'],
+            'password' => ['required','string','min:5','max:20'],
+        ]);
 
-        if ($validator->fails()) {
-            return $validator->errors()->toArray(); // Return errors indicate validation failure
-        }
+        // $rules = [
+        //     'name' => 'required|string|max:15|',
+        //     'password' => 'required|string|min:5|max:20|',
+        // ];
 
-        // Return an empty array to indicate successful validation
-        return [];
+        // $validator = Validator::make($request->all(), $rules);
+
+        // if ($validator->fails()) {
+        //     return $validator->errors()->toArray(); // Return errors indicate validation failure
+        // }
+
+        // // Return an empty array to indicate successful validation
+        // return [];
     }
 
     public function registerValidation(Request $request)
@@ -142,89 +148,103 @@ class FirebaseController extends Controller
 
     public function listValidation(Request $request)
     {
-        $rules = [
-            'list' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
-            'priority' => 'required|integer|between:1,3',
-            'date' => 'required|date',
-            'color'    => 'required|string|regex:/^#[0-9a-fA-F]{6}$/',
-            //'taskDisplay' => 'required|string|max:25|regex:/^[a-zA-Z\s]+$/',
-        ];
+        $request->validate([
+            'list' => ['required','string','max:20'],
+            'priority' => ['required','integer','between:1,3'],
+            'date' => ['required','date'],
+            'color' => ['required' ,'email','^#[0-9a-fA-F]{6}$/' ],
+        ]);
 
-        $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
-            return $validator->errors()->toArray(); // Return errors indicate validation failure
-        }
+        // $rules = [
+        //     'list' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
+        //     'priority' => 'required|integer|between:1,3',
+        //     'date' => 'required|date',
+        //     'color'    => 'required|string|regex:/^#[0-9a-fA-F]{6}$/',
+        //     //'taskDisplay' => 'required|string|max:25|regex:/^[a-zA-Z\s]+$/',
+        // ];
 
-        $listName = $request->listName;
 
-        $listExists = $this->database->getReference('lists/' . $listName)->getSnapshot()->exists();
+        // $validator = Validator::make($request->all(), $rules);
 
-        if ($listExists) {
-            return ['listName' => 'listName already exists'];
-        }
+        // if ($validator->fails()) {
+        //     return $validator->errors()->toArray(); // Return errors indicate validation failure
+        // }
 
-        // Return an empty array to indicate successful validation
-        return [];
+        // $listName = $request->listName;
+
+        // $listExists = $this->database->getReference('lists/' . $listName)->getSnapshot()->exists();
+
+        // if ($listExists) {
+        //     return ['listName' => 'listName already exists'];
+        // }
+
+        // // Return an empty array to indicate successful validation
+        // return [];
     }
 
     public function taskValidation(Request $request)
     {
-        $rules = [
 
-            'taskDisplay' => 'required|string|max:100|',
-        ];
+        $request->validate([
+            'taskDisplay' => ['required','string','max:50','regex:/^[a-zA-Z\s]+$/'],
+        ]);
 
-        $validator = Validator::make($request->all(), $rules);
+        // $rules = [
 
-        if ($validator->fails()) {
-            return $validator->errors()->toArray(); // Return errors indicate validation failure
-        }
+        //     'taskDisplay' => 'required|string|max:100|',
+        // ];
 
-        // Return an empty array to indicate successful validation
-        return [];
+        // $validator = Validator::make($request->all(), $rules);
+
+        // if ($validator->fails()) {
+        //     return $validator->errors()->toArray(); // Return errors indicate validation failure
+        // }
+
+        // // Return an empty array to indicate successful validation
+        // return [];
     }
 
-    public function validation(Request $request)
-    {
-        $rules = [
-            'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
-            'password' => 'required|string|min:5|max:20|',
-            'email' => 'required|email|max:255',
-            'name' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
-            'listName' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
-            'date' => 'required|date',
-            'color'    => 'required|string|regex:/^#[0-9a-fA-F]{6}$/',
-            'priority' => 'required|integer|between:1,3',
-            'taskDisplay' => 'required|string|max:25|regex:/^[a-zA-Z\s]+$/',
-            // Add more validation rules for other fields
-        ];
+    // public function validation(Request $request)
+    // {
+    //     $rules = [
+    //         'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
+    //         'password' => 'required|string|min:5|max:20|',
+    //         'email' => 'required|email|max:255',
+    //         'name' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
+    //         'listName' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
+    //         'date' => 'required|date',
+    //         'color'    => 'required|string|regex:/^#[0-9a-fA-F]{6}$/',
+    //         'priority' => 'required|integer|between:1,3',
+    //         'taskDisplay' => 'required|string|max:25|regex:/^[a-zA-Z\s]+$/',
+    //         // Add more validation rules for other fields
+    //     ];
 
-        $validator = Validator::make($request->all(), $rules);
+    //     $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()) {
-            // Handle validation errors if needed
-            return $validator->errors()->toArray(); // Return errors indicate validation failure
-        }
+    //     if ($validator->fails()) {
+    //         // Handle validation errors if needed
+    //         return $validator->errors()->toArray(); // Return errors indicate validation failure
+    //     }
 
 
-        // Check if username and listName already exist in Firebase
-        $providedUsername = $request->username;
-        $listName = $request->listName;
+    //     // Check if username and listName already exist in Firebase
+    //     $providedUsername = $request->username;
+    //     $listName = $request->listName;
 
-        $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
-        $listExists = $this->database->getReference('lists/' . $listName)->getSnapshot()->exists();
+    //     $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
+    //     $listExists = $this->database->getReference('lists/' . $listName)->getSnapshot()->exists();
 
-        if ($userExists) {
-            return ['user' => 'Username already exists'];
-        }
-        if ($listExists) {
-            return ['listName' => 'listName already exists'];
-        }
+    //     if ($userExists) {
+    //         return ['user' => 'Username already exists'];
+    //     }
+    //     if ($listExists) {
+    //         return ['listName' => 'listName already exists'];
+    //     }
 
-        // Return an empty array to indicate successful validation
-        return [];
-    }
+    //     // Return an empty array to indicate successful validation
+    //     return [];
+    // }
 
 
     // ----------------------

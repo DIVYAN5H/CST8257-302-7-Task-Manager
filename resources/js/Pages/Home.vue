@@ -8,13 +8,17 @@ import NewList from "@/Components/NewList.vue";
 
 const page = usePage();
 const username = ref(page.props.username);
-defineProps({ errors: Object });
 console.log(page.props.errors);
 let name = ref(page.props.name);
 const addingList = ref(false);
 let lists = ref(JSON.parse(page.props.lists));
 //var tasksCompleted = getCompletedTasks(page.props.lists);
 var tasksCompleted = ref(page.props.completedTasks);
+
+const props = defineProps( 'errors' );
+const errors1 = ref(page.props.errors);
+console.log(props.errors);
+console.log(errors1);
 
 
 function sortListsByPriority() {
@@ -85,7 +89,7 @@ onMounted(() => {
   <Transition>
     <div class="bg-texture-6 h-fit min-h-screen scroll-smooth font-Poppins ">
       <div class="w-full">
-        <Navigation :username="username" :name="name" :email="page.props.email" :tasksCompleted="tasksCompleted">
+        <Navigation :errors="page.props.errors" :username="username" :name="name" :email="page.props.email" :tasksCompleted="tasksCompleted">
         </Navigation>
         
         <div class="flex justify-center mt-10">
@@ -107,7 +111,7 @@ onMounted(() => {
         <div class="flex w-full grow justify-center px-10 mt-5">
           <div class="grid grow w-100 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-4">
             <div  v-for="(list, listName) in lists" :key="listName">
-              <TaskComponent :listName="listName" :color="list.color" :priority="list.priority" :date="list.date"
+              <TaskComponent :errors="page.props.errors" :listName="listName" :color="list.color" :priority="list.priority" :date="list.date"
               :tasks="list.tasks">
             </TaskComponent>
             </div>
@@ -130,7 +134,7 @@ onMounted(() => {
               enter-active-class="transition delay-200 duration-300" 
               leave-active-class="transition duration-100">
               <div v-if="addingList" >
-                <NewList @close="addingList = !addingList" @addedNewList="addingList = !addingList"> </NewList>
+                <NewList @close="addingList = !addingList" @addedNewList="addingList = !addingList" :errors="page.props.errors"> </NewList>
               </div>
             </Transition>
 

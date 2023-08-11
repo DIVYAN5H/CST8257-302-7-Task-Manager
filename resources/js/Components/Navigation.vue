@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import UserFlyout from '@/Components/UserFlyout.vue';
 
 const isOpen = ref(false);
-const props = defineProps(['username', 'name', 'email', 'tasksCompleted']);
+const props = defineProps(['username', 'name', 'email', 'tasksCompleted', 'errors']);
 
 </script>
 
@@ -40,6 +40,6 @@ const props = defineProps(['username', 'name', 'email', 'tasksCompleted']);
         </svg>
       </button>
     </div>
-    <UserFlyout :tasksCompleted="tasksCompleted" :username="username" :name="name" :email="email"></UserFlyout>
+    <UserFlyout :errors="props.errors" :tasksCompleted="tasksCompleted" :username="username" :name="name" :email="email"></UserFlyout>
   </aside>
 </template>

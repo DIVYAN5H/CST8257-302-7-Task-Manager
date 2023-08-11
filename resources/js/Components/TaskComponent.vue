@@ -14,6 +14,7 @@ const props = defineProps([
   "priority",
   "date",
   "color",
+  "errors"
 ]);
 const page = usePage();
 const isOpen = ref(false);
