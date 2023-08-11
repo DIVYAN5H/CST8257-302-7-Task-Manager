@@ -29,14 +29,33 @@ function getCount(status) {
   console.log('Emit Status', status);
   for (let i in props.tasks) {
     c = c + 1;
+    if(props.tasks[i].status == true) {
+      console.log('Truly Great', props.listName);
+      completedTasks = completedTasks + 1;
+    }
+  };
+  return c;
+}
+
+function getCompletedTasksCount() {
+  let c = 0;
+  console.log('Emit Status', status);
+  for (let i in props.tasks) {
+    if(props.tasks[i].status == true) {
+      console.log('Truly Great', props.listName);
+      c = c + 1;
+    }
   };
   return c;
 }
 
 
+
 onUpdated(() => {
   tasks.value = props.tasks
   totalTasks = getCount(1);
+  completedTasks = getCompletedTasksCount();
+  console.log(completedTasks);
   console.log('Updated Total Tasks', totalTasks);
 });
 
@@ -91,7 +110,7 @@ const submitUpdateTaskForm = async (taskId) => {
     <div class="text-white">
       <div class="grid grid-cols-1">
         <div class=" bg-white/10 shadow-xl h-16">
-          <TaskBadge :color="color" :date="date" :listName="listName" :completed="totalTasks"> {{ listName }}
+          <TaskBadge :color="color" :date="date" :listName="listName" :completed="completedTasks" :total="totalTasks"> {{ listName }}
           </TaskBadge>
         </div>
       </div>

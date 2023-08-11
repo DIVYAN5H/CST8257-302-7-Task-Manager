@@ -1,7 +1,7 @@
 <script setup>
 import { usePage, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
-const props = defineProps(['color', 'date', 'listName', 'completed']);
+const props = defineProps(['color', 'date', 'listName', 'completed', 'total']);
 
 let completedStatus = ref(props.completed);
 
@@ -22,7 +22,7 @@ const submitDeleteForm = () => {
     <!-- <button @click="color = !color" :class=" color ? 'bg-white ring-4 ring-['+ color +']' : 'bg-black ring-4 ring-['+color+']'" class="rounded rounded-full  w-2 h-2 my-auto mr-2">
     </button> -->
     <div :style="{ backgroundColor: color }" class="h-full mr-4"></div>
-    <div class="col-span-4">
+    <div class="col-span-5">
       <slot></slot>
 
       <hr />
@@ -41,7 +41,7 @@ const submitDeleteForm = () => {
               d="M2 4.5A2.5 2.5 0 014.5 2h11a2.5 2.5 0 010 5h-11A2.5 2.5 0 012 4.5zM2.75 9.083a.75.75 0 000 1.5h14.5a.75.75 0 000-1.5H2.75zM2.75 12.663a.75.75 0 000 1.5h14.5a.75.75 0 000-1.5H2.75zM2.75 16.25a.75.75 0 000 1.5h14.5a.75.75 0 100-1.5H2.75z" />
           </svg>
         </div>
-        <div class="h-full ml-1 pt-1 flex items-center font-normal"> {{ completed }} Tasks</div>
+        <div class="h-full  ml-1 pt-1 flex items-center font-normal"> {{ (completed / total) * 100 }}% Completed</div>
         <div></div>
       </div>
     </div>
