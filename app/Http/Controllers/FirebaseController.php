@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use SebastianBergmann\CodeUnit\FunctionUnit;
 use Kreait\Firebase\Contract\Database;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -25,7 +26,7 @@ class FirebaseController extends Controller
 
 
         $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
-        $userValue = $this->database->getReference('users/'. $user['username'] . '/completedTasks')->getValue();
+        $userValue = $this->database->getReference('users/' . $user['username'] . '/completedTasks')->getValue();
 
         $userWithNewList = [
             "username" => $user['username'],
@@ -49,51 +50,75 @@ class FirebaseController extends Controller
         return $input;
     }
 
-    private function validation(Request $request)
+    public function validation(Request $request)
     {
-        $error = [];
-        $user = $request->user ?? Session::get('user');
+        $rules = [
+            'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
+            'password' => 'required|string|min:5|max:20|regex:/^[a-zA-Z\s]+$/',
+            'email' => 'required|email|max:255',
+            'name' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
+            'listName' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
+            'date'     => 'required|date|regex:/^[a-zA-Z\s]+$/',
+            'color'    => 'required|string|regex:/^#[0-9a-fA-F]{6}$/',
+            'priority' => 'required|integer|between:1,3',
+            'taskDisplay' => 'required|string|max:25|regex:/^[a-zA-Z\s]+$/',
+            // Add more validation rules for other fields
+        ];
 
-        if ($user == null) {
-            array_push($error, "Please Enter Username");
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            // Handle validation errors if needed
+            return $validator->errors()->toArray(); // Return errors indicate validation failure
         }
 
-        if (count($error) !== 0) {
-            return $error;
-        }
-
-        return $request;
+        // Return emtpty array to indicate successful validation
+        return [];
     }
+
 
     // ----------------------
     // -------- USER --------
     // ----------------------
     public function registerFunc(Request $request)
     {
-        $dataToSave = [
-            "username" => $request->username,
-            "email" => $request->email,
-            "name" => $request->name,
-            "password" => encrypt($request->password),
-            "completedTasks" => 0
-        ];
+        $validationResult = $this->validation($request);
 
-        //this should run only after validation
-        $this->database->getReference('users/' . $dataToSave['username'])->set($dataToSave);
+        if (empty($validationResult)) {
 
-        $user = [
-            "username" => $dataToSave['username'],
-            "email" => $dataToSave['email'],
-            "name" => $dataToSave['name'],
-            "lists" => [],
-            "completedTasks" => 0
-        ];
+            $providedUsername = $this->sanitize($request->username);
+            $providedEmail = $this->sanitize($request->email);
+            $providedName = $this->sanitize($request->name);
+            $providedPassword = $this->sanitize($request->password);
 
-        Session::put('user', $user);
-        Session::put('logged', true);
-        $this->loginDisplay();
 
-        return redirect()->route('home');
+            $dataToSave = [
+                "username" => $providedUsername,
+                "email" => $providedEmail,
+                "name" => $providedName,
+                "password" => encrypt($providedPassword),
+                "completedTasks" => 0
+            ];
+
+            //this should run only after validation
+            $this->database->getReference('users/' . $dataToSave['username'])->set($dataToSave);
+
+            $user = [
+                "username" => $dataToSave['username'],
+                "email" => $dataToSave['email'],
+                "name" => $dataToSave['name'],
+                "lists" => [],
+                "completedTasks" => 0
+            ];
+
+            Session::put('user', $user);
+            Session::put('logged', true);
+            $this->loginDisplay();
+
+            return redirect()->route('home');
+        } else {
+            // render same page with $validationResult (that is a array of errors)
+        }
     }
 
     public function loginDisplay()
@@ -110,55 +135,68 @@ class FirebaseController extends Controller
 
     public function loginFunc(Request $request)
     {
+        $validationResult = $this->validation($request);
 
-        //this should run only after validation
-        $providedPassword = $request->password;
+        if (empty($validationResult)) {
+            $providedPassword = $this->sanitize($request->password);
+            $providedUsername = $this->sanitize($request->username);
 
-        $userFromDB = $this->database->getReference('users/' . $request->username)->getValue();
+            $userFromDB = $this->database->getReference('users/' . $providedUsername)->getValue();
 
 
-        if (decrypt($userFromDB['password']) == $providedPassword) {
-            $user = [
-                "username" => $userFromDB['username'],
-                "email" => $userFromDB['email'],
-                "name" => $userFromDB['name'],
-                "lists" => [],
-                "completedTasks" => $userFromDB['completedTasks'],
-            ];
+            if (decrypt($userFromDB['password']) == $providedPassword) {
+                $user = [
+                    "username" => $userFromDB['username'],
+                    "email" => $userFromDB['email'],
+                    "name" => $userFromDB['name'],
+                    "lists" => [],
+                    "completedTasks" => $userFromDB['completedTasks'],
+                ];
 
-            Session::put('user', $user);
-            Session::put('logged', true);
+                Session::put('user', $user);
+                Session::put('logged', true);
 
-            return redirect()->route('home');
+                return redirect()->route('home');
+            } else {
+                return redirect()->route('landing');
+            }
         } else {
-            return redirect()->route('landing');
+            // render same page with $validationResult (that is a array of errors)
         }
     }
 
     public function updateUser(Request $request)
     {
-        $user = Session::get('user');
+        $validationResult = $this->validation($request);
 
-        $name = $request->name ?? $user['name'];
+        if (empty($validationResult)) {
+            $providedPassword = $this->sanitize($request->password);
 
-        if ($request->password) {
-            $this->database->getReference('users/' . $user['username'] . '/password')->set(encrypt($request->password));
+            $user = Session::get('user');
+
+            $name = $this->sanitize($request->username) ?? $user['name'];
+
+            if ($providedPassword) {
+                $this->database->getReference('users/' . $user['username'] . '/password')->set(encrypt($providedPassword));
+            }
+
+            $this->database->getReference('users/' . $user['username'] . '/name')->set($name);
+
+            $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
+
+            $userWithNewName = [
+                "username" => $user['username'],
+                "email" => $user['email'],
+                "name" => $name,
+                "lists" => $userLists,
+            ];
+
+            Session::put('user', $userWithNewName);
+
+            return redirect()->route('home');
+        } else {
+            // render same page with $validationResult (that is a array of errors)
         }
-
-        $this->database->getReference('users/' . $user['username'] . '/name')->set($name);
-
-        $userLists = json_encode($this->database->getReference('userTasks/' . $user['username'])->getValue());
-
-        $userWithNewName = [
-            "username" => $user['username'],
-            "email" => $user['email'],
-            "name" => $request->name,
-            "lists" => $userLists,
-        ];
-
-        Session::put('user', $userWithNewName);
-
-        return redirect()->route('home');
     }
 
 
@@ -178,38 +216,44 @@ class FirebaseController extends Controller
 
     public function addList(Request $request)
     {
-        $user = Session::get('user');
+        $validationResult = $this->validation($request);
 
-        $listName = $request->listName;
-        $listToAdd =[
-            'color' => $request->color,
-            'priority' => $request->priority,
-            'date' => $request->date,
-        ];
+        if (empty($validationResult)) {
 
-        $listName = $request->list;
-        $color = $request->color;
-        $priority = $request->priority;
-        $date = $request->date;
+            $user = Session::get('user');
 
+            $listName = $this->sanitize($request->listName);
+            $listToAdd = [
+                'color' => $this->sanitize($request->color),
+                'priority' => $this->sanitize($request->priority),
+                'date' => $this->sanitize($request->date),
+            ];
 
-        // should run after validation
-
-        $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->set($listToAdd);
+            $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->set($listToAdd);
 
 
-        return redirect()->route('home');
+            return redirect()->route('home');
+        } else {
+            // render same page with $validationResult (that is a array of errors)
+        }
     }
 
     public function deleteList(Request $request)
     {
-        $listName = $request->listName;
+        $validationResult = $this->validation($request);
 
-        $user = Session::get('user');
+        if (empty($validationResult)) {
 
-        $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->remove();
+            $listName = $this->sanitize($request->listName);
 
-        return redirect()->route('home');
+            $user = Session::get('user');
+
+            $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->remove();
+
+            return redirect()->route('home');
+        } else {
+            // render same page with $validationResult (that is a array of errors)
+        }
     }
 
 
@@ -220,30 +264,38 @@ class FirebaseController extends Controller
     public function addTaskToList(Request $request)
     {
 
-        $listName = $request->listName;
+        $validationResult = $this->validation($request);
 
-        $dataToSave = [
-            "taskDisplay" => $request->taskDisplay,
-            "status" => false
-        ];
+        if (empty($validationResult)) {
+            $listName = $this->sanitize($request->listName);
 
-        $username = Session::get('user')['username'];
+            $dataToSave = [
+                "taskDisplay" => $this->sanitize($request->taskDisplay),
+                "status" => false
+            ];
 
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($dataToSave);
+            $username = Session::get('user')['username'];
 
-        return redirect()->route('home');
+            $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks')->push($dataToSave);
+
+            return redirect()->route('home');
+        } else {
+            // render same page with $validationResult (that is a array of errors)
+        }
     }
 
     public function updateTask(Request $request)
     {
+        $validationResult = $this->validation($request);
 
-        $listName = $request->listName;
-        $taskId = $request->taskId;
+        if (empty($validationResult)) {
+            $listName = $this->sanitize($request->listName);
+            $taskId = $this->sanitize($request->taskId);
 
-        $username = Session::get('user')['username'];
-        $completedTasks = $this->database->getReference('users/' . $username . '/completedTasks')->getValue();
+            $username = Session::get('user')['username'];
+            $completedTasks = $this->database->getReference('users/' . $username . '/completedTasks')->getValue();
 
-        /*
+            /*
         if the task is already completed, and the new task is not completed:
             subtract 1 from the users completed task count
         if the task is not already completed, and the new task is completed:
@@ -252,28 +304,37 @@ class FirebaseController extends Controller
             do nothing
         */
 
-        if($this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->getValue() == true && $request->status == false) {
-            $this->database->getReference('users/'. $username. '/completedTasks')->set($completedTasks - 1);
-        } else if($this->database->getReference('userTasks/'. $username. '/'. $listName. '/tasks'. '/'. $taskId. '/status')->getValue() == false && $request->status == true){
-            $this->database->getReference('users/'. $username. '/completedTasks')->set($completedTasks + 1);
+            if ($this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->getValue() == true && $request->status == false) {
+                $this->database->getReference('users/' . $username . '/completedTasks')->set($completedTasks - 1);
+            } else if ($this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->getValue() == false && $request->status == true) {
+                $this->database->getReference('users/' . $username . '/completedTasks')->set($completedTasks + 1);
+            }
+
+
+            $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/taskDisplay')->set($request->taskDisplay);
+            $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->set($request->status);
+
+            return redirect()->route('home');
+        } else {
+            // render same page with $validationResult (that is a array of errors)
         }
-
-
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/taskDisplay')->set($request->taskDisplay);
-        $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId . '/status')->set($request->status);
-
-        return redirect()->route('home');
     }
 
     public function deleteTask(Request $request)
     {
-        $listName = $request->listName;
-        $taskId = $request->taskId;
+        $validationResult = $this->validation($request);
 
-        $username = Session::get('user')['username'];
+        if (empty($validationResult)) {
+            $listName = $this->sanitize($request->listName);
+            $taskId = $this->sanitize($request->taskId);
 
-        $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
+            $username = Session::get('user')['username'];
 
-        return redirect()->route('home');
+            $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
+
+            return redirect()->route('home');
+        } else {
+            // render same page with $validationResult (that is a array of errors)
+        }
     }
 }
