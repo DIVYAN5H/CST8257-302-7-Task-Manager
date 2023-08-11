@@ -39,7 +39,7 @@ const submitDeleteForm = () => {
     <div :style="{ backgroundColor: color }" class="h-full mr-4"></div>
     <div class="col-span-6 py-2">
       <slot></slot>
-  
+      <span class=" ml-3 h-full text-xs p-1 rounded-lg border border-white"> {{ priority }} </span>
       <hr />
       <div class="text-sm flex items-center">
         <div> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-6 h-6">
@@ -58,7 +58,7 @@ const submitDeleteForm = () => {
         </div>
         <div v-if="total <= 0" class="h-full border-r-2 pr-2 ml-1 pt-1 flex items-center font-normal"> No Tasks </div>
         <div v-if="total > 0" class="h-full border-r-2 pr-2 ml-1 pt-1 flex items-center font-normal"> {{ parseInt((completed / total) * 100) }}% Completed</div>
-        <span class=" ml-6 mt-1 text-xs p-1 rounded-lg border border-white"> {{ priority }} </span>
+
       </div>
       
     </div>
