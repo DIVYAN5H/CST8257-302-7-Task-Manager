@@ -68,19 +68,19 @@ class FirebaseController extends Controller
 
 
         $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
-        
+
 
         if (!$userExists) {
             return ['user' => 'Username does not exist'];
         }
-        
+
         // Return an empty array to indicate successful validation
         return [];
-        }
+    }
 
-        //user update validation --------------------------------------------------
-        public function updateValidation(Request $request)
-        {
+    //user update validation --------------------------------------------------
+    public function updateValidation(Request $request)
+    {
         $rules = [
             'name' => 'required|string|max:15|',
             'password' => 'required|string|min:5|max:20|',
@@ -94,33 +94,50 @@ class FirebaseController extends Controller
 
         // Return an empty array to indicate successful validation
         return [];
-        }
+    }
 
-        public function registerValidation(Request $request) {
-        $rules = [
-            'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
-            'password' => 'required|string|min:5|max:20|',
-            'name' => 'required|string|max:10|',
-            'email' => 'required|email|max:255',
-        ];
+    public function registerValidation(Request $request)
+    {
+        
 
-        $validator = Validator::make($request->all(), $rules);
+        $request->validate([
+            'username' => ['required','string','max:15','regex:/^[a-zA-Z\s]+$/'],
+            'password' => ['required','string','min:5','max:20'],
+            'name' => ['required','string','max:30'],
+            'email' => ['required' ,'email','max:255' ],
+        ]);
 
-        if ($validator->fails()) {
-            return $validator->errors()->toArray(); // Return errors indicate validation failure
-        }
 
-        $providedUsername = $request->username;
+        // $rules = [
+        //     'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
+        //     'password' => 'required|string|min:5|max:20|',
+        //     'name' => 'required|string|max:30|',
+        //     'email' => 'required|email|max:255',
+        // ];
 
-        $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
+        // $validator = Validator::make($request->all(), $rules);
 
-        if ($userExists) {
-            return ['user' => 'Username already exists'];
-        }
-        // Return an empty array to indicate successful validation
-        return [];
+        // if ($validator->fails()) {
 
-        }
+        //     exit(); 
+        //     return Inertia::render('Landing', 
+        //     [
+        //         'errors' => $validator->errors(),
+        //         'show' => false,
+        //     ]);
+        //     //return $validator->errors()->toArray(); // Return errors indicate validation failure
+        // }
+
+        // $providedUsername = $request->username;
+
+        // $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
+
+        // if ($userExists) {
+        //     return ['user' => 'Username already exists'];
+        // }
+        // // Return an empty array to indicate successful validation
+        // return [];
+    }
 
 
     public function listValidation(Request $request)
@@ -154,7 +171,7 @@ class FirebaseController extends Controller
     public function taskValidation(Request $request)
     {
         $rules = [
-            
+
             'taskDisplay' => 'required|string|max:100|',
         ];
 
@@ -190,7 +207,7 @@ class FirebaseController extends Controller
             return $validator->errors()->toArray(); // Return errors indicate validation failure
         }
 
-        
+
         // Check if username and listName already exist in Firebase
         $providedUsername = $request->username;
         $listName = $request->listName;
@@ -215,6 +232,7 @@ class FirebaseController extends Controller
     // ----------------------
     public function registerFunc(Request $request)
     {
+        
         $validationResult = $this->registerValidation($request);
 
         if (empty($validationResult)) {
@@ -377,15 +395,15 @@ class FirebaseController extends Controller
 
         //if (empty($validationResult)) {
 
-            $listName = $this->sanitize($request->listName);
+        $listName = $this->sanitize($request->listName);
 
-            $user = Session::get('user');
+        $user = Session::get('user');
 
-            $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->remove();
+        $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->remove();
 
-            return redirect()->route('home');
+        return redirect()->route('home');
         //} else {
-            // render same page with $validationResult (that is a array of errors)
+        // render same page with $validationResult (that is a array of errors)
         //}
     }
 
@@ -458,16 +476,16 @@ class FirebaseController extends Controller
         //$validationResult = $this->validation($request);
 
         //if (empty($validationResult)) {
-            $listName = $this->sanitize($request->listName);
-            $taskId = $this->sanitize($request->taskId);
+        $listName = $this->sanitize($request->listName);
+        $taskId = $this->sanitize($request->taskId);
 
-            $username = Session::get('user')['username'];
+        $username = Session::get('user')['username'];
 
-            $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
+        $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
 
-            return redirect()->route('home');
+        return redirect()->route('home');
         //} else {
-            // render same page with $validationResult (that is a array of errors)
+        // render same page with $validationResult (that is a array of errors)
         //}
     }
 }

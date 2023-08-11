@@ -8,6 +8,8 @@ import NewList from "@/Components/NewList.vue";
 
 const page = usePage();
 const username = ref(page.props.username);
+defineProps({ errors: Object });
+console.log(page.props.errors);
 let name = ref(page.props.name);
 const addingList = ref(false);
 let lists = ref(JSON.parse(page.props.lists));
@@ -81,7 +83,7 @@ onMounted(() => {
 <template>
   <Head title="Home"> </Head>
   <Transition>
-    <div class="bg-texture-6 h-fit min-h-screen scroll-smooth">
+    <div class="bg-texture-6 h-fit min-h-screen scroll-smooth font-Poppins ">
       <div class="w-full">
         <Navigation :username="username" :name="name" :email="page.props.email" :tasksCompleted="tasksCompleted">
         </Navigation>

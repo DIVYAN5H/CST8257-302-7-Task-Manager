@@ -39,10 +39,8 @@ function getCount(status) {
 
 function getCompletedTasksCount() {
   let c = 0;
-  console.log('Emit Status', status);
   for (let i in props.tasks) {
     if(props.tasks[i].status == true) {
-      console.log('Truly Great', props.listName);
       c = c + 1;
     }
   };
@@ -55,8 +53,6 @@ onUpdated(() => {
   tasks.value = props.tasks
   totalTasks = getCount(1);
   completedTasks = getCompletedTasksCount();
-  console.log(completedTasks);
-  console.log('Updated Total Tasks', totalTasks);
 });
 
 
