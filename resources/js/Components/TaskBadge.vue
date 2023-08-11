@@ -56,6 +56,7 @@ const submitDeleteForm = () => {
               d="M2 4.5A2.5 2.5 0 014.5 2h11a2.5 2.5 0 010 5h-11A2.5 2.5 0 012 4.5zM2.75 9.083a.75.75 0 000 1.5h14.5a.75.75 0 000-1.5H2.75zM2.75 12.663a.75.75 0 000 1.5h14.5a.75.75 0 000-1.5H2.75zM2.75 16.25a.75.75 0 000 1.5h14.5a.75.75 0 100-1.5H2.75z" />
           </svg>
         </div>
+        <div v-if="total <= 0" class="h-full border-r-2 pr-2 ml-1 pt-1 flex items-center font-normal"> No Tasks </div>
         <div v-if="total > 0" class="h-full border-r-2 pr-2 ml-1 pt-1 flex items-center font-normal"> {{ parseInt((completed / total) * 100) }}% Completed</div>
         <span class=" ml-6 mt-1 text-xs p-1 rounded-lg border border-white"> {{ priority }} </span>
       </div>
