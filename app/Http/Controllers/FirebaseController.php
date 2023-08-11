@@ -50,15 +50,133 @@ class FirebaseController extends Controller
         return $input;
     }
 
+    public function loginValidation(Request $request)
+    {
+        $rules = [
+            'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
+            'password' => 'required|string|min:5|max:20|',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toArray(); // Return errors indicate validation failure
+        }
+
+
+        $providedUsername = $request->username;
+
+
+        $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
+        
+
+        if (!$userExists) {
+            return ['user' => 'Username does not exist'];
+        }
+        
+        // Return an empty array to indicate successful validation
+        return [];
+        }
+
+        //user update validation --------------------------------------------------
+        public function updateValidation(Request $request)
+        {
+        $rules = [
+            'name' => 'required|string|max:15|',
+            'password' => 'required|string|min:5|max:20|',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toArray(); // Return errors indicate validation failure
+        }
+
+        // Return an empty array to indicate successful validation
+        return [];
+        }
+
+        public function registerValidation(Request $request) {
+        $rules = [
+            'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
+            'password' => 'required|string|min:5|max:20|',
+            'name' => 'required|string|max:10|',
+            'email' => 'required|email|max:255',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toArray(); // Return errors indicate validation failure
+        }
+
+        $providedUsername = $request->username;
+
+        $userExists = $this->database->getReference('users/' . $providedUsername)->getSnapshot()->exists();
+
+        if ($userExists) {
+            return ['user' => 'Username already exists'];
+        }
+        // Return an empty array to indicate successful validation
+        return [];
+
+        }
+
+
+    public function listValidation(Request $request)
+    {
+        $rules = [
+            'list' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
+            'priority' => 'required|integer|between:1,3',
+            'date' => 'required|date',
+            'color'    => 'required|string|regex:/^#[0-9a-fA-F]{6}$/',
+            //'taskDisplay' => 'required|string|max:25|regex:/^[a-zA-Z\s]+$/',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toArray(); // Return errors indicate validation failure
+        }
+
+        $listName = $request->listName;
+
+        $listExists = $this->database->getReference('lists/' . $listName)->getSnapshot()->exists();
+
+        if ($listExists) {
+            return ['listName' => 'listName already exists'];
+        }
+
+        // Return an empty array to indicate successful validation
+        return [];
+    }
+
+    public function taskValidation(Request $request)
+    {
+        $rules = [
+            
+            'taskDisplay' => 'required|string|max:100|',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return $validator->errors()->toArray(); // Return errors indicate validation failure
+        }
+
+        // Return an empty array to indicate successful validation
+        return [];
+    }
+
     public function validation(Request $request)
     {
         $rules = [
             'username' => 'required|string|max:15|regex:/^[a-zA-Z\s]+$/',
-            'password' => 'required|string|min:5|max:20|regex:/^[a-zA-Z\s]+$/',
+            'password' => 'required|string|min:5|max:20|',
             'email' => 'required|email|max:255',
             'name' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
             'listName' => 'required|string|max:10|regex:/^[a-zA-Z\s]+$/',
-            'date'     => 'required|date|regex:/^[a-zA-Z\s]+$/',
+            'date' => 'required|date',
             'color'    => 'required|string|regex:/^#[0-9a-fA-F]{6}$/',
             'priority' => 'required|integer|between:1,3',
             'taskDisplay' => 'required|string|max:25|regex:/^[a-zA-Z\s]+$/',
@@ -72,6 +190,7 @@ class FirebaseController extends Controller
             return $validator->errors()->toArray(); // Return errors indicate validation failure
         }
 
+        
         // Check if username and listName already exist in Firebase
         $providedUsername = $request->username;
         $listName = $request->listName;
@@ -96,7 +215,7 @@ class FirebaseController extends Controller
     // ----------------------
     public function registerFunc(Request $request)
     {
-        $validationResult = $this->validation($request);
+        $validationResult = $this->registerValidation($request);
 
         if (empty($validationResult)) {
 
@@ -149,7 +268,7 @@ class FirebaseController extends Controller
 
     public function loginFunc(Request $request)
     {
-        $validationResult = $this->validation($request);
+        $validationResult = $this->loginValidation($request);
 
         if (empty($validationResult)) {
             $providedPassword = $this->sanitize($request->password);
@@ -181,14 +300,14 @@ class FirebaseController extends Controller
 
     public function updateUser(Request $request)
     {
-        $validationResult = $this->validation($request);
+        $validationResult = $this->updateValidation($request);
 
         if (empty($validationResult)) {
             $providedPassword = $this->sanitize($request->password);
 
             $user = Session::get('user');
 
-            $name = $this->sanitize($request->username) ?? $user['name'];
+            $name = $this->sanitize($request->name) ?? $user['name'];
 
             if ($providedPassword) {
                 $this->database->getReference('users/' . $user['username'] . '/password')->set(encrypt($providedPassword));
@@ -230,13 +349,13 @@ class FirebaseController extends Controller
 
     public function addList(Request $request)
     {
-        $validationResult = $this->validation($request);
+        $validationResult = $this->listValidation($request);
 
         if (empty($validationResult)) {
 
             $user = Session::get('user');
 
-            $listName = $this->sanitize($request->listName);
+            $listName = $this->sanitize($request->list);
             $listToAdd = [
                 'color' => $this->sanitize($request->color),
                 'priority' => $this->sanitize($request->priority),
@@ -254,9 +373,9 @@ class FirebaseController extends Controller
 
     public function deleteList(Request $request)
     {
-        $validationResult = $this->validation($request);
+        //$validationResult = $this->validation($request);
 
-        if (empty($validationResult)) {
+        //if (empty($validationResult)) {
 
             $listName = $this->sanitize($request->listName);
 
@@ -265,9 +384,9 @@ class FirebaseController extends Controller
             $this->database->getReference('userTasks/' . $user['username'] . '/' . $listName)->remove();
 
             return redirect()->route('home');
-        } else {
+        //} else {
             // render same page with $validationResult (that is a array of errors)
-        }
+        //}
     }
 
 
@@ -278,7 +397,7 @@ class FirebaseController extends Controller
     public function addTaskToList(Request $request)
     {
 
-        $validationResult = $this->validation($request);
+        $validationResult = $this->taskValidation($request);
 
         if (empty($validationResult)) {
             $listName = $this->sanitize($request->listName);
@@ -300,7 +419,7 @@ class FirebaseController extends Controller
 
     public function updateTask(Request $request)
     {
-        $validationResult = $this->validation($request);
+        $validationResult = $this->taskValidation($request);
 
         if (empty($validationResult)) {
             $listName = $this->sanitize($request->listName);
@@ -336,9 +455,9 @@ class FirebaseController extends Controller
 
     public function deleteTask(Request $request)
     {
-        $validationResult = $this->validation($request);
+        //$validationResult = $this->validation($request);
 
-        if (empty($validationResult)) {
+        //if (empty($validationResult)) {
             $listName = $this->sanitize($request->listName);
             $taskId = $this->sanitize($request->taskId);
 
@@ -347,8 +466,8 @@ class FirebaseController extends Controller
             $postref = $this->database->getReference('userTasks/' . $username . '/' . $listName . '/tasks' . '/' . $taskId)->remove();
 
             return redirect()->route('home');
-        } else {
+        //} else {
             // render same page with $validationResult (that is a array of errors)
-        }
+        //}
     }
 }

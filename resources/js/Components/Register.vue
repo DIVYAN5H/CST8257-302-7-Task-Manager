@@ -25,20 +25,20 @@ const form = useForm({
                         placeholder="Username" id="username" v-model="form.username" />
                 </div>
                 <div class="grid mx-auto w-full grid-cols-1">
-                    <label class="ml-2" for="pass"> Password </label>
+                    <label class="ml-2" for="password"> Password </label>
                     <input type="password" name="password"
                         class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
                         id="pass" placeholder="••••••••••" v-model="form.password" />
                 </div>
                 <div class="grid grid-cols-1">
-                    <label class="ml-2" for="username"> Name </label>
-                    <input type="text" name="username"
+                    <label class="ml-2" for="name"> Name </label>
+                    <input type="text" name="name"
                         class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
                         placeholder="J. Smith" id="name" v-model="form.name" />
                 </div>
                 <div class="grid grid-cols-1">
-                    <label class="ml-2" for="username"> Email </label>
-                    <input type="text" name="username"
+                    <label class="ml-2" for="email"> Email </label>
+                    <input type="email" name="email"
                         class="form-input h-12 border-violet-600 border-4 mx-auto px-3 py-1 mb-3 w-full rounded-full"
                         placeholder="js@email.com" id="email" v-model="form.email" />
                 </div>

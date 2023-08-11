@@ -58,7 +58,7 @@ function getInitials(name) {
                 <div class="grid-cols-1 text-lg w-1/2 -translate-x-[1rem]">
                 <form @submit.prevent="form.post('/userUpdate')">
                     <input type="text" name="name" v-model="form.name" class="bg-transparent rounded-full w-40 mb-1">
-                    <input type="text" name="password" v-model="form.password" placeholder="password" class="bg-transparent rounded-full w-40">
+                    <input type="password" name="password" v-model="form.password" placeholder="password" class="bg-transparent rounded-full w-40">
                     
                     <button type="submit" class="w-40 text-sm rounded-full bg-white/30 m-3 p-3 border hover:bg-white/40 mt-5 -translate-x-[5rem]"> Update </button>
                 </form>
