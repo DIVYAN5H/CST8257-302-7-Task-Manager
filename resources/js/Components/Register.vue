@@ -1,6 +1,6 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import { ref, onUpdated } from 'vue';
+import { ref, onUpdated, onMounted } from 'vue';
 
 const props = defineProps(['errors']);
 
@@ -27,7 +27,8 @@ const form = useForm({
             <img style="width: 50px" src="/img/Logo.png" alt="" />
         </div>
         <div class="text-3xl mb-10 my-10 mx-auto text-center">Register</div>
-        <form @submit.prevent="form.post('/register')">
+        <form @submit.prevent="form.post('/register',{
+        oonSuccess: () => $emit('transition')})">
             <div class="grid grid-cols-1 w-2/3 mx-auto">
                 <div class="grid grid-cols-1">
                     <label class="ml-2" for="username"> Username </label>

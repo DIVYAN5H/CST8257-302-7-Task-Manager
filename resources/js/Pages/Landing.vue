@@ -1,17 +1,22 @@
 <script setup>
 import { Head, usePage } from "@inertiajs/vue3";
-import { ref, onUpdated } from "vue";
+import { ref, onUpdated, onMounted } from "vue";
 import LoginView from '@/Components/LoginView.vue';
 import Register from "@/Components/Register.vue";
 
 
 const page = usePage();
-let show = ref(page.props.show);
+let show = ref(true);
 const props = defineProps( 'errors' );
 const errors1 = ref(page.props.errors);
 console.log(props.errors);
 console.log(errors1);
 
+onMounted(() => {
+    console.log(show);
+    show.value = true;
+    
+});
 
 onUpdated(() => {
 
